@@ -1,6 +1,7 @@
 plugins {
     id 'fabric-loom' version '0.4-SNAPSHOT'
     id 'maven-publish'
+    id 'com.jfrog.bintray' version '1.8.5'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -71,5 +72,20 @@ publishing {
     repositories {
         // uncomment to publish to the local maven
         // mavenLocal()
+    }
+}
+
+bintray {
+    user = project.property('bintray.user')
+    key = project.property('bintray.key')
+    configurations = [ 'mavenJava' ]
+    pkg {
+        repo = 'mcmods.fabric'
+        name = 'lionutils'
+        version {
+            name = "${project.mod_version}"
+            vcsTag = "v${project.mod_version}"
+            released = new Date()
+        }
     }
 }
