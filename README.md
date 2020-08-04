@@ -1,5 +1,6 @@
 # LionUtils
-Utilities library for Minecraft Fabric modding.
+Utilities library for Minecraft Fabric modding.  
+Javadoc can be found [here](https://leo40git.github.io/LionUtils).
 
 # Usage
 This library is designed to be included in the mods that use it via Jar-in-Jar (JiJ) technology.

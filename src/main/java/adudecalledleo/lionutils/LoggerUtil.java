@@ -10,7 +10,11 @@ import org.apache.logging.log4j.message.*;
  */
 public class LoggerUtil {
     /**
-     * Creates a {@link MessageFactory} suited for the current environment.
+     * Creates a {@link MessageFactory} suited for the current environment.<br>
+     * If this is a {@linkplain FabricLoader#isDevelopmentEnvironment() development environment}, simply returns the
+     * an instance of the default message factory (which is {@link ParameterizedMessageFactory}).<br>
+     * Otherwise, returns a special message factory that appends the logger's name to the start of the message (which also supports
+     * parameters, so no need to worry).
      * @param loggerName logger name
      * @return message factory
      */
