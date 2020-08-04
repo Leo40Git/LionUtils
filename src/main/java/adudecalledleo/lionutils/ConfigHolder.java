@@ -1,7 +1,7 @@
 package adudecalledleo.lionutils;
 
 import net.fabricmc.loader.api.FabricLoader;
-import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -38,7 +38,7 @@ public class ConfigHolder<T> {
     private final Path configPath;
     private final Class<T> configType;
     private final Supplier<T> defaultFactory;
-    private final BiConsumer<Phase, Throwable> exceptionHandler;
+    private final BiConsumer<Phase, Exception> exceptionHandler;
 
     private final List<BiConsumer<Phase, T>> listeners = new ArrayList<>();
     private final List<BiConsumer<Phase, T>> listenersToAdd = new ArrayList<>();
@@ -46,7 +46,7 @@ public class ConfigHolder<T> {
 
     private T config;
 
-    private ConfigHolder(Path configPath, Class<T> configType, Supplier<T> defaultFactory, BiConsumer<Phase, Throwable> exceptionHandler) {
+    private ConfigHolder(Path configPath, Class<T> configType, Supplier<T> defaultFactory, BiConsumer<Phase, Exception> exceptionHandler) {
         this.configPath = configPath;
         this.configType = configType;
         this.defaultFactory = defaultFactory;
@@ -54,11 +54,11 @@ public class ConfigHolder<T> {
     }
 
     /**
-     * Creates a default exception handler that outputs to a {@link LogFunction}.
-     * @param logFunction log function to output to
-     * @return exception handler
+     * Creates a default exception handler that outputs to a {@link Logger}.
+     * @param logger logger to output to
+     * @return the exception handler
      */
-    public static BiConsumer<Phase, Throwable> createExceptionHandler(LogFunction logFunction) {
+    public static BiConsumer<Phase, Exception> createExceptionHandler(Logger logger) {
         return (phase, e) -> {
             String msg = "Exception in config holder";
             switch (phase) {
@@ -69,7 +69,7 @@ public class ConfigHolder<T> {
                 msg = "Exception while saving config";
                 break;
             }
-            logFunction.log(Level.ERROR, msg, e);
+            logger.error(msg, e);
         };
     }
 
@@ -80,10 +80,10 @@ public class ConfigHolder<T> {
      * @param defaultFactory factory to create default POJO
      * @param exceptionHandler exception handler
      * @param <T> type of config POJO
-     * @return a new config handler
+     * @return the configuration handler
      */
     public static <T> ConfigHolder<T> create(Path configPath, Class<T> configType, Supplier<T> defaultFactory,
-            BiConsumer<Phase, Throwable> exceptionHandler) {
+            BiConsumer<Phase, Exception> exceptionHandler) {
         return new ConfigHolder<>(FabricLoader.getInstance().getConfigDir().resolve(configPath), configType,
                 defaultFactory, exceptionHandler);
     }
@@ -96,10 +96,10 @@ public class ConfigHolder<T> {
      * @param defaultFactory factory to create default POJO
      * @param exceptionHandler exception handler
      * @param <T> type of config POJO
-     * @return a new config handler
+     * @return the configuration handler
      */
     public static <T> ConfigHolder<T> create(String configName, Class<T> configType, Supplier<T> defaultFactory,
-            BiConsumer<Phase, Throwable> exceptionHandler) {
+            BiConsumer<Phase, Exception> exceptionHandler) {
         if (!configName.endsWith(".json"))
             configName += ".json";
         return create(Paths.get(configName), configType, defaultFactory, exceptionHandler);
@@ -120,11 +120,9 @@ public class ConfigHolder<T> {
      */
     public void loadConfig() {
         if (configPath.toFile().exists()) {
-            try {
-                BufferedReader br = Files.newBufferedReader(configPath);
+            try (BufferedReader br = Files.newBufferedReader(configPath)) {
                 config = GSON.fromJson(br, configType);
-                br.close();
-            } catch (Throwable e) {
+            } catch (Exception e) {
                 exceptionHandler.accept(Phase.LOAD, e);
                 config = defaultFactory.get();
             } finally {
@@ -140,11 +138,9 @@ public class ConfigHolder<T> {
      * Saves the config POJO to the file.
      */
     public void saveConfig() {
-        try {
-            BufferedWriter bw = Files.newBufferedWriter(configPath);
+        try (BufferedWriter bw = Files.newBufferedWriter(configPath)) {
             GSON.toJson(config, bw);
-            bw.close();
-        } catch (Throwable e) {
+        } catch (Exception e) {
             exceptionHandler.accept(Phase.SAVE, e);
         } finally {
             updateAndNotifyListeners(Phase.SAVE);
