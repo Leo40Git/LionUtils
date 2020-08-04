@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "lionutils",
+  "version": "${version}",
+  "name": "LionUtils",
+  "description": "Utilities library for Minecraft Fabric modding.",
+  "authors": [
+    "ADudeCalledLeo"
+  ],
+  "contact": {
+    "website": "https://github.com/Leo40Git/LionUtils"
+  },
+  "license": "MIT",
+  "icon": "assets/lionutils/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "adudecalledleo.lionutils.LionUtils"
+    ]
+  },
+  "mixins": [
+    "lionutils.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.9.0+build.204",
+    "minecraft": "1.16.1"
+  }
+}
