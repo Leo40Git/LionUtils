@@ -9,8 +9,19 @@ import org.apache.logging.log4j.Logger;
  */
 @FunctionalInterface
 public interface LogFunction {
+    /**
+     * Logs a message.
+     * @param level message level
+     * @param message message
+     * @param throwable exception (or {@code null})
+     */
     void log(Level level, String message, Throwable throwable);
 
+    /**
+     * Logs a message.
+     * @param level message level
+     * @param message message
+     */
     default void log(Level level, String message) {
         log(level, message, null);
     }
