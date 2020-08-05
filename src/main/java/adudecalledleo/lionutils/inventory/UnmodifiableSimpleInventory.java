@@ -1,5 +1,6 @@
 package adudecalledleo.lionutils.inventory;
 
+import adudecalledleo.lionutils.mixin.SimpleInventoryAccessor;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;
@@ -15,6 +16,7 @@ public class UnmodifiableSimpleInventory extends SimpleInventory implements Unmo
     }
 
     public UnmodifiableSimpleInventory(DefaultedList<ItemStack> stacks) {
-        this(stacks.toArray(new ItemStack[0]));
+        super(stacks.size());
+        ((SimpleInventoryAccessor) this).setStacks(stacks);
     }
 }

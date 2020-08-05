@@ -163,7 +163,9 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>badConstructor</h4>
-<pre>public static&nbsp;void&nbsp;badConstructor()</pre>
+<pre>@Contract(value=" -&gt; fail",
+          pure=true)
+public static&nbsp;void&nbsp;badConstructor()</pre>
 <div class="block">Throws an <code>UnsupportedOperationException</code>.<br>
  Intended for use in initializer class constructors to prevent them from being constructed.</div>
 </li>

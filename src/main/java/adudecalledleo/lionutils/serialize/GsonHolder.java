@@ -5,6 +5,7 @@ import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Contract;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -13,6 +14,7 @@ import java.lang.annotation.Annotation;
  * Holds a {@link Gson} instance that has some extra goodies.
  */
 public final class GsonHolder {
+    @Contract(value = " -> fail", pure = true)
     private GsonHolder() {
         InitializerUtil.badConstructor();
     }
