@@ -39,4 +39,31 @@ public final class InventoryUtil {
     public static @NotNull UnmodifiableInventory unmodOf(DefaultedList<ItemStack> stacks) {
         return new UnmodifiableSimpleInventory(stacks);
     }
+
+    private static class UnmodifiableSimpleInventory extends SimpleInventory implements UnmodifiableInventory {
+        public UnmodifiableSimpleInventory(DefaultedList<ItemStack> stacks) {
+            super(stacks.size());
+            ((SimpleInventoryAccessor) this).setStacks(stacks);
+        }
+
+        @Override
+        public ItemStack removeStack(int slot, int amount) {
+            return UnmodifiableInventory.super.removeStack(slot, amount);
+        }
+
+        @Override
+        public ItemStack removeStack(int slot) {
+            return UnmodifiableInventory.super.removeStack(slot);
+        }
+
+        @Override
+        public void setStack(int slot, ItemStack stack) {
+            UnmodifiableInventory.super.setStack(slot, stack);
+        }
+
+        @Override
+        public void clear() {
+            UnmodifiableInventory.super.clear();
+        }
+    }
 }
