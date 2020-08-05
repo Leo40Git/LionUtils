@@ -10,7 +10,12 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Helper class for configuring and obtaining {@link Logger}s.
  */
-public class LoggerUtil {
+public final class LoggerUtil {
+    @Contract(value = " -> fail", pure = true)
+    private LoggerUtil() {
+        InitializerUtil.badConstructor();
+    }
+
     /**
      * Creates a {@link MessageFactory} suited for the current environment.<br>
      * If this is a {@linkplain FabricLoader#isDevelopmentEnvironment() development environment}, simply returns the
