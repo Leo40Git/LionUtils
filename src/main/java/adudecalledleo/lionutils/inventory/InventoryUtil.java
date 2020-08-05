@@ -2,6 +2,7 @@ package adudecalledleo.lionutils.inventory;
 
 import adudecalledleo.lionutils.InitializerUtil;
 import adudecalledleo.lionutils.mixin.SimpleInventoryAccessor;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
@@ -20,7 +21,7 @@ public final class InventoryUtil {
 
     /**
      * Wraps a "raw inventory" into an {@link Inventory}.
-     * @param stacks raw inventory
+     * @param stacks stack list
      * @return the wrapper inventory
      */
     @SuppressWarnings("ConstantConditions")
@@ -32,12 +33,24 @@ public final class InventoryUtil {
 
     /**
      * Wraps a "raw inventory" into an {@link UnmodifiableInventory}.
-     * @param stacks raw inventory
+     * @param stacks stack list
      * @return the wrapper inventory
      */
     @Contract("_ -> new")
     public static @NotNull UnmodifiableInventory unmodOf(DefaultedList<ItemStack> stacks) {
         return new UnmodifiableSimpleInventory(stacks);
+    }
+
+    /**
+     * Wraps a standard {@link Inventory} into an {@link UnmodifiableInventory}.
+     * @param inventory inventory
+     * @return the wrapper inventory
+     */
+    @Contract("null -> new")
+    public static @NotNull UnmodifiableInventory unmodOf(Inventory inventory) {
+        if (inventory instanceof SimpleInventoryAccessor)
+            return unmodOf(((SimpleInventoryAccessor) inventory).getStacks());
+        return new UnmodifiableDelegatingInventory(inventory);
     }
 
     private static class UnmodifiableSimpleInventory extends SimpleInventory implements UnmodifiableInventory {
@@ -64,6 +77,39 @@ public final class InventoryUtil {
         @Override
         public void clear() {
             UnmodifiableInventory.super.clear();
+        }
+    }
+
+    private static class UnmodifiableDelegatingInventory implements UnmodifiableInventory {
+        private final Inventory delegate;
+
+        private UnmodifiableDelegatingInventory(Inventory delegate) {
+            this.delegate = delegate;
+        }
+
+        @Override
+        public int size() {
+            return delegate.size();
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return delegate.isEmpty();
+        }
+
+        @Override
+        public ItemStack getStack(int slot) {
+            return delegate.getStack(slot);
+        }
+
+        @Override
+        public void markDirty() {
+            delegate.markDirty();
+        }
+
+        @Override
+        public boolean canPlayerUse(PlayerEntity player) {
+            return delegate.canPlayerUse(player);
         }
     }
 }

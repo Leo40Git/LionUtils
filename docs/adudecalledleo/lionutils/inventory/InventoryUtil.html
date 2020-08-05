@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9};
+var methods = {"i0":9,"i1":9,"i2":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -140,6 +140,12 @@ extends java.lang.Object</pre>
 <div class="block">Wraps a "raw inventory" into an <a href="../../../adudecalledleo/lionutils/inventory/UnmodifiableInventory.html" title="interface in adudecalledleo.lionutils.inventory"><code>UnmodifiableInventory</code></a>.</div>
 </td>
 </tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>static @NotNull <a href="../../../adudecalledleo/lionutils/inventory/UnmodifiableInventory.html" title="interface in adudecalledleo.lionutils.inventory">UnmodifiableInventory</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../adudecalledleo/lionutils/inventory/InventoryUtil.html#unmodOf-net.minecraft.inventory.Inventory-">unmodOf</a></span>(net.minecraft.inventory.Inventory&nbsp;inventory)</code>
+<div class="block">Wraps a standard <code>Inventory</code> into an <a href="../../../adudecalledleo/lionutils/inventory/UnmodifiableInventory.html" title="interface in adudecalledleo.lionutils.inventory"><code>UnmodifiableInventory</code></a>.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -173,7 +179,7 @@ public static&nbsp;@NotNull net.minecraft.inventory.Inventory&nbsp;of(net.minecr
 <div class="block">Wraps a "raw inventory" into an <code>Inventory</code>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>stacks</code> - raw inventory</dd>
+<dd><code>stacks</code> - stack list</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the wrapper inventory</dd>
 </dl>
@@ -182,7 +188,7 @@ public static&nbsp;@NotNull net.minecraft.inventory.Inventory&nbsp;of(net.minecr
 <a name="unmodOf-net.minecraft.util.collection.DefaultedList-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>unmodOf</h4>
 <pre>@Contract(value="_ -&gt; new")
@@ -191,7 +197,25 @@ public static&nbsp;@NotNull <a href="../../../adudecalledleo/lionutils/inventory
 <div class="block">Wraps a "raw inventory" into an <a href="../../../adudecalledleo/lionutils/inventory/UnmodifiableInventory.html" title="interface in adudecalledleo.lionutils.inventory"><code>UnmodifiableInventory</code></a>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>stacks</code> - raw inventory</dd>
+<dd><code>stacks</code> - stack list</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the wrapper inventory</dd>
+</dl>
+</li>
+</ul>
+<a name="unmodOf-net.minecraft.inventory.Inventory-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>unmodOf</h4>
+<pre>@Contract(value="null -&gt; new")
+ @NotNull
+public static&nbsp;@NotNull <a href="../../../adudecalledleo/lionutils/inventory/UnmodifiableInventory.html" title="interface in adudecalledleo.lionutils.inventory">UnmodifiableInventory</a>&nbsp;unmodOf(net.minecraft.inventory.Inventory&nbsp;inventory)</pre>
+<div class="block">Wraps a standard <code>Inventory</code> into an <a href="../../../adudecalledleo/lionutils/inventory/UnmodifiableInventory.html" title="interface in adudecalledleo.lionutils.inventory"><code>UnmodifiableInventory</code></a>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>inventory</code> - inventory</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the wrapper inventory</dd>
 </dl>

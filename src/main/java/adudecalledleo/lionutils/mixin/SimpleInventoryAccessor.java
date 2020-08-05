@@ -7,14 +7,20 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
 /**
- * Allows setting the backing stack list.
+ * Allows getting and setting the backing stack list.
  */
 @Mixin(SimpleInventory.class)
 public interface SimpleInventoryAccessor {
     /**
+     * Gets the backing stack list.
+     * @return stack list
+     */
+    @Accessor
+    DefaultedList<ItemStack> getStacks();
+    /**
      * Sets the backing stack list.
      * @param stacks stack list
      */
-    @Accessor("stacks")
+    @Accessor
     void setStacks(DefaultedList<ItemStack> stacks);
 }
