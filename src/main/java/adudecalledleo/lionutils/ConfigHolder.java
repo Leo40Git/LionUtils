@@ -37,18 +37,19 @@ public class ConfigHolder<T> {
         SAVE
     }
 
-    private final Path configPath;
-    private final Class<T> configType;
-    private final Supplier<T> defaultFactory;
-    private final BiConsumer<Phase, Exception> exceptionHandler;
+    private @NotNull final Path configPath;
+    private @NotNull final Class<T> configType;
+    private @NotNull final Supplier<T> defaultFactory;
+    private @NotNull final BiConsumer<Phase, Exception> exceptionHandler;
 
-    private final List<BiConsumer<Phase, T>> listeners = new ArrayList<>();
-    private final List<BiConsumer<Phase, T>> listenersToAdd = new ArrayList<>();
-    private final List<BiConsumer<Phase, T>> listenersToRemove = new ArrayList<>();
+    private @NotNull final List<BiConsumer<Phase, T>> listeners = new ArrayList<>();
+    private @NotNull final List<BiConsumer<Phase, T>> listenersToAdd = new ArrayList<>();
+    private @NotNull final List<BiConsumer<Phase, T>> listenersToRemove = new ArrayList<>();
 
     private T config;
 
-    private ConfigHolder(Path configPath, Class<T> configType, Supplier<T> defaultFactory, BiConsumer<Phase, Exception> exceptionHandler) {
+    private ConfigHolder(@NotNull Path configPath, @NotNull Class<T> configType, @NotNull Supplier<T> defaultFactory,
+            @NotNull BiConsumer<Phase, Exception> exceptionHandler) {
         this.configPath = configPath;
         this.configType = configType;
         this.defaultFactory = defaultFactory;
@@ -61,7 +62,7 @@ public class ConfigHolder<T> {
      * @return the exception handler
      */
     @Contract(pure = true)
-    public static @NotNull BiConsumer<Phase, Exception> createExceptionHandler(Logger logger) {
+    public static @NotNull BiConsumer<Phase, Exception> createExceptionHandler(@NotNull Logger logger) {
         return (phase, e) -> {
             String msg = "Exception in config holder";
             switch (phase) {
@@ -86,8 +87,8 @@ public class ConfigHolder<T> {
      * @return the configuration handler
      */
     @Contract("_, _, _, _ -> new")
-    public static <T> @NotNull ConfigHolder<T> create(Path configPath, Class<T> configType, Supplier<T> defaultFactory,
-            BiConsumer<Phase, Exception> exceptionHandler) {
+    public static <T> @NotNull ConfigHolder<T> create(@NotNull Path configPath, @NotNull Class<T> configType,
+            @NotNull Supplier<T> defaultFactory, @NotNull BiConsumer<Phase, Exception> exceptionHandler) {
         return new ConfigHolder<>(FabricLoader.getInstance().getConfigDir().resolve(configPath), configType,
                 defaultFactory, exceptionHandler);
     }
@@ -102,8 +103,8 @@ public class ConfigHolder<T> {
      * @param <T> type of config POJO
      * @return the configuration handler
      */
-    public static <T> @NotNull ConfigHolder<T> create(String configName, Class<T> configType, Supplier<T> defaultFactory,
-            BiConsumer<Phase, Exception> exceptionHandler) {
+    public static <T> @NotNull ConfigHolder<T> create(@NotNull String configName, @NotNull Class<T> configType,
+            @NotNull Supplier<T> defaultFactory, @NotNull BiConsumer<Phase, Exception> exceptionHandler) {
         if (!configName.endsWith(".json"))
             configName += ".json";
         return create(Paths.get(configName), configType, defaultFactory, exceptionHandler);

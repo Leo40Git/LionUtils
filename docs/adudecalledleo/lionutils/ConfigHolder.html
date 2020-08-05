@@ -162,25 +162,25 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;@NotNull <a href="../../adudecalledleo/lionutils/ConfigHolder.html" title="class in adudecalledleo.lionutils">ConfigHolder</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/ConfigHolder.html#create-java.nio.file.Path-java.lang.Class-java.util.function.Supplier-java.util.function.BiConsumer-">create</a></span>(java.nio.file.Path&nbsp;configPath,
-      java.lang.Class&lt;T&gt;&nbsp;configType,
-      java.util.function.Supplier&lt;T&gt;&nbsp;defaultFactory,
-      java.util.function.BiConsumer&lt;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a>,java.lang.Exception&gt;&nbsp;exceptionHandler)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/ConfigHolder.html#create-java.nio.file.Path-java.lang.Class-java.util.function.Supplier-java.util.function.BiConsumer-">create</a></span>(@NotNull java.nio.file.Path&nbsp;configPath,
+      @NotNull java.lang.Class&lt;T&gt;&nbsp;configType,
+      @NotNull java.util.function.Supplier&lt;T&gt;&nbsp;defaultFactory,
+      @NotNull java.util.function.BiConsumer&lt;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a>,java.lang.Exception&gt;&nbsp;exceptionHandler)</code>
 <div class="block">Constructs a <a href="../../adudecalledleo/lionutils/ConfigHolder.html" title="class in adudecalledleo.lionutils"><code>ConfigHolder</code></a>.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;@NotNull <a href="../../adudecalledleo/lionutils/ConfigHolder.html" title="class in adudecalledleo.lionutils">ConfigHolder</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/ConfigHolder.html#create-java.lang.String-java.lang.Class-java.util.function.Supplier-java.util.function.BiConsumer-">create</a></span>(java.lang.String&nbsp;configName,
-      java.lang.Class&lt;T&gt;&nbsp;configType,
-      java.util.function.Supplier&lt;T&gt;&nbsp;defaultFactory,
-      java.util.function.BiConsumer&lt;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a>,java.lang.Exception&gt;&nbsp;exceptionHandler)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/ConfigHolder.html#create-java.lang.String-java.lang.Class-java.util.function.Supplier-java.util.function.BiConsumer-">create</a></span>(@NotNull java.lang.String&nbsp;configName,
+      @NotNull java.lang.Class&lt;T&gt;&nbsp;configType,
+      @NotNull java.util.function.Supplier&lt;T&gt;&nbsp;defaultFactory,
+      @NotNull java.util.function.BiConsumer&lt;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a>,java.lang.Exception&gt;&nbsp;exceptionHandler)</code>
 <div class="block">Constructs a <a href="../../adudecalledleo/lionutils/ConfigHolder.html" title="class in adudecalledleo.lionutils"><code>ConfigHolder</code></a>.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>static @NotNull java.util.function.BiConsumer&lt;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a>,java.lang.Exception&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/ConfigHolder.html#createExceptionHandler-org.apache.logging.log4j.Logger-">createExceptionHandler</a></span>(org.apache.logging.log4j.Logger&nbsp;logger)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/ConfigHolder.html#createExceptionHandler-org.apache.logging.log4j.Logger-">createExceptionHandler</a></span>(@NotNull org.apache.logging.log4j.Logger&nbsp;logger)</code>
 <div class="block">Creates a default exception handler that outputs to a <code>Logger</code>.</div>
 </td>
 </tr>
@@ -238,7 +238,8 @@ extends java.lang.Object</pre>
 <h4>createExceptionHandler</h4>
 <pre>@Contract(pure=true)
  @NotNull
-public static&nbsp;@NotNull java.util.function.BiConsumer&lt;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a>,java.lang.Exception&gt;&nbsp;createExceptionHandler(org.apache.logging.log4j.Logger&nbsp;logger)</pre>
+public static&nbsp;@NotNull java.util.function.BiConsumer&lt;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a>,java.lang.Exception&gt;&nbsp;createExceptionHandler(@NotNull
+                                                                                                                                                     @NotNull org.apache.logging.log4j.Logger&nbsp;logger)</pre>
 <div class="block">Creates a default exception handler that outputs to a <code>Logger</code>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -256,10 +257,14 @@ public static&nbsp;@NotNull java.util.function.BiConsumer&lt;<a href="../../adud
 <h4>create</h4>
 <pre>@Contract(value="_, _, _, _ -&gt; new")
  @NotNull
-public static&nbsp;&lt;T&gt;&nbsp;@NotNull <a href="../../adudecalledleo/lionutils/ConfigHolder.html" title="class in adudecalledleo.lionutils">ConfigHolder</a>&lt;T&gt;&nbsp;create(java.nio.file.Path&nbsp;configPath,
-                                                                                                   java.lang.Class&lt;T&gt;&nbsp;configType,
-                                                                                                   java.util.function.Supplier&lt;T&gt;&nbsp;defaultFactory,
-                                                                                                   java.util.function.BiConsumer&lt;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a>,java.lang.Exception&gt;&nbsp;exceptionHandler)</pre>
+public static&nbsp;&lt;T&gt;&nbsp;@NotNull <a href="../../adudecalledleo/lionutils/ConfigHolder.html" title="class in adudecalledleo.lionutils">ConfigHolder</a>&lt;T&gt;&nbsp;create(@NotNull
+                                                                                                   @NotNull java.nio.file.Path&nbsp;configPath,
+                                                                                                   @NotNull
+                                                                                                   @NotNull java.lang.Class&lt;T&gt;&nbsp;configType,
+                                                                                                   @NotNull
+                                                                                                   @NotNull java.util.function.Supplier&lt;T&gt;&nbsp;defaultFactory,
+                                                                                                   @NotNull
+                                                                                                   @NotNull java.util.function.BiConsumer&lt;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a>,java.lang.Exception&gt;&nbsp;exceptionHandler)</pre>
 <div class="block">Constructs a <a href="../../adudecalledleo/lionutils/ConfigHolder.html" title="class in adudecalledleo.lionutils"><code>ConfigHolder</code></a>.</div>
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
@@ -281,10 +286,14 @@ public static&nbsp;&lt;T&gt;&nbsp;@NotNull <a href="../../adudecalledleo/lionuti
 <li class="blockList">
 <h4>create</h4>
 <pre>@NotNull
-public static&nbsp;&lt;T&gt;&nbsp;@NotNull <a href="../../adudecalledleo/lionutils/ConfigHolder.html" title="class in adudecalledleo.lionutils">ConfigHolder</a>&lt;T&gt;&nbsp;create(java.lang.String&nbsp;configName,
-                                                            java.lang.Class&lt;T&gt;&nbsp;configType,
-                                                            java.util.function.Supplier&lt;T&gt;&nbsp;defaultFactory,
-                                                            java.util.function.BiConsumer&lt;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a>,java.lang.Exception&gt;&nbsp;exceptionHandler)</pre>
+public static&nbsp;&lt;T&gt;&nbsp;@NotNull <a href="../../adudecalledleo/lionutils/ConfigHolder.html" title="class in adudecalledleo.lionutils">ConfigHolder</a>&lt;T&gt;&nbsp;create(@NotNull
+                                                            @NotNull java.lang.String&nbsp;configName,
+                                                            @NotNull
+                                                            @NotNull java.lang.Class&lt;T&gt;&nbsp;configType,
+                                                            @NotNull
+                                                            @NotNull java.util.function.Supplier&lt;T&gt;&nbsp;defaultFactory,
+                                                            @NotNull
+                                                            @NotNull java.util.function.BiConsumer&lt;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a>,java.lang.Exception&gt;&nbsp;exceptionHandler)</pre>
 <div class="block">Constructs a <a href="../../adudecalledleo/lionutils/ConfigHolder.html" title="class in adudecalledleo.lionutils"><code>ConfigHolder</code></a>.</div>
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
