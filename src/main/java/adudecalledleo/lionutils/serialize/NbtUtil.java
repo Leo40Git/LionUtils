@@ -7,7 +7,6 @@ import net.minecraft.datafixer.NbtOps;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.util.math.BlockPos;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -44,7 +43,7 @@ public final class NbtUtil {
      * @param key key to read from
      * @return the block position, or {@code null} if the key isn't associated with one
      */
-    public static @Nullable BlockPos getBlockPos(CompoundTag tag, String key) {
+    public static BlockPos getBlockPos(CompoundTag tag, String key) {
         if (!tag.contains(key, /* NbtType.LONG */ 4))
             return null;
         return BlockPos.fromLong(tag.getLong(key));

@@ -7,14 +7,11 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Utilities for dealing with {@link Inventory}s and "raw inventories" ({@link DefaultedList}s of {@link ItemStack}s).
  */
 public final class InventoryUtil {
-    @Contract(value = " -> fail", pure = true)
     private InventoryUtil() {
         InitializerUtil.badConstructor();
     }
@@ -25,7 +22,7 @@ public final class InventoryUtil {
      * @return the wrapper inventory
      */
     @SuppressWarnings("ConstantConditions")
-    public static @NotNull Inventory of(DefaultedList<ItemStack> stacks) {
+    public static Inventory of(DefaultedList<ItemStack> stacks) {
         SimpleInventory inv = new SimpleInventory(stacks.size());
         ((SimpleInventoryAccessor) inv).setStacks(stacks);
         return inv;
@@ -36,8 +33,7 @@ public final class InventoryUtil {
      * @param stacks stack list
      * @return the wrapper inventory
      */
-    @Contract("_ -> new")
-    public static @NotNull UnmodifiableInventory unmodOf(DefaultedList<ItemStack> stacks) {
+    public static UnmodifiableInventory unmodOf(DefaultedList<ItemStack> stacks) {
         return new UnmodifiableSimpleInventory(stacks);
     }
 
@@ -46,8 +42,7 @@ public final class InventoryUtil {
      * @param inventory inventory
      * @return the wrapper inventory
      */
-    @Contract("null -> new")
-    public static @NotNull UnmodifiableInventory unmodOf(Inventory inventory) {
+    public static UnmodifiableInventory unmodOf(Inventory inventory) {
         if (inventory instanceof SimpleInventoryAccessor)
             return unmodOf(((SimpleInventoryAccessor) inventory).getStacks());
         return new UnmodifiableDelegatingInventory(inventory);

@@ -2,8 +2,6 @@ package adudecalledleo.lionutils;
 
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -61,8 +59,7 @@ public class ConfigHolder<T> {
      * @param logger logger to output to
      * @return the exception handler
      */
-    @Contract(pure = true)
-    public static @NotNull BiConsumer<Phase, Exception> createExceptionHandler(Logger logger) {
+    public static BiConsumer<Phase, Exception> createExceptionHandler(Logger logger) {
         return (phase, e) -> {
             String msg = "Exception in config holder";
             switch (phase) {
@@ -86,8 +83,7 @@ public class ConfigHolder<T> {
      * @param <T> type of config POJO
      * @return the configuration handler
      */
-    @Contract("_, _, _, _ -> new")
-    public static <T> @NotNull ConfigHolder<T> create(Path configPath, Class<T> configType,
+    public static <T> ConfigHolder<T> create(Path configPath, Class<T> configType,
             Supplier<T> defaultFactory, BiConsumer<Phase, Exception> exceptionHandler) {
         return new ConfigHolder<>(FabricLoader.getInstance().getConfigDir().resolve(configPath), configType,
                 defaultFactory, exceptionHandler);
@@ -103,7 +99,7 @@ public class ConfigHolder<T> {
      * @param <T> type of config POJO
      * @return the configuration handler
      */
-    public static <T> @NotNull ConfigHolder<T> create(String configName, Class<T> configType,
+    public static <T> ConfigHolder<T> create(String configName, Class<T> configType,
             Supplier<T> defaultFactory, BiConsumer<Phase, Exception> exceptionHandler) {
         if (!configName.endsWith(".json"))
             configName += ".json";

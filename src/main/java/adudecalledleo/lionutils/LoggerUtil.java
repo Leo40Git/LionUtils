@@ -4,14 +4,11 @@ import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.*;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Helper class for configuring and obtaining {@link Logger}s.
  */
 public final class LoggerUtil {
-    @Contract(value = " -> fail", pure = true)
     private LoggerUtil() {
         InitializerUtil.badConstructor();
     }
@@ -25,8 +22,7 @@ public final class LoggerUtil {
      * @param loggerName logger name
      * @return message factory
      */
-    @Contract("_ -> new")
-    public static @NotNull MessageFactory createMessageFactory(String loggerName) {
+    public static MessageFactory createMessageFactory(String loggerName) {
         if (FabricLoader.getInstance().isDevelopmentEnvironment())
             return new ParameterizedMessageFactory();
         else
@@ -51,7 +47,7 @@ public final class LoggerUtil {
      * @param name logger name
      * @return the logger
      */
-    public static @NotNull Logger getLogger(String name) {
+    public static Logger getLogger(String name) {
         return LogManager.getLogger(name, createMessageFactory(name));
     }
 }

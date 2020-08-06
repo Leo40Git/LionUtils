@@ -4,8 +4,6 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import net.minecraft.util.UserCache;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
@@ -29,7 +27,7 @@ public final class GameProfileUtil {
      * so you probably shouldn't call this.
      * @param sessionService session service to use
      */
-    public static void setSessionService(@NotNull MinecraftSessionService sessionService) {
+    public static void setSessionService(MinecraftSessionService sessionService) {
         GameProfileUtil.sessionService = sessionService;
     }
 
@@ -39,7 +37,7 @@ public final class GameProfileUtil {
      * so you probably shouldn't call this.
      * @param userCache user cache to use
      */
-    public static void setUserCache(@NotNull UserCache userCache) {
+    public static void setUserCache(UserCache userCache) {
         GameProfileUtil.userCache = userCache;
     }
 
@@ -49,8 +47,7 @@ public final class GameProfileUtil {
      * @param name player name
      * @return profile associated with the specified player
      */
-    @Contract("null, null -> fail")
-    public static @NotNull GameProfile getGameProfile(UUID id, String name) {
+    public static GameProfile getGameProfile(UUID id, String name) {
         if (id == null && name == null)
             throw new IllegalArgumentException("Either ID or name need to be non-null!");
         GameProfile profile = null;
@@ -86,8 +83,7 @@ public final class GameProfileUtil {
      * @param playerUUID player UUID
      * @return the player's name, or {@link #PLAYER_NAME_UNKNOWN} if something went wrong (like the player not existing)
      */
-    @NotNull
-    public static String getPlayerName(@NotNull UUID playerUUID) {
+    public static String getPlayerName(UUID playerUUID) {
         GameProfile profile = getGameProfile(playerUUID, null);
         if (!profile.isComplete())
             return PLAYER_NAME_UNKNOWN;
