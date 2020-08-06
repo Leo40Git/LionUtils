@@ -110,16 +110,16 @@ public class ConfigHolder<T> {
      * Gets the config POJO.
      * @return config POJO
      */
-    public T getConfig() {
+    public T get() {
         if (config == null)
-            loadConfig();
+            load();
         return config;
     }
 
     /**
      * Loads the config POJO from the file.
      */
-    public void loadConfig() {
+    public void load() {
         if (configPath.toFile().exists()) {
             try (BufferedReader br = Files.newBufferedReader(configPath)) {
                 config = GSON.fromJson(br, configType);
@@ -131,14 +131,14 @@ public class ConfigHolder<T> {
             }
         } else {
             config = defaultFactory.get();
-            saveConfig();
+            save();
         }
     }
 
     /**
      * Saves the config POJO to the file.
      */
-    public void saveConfig() {
+    public void save() {
         try (BufferedWriter bw = Files.newBufferedWriter(configPath)) {
             GSON.toJson(config, bw);
         } catch (Exception e) {
