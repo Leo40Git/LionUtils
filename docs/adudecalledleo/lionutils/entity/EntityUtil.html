@@ -133,8 +133,7 @@ extends java.lang.Object</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../adudecalledleo/lionutils/entity/EntityUtil.html#createSpawnPacket-net.minecraft.entity.Entity-net.minecraft.util.Identifier-">createSpawnPacket</a></span>(net.minecraft.entity.Entity&nbsp;e,
                  net.minecraft.util.Identifier&nbsp;packetID)</code>
 <div class="block">Creates a S2C packet for spawning the entity on the client.<br>
- Required for any entity that doesn't extend <code>LivingEntity</code>.<br>
- To use, simply override <code>Entity.createSpawnPacket()</code> with the following:</div>
+ Required for any entity that doesn't extend <code>LivingEntity</code>.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
@@ -174,8 +173,8 @@ extends java.lang.Object</pre>
 <h4>createSpawnPacket</h4>
 <pre>public static&nbsp;net.minecraft.network.Packet&lt;?&gt;&nbsp;createSpawnPacket(net.minecraft.entity.Entity&nbsp;e,
                                                                 net.minecraft.util.Identifier&nbsp;packetID)</pre>
-<div class="block">Creates a S2C packet for spawning the entity on the client.<br>
- Required for any entity that doesn't extend <code>LivingEntity</code>.<br>
+<div class="block"><p>Creates a S2C packet for spawning the entity on the client.<br>
+ Required for any entity that doesn't extend <code>LivingEntity</code>.</p>
  To use, simply override <code>Entity.createSpawnPacket()</code> with the following:<pre>
  &#64;Override
  public Packet&lt;?&gt; createSpawnPacket() {

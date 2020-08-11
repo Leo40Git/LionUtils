@@ -28,8 +28,8 @@ public final class EntityUtil {
     }
 
     /**
-     * Creates a S2C packet for spawning the entity on the client.<br>
-     * Required for any entity that doesn't extend {@link net.minecraft.entity.LivingEntity LivingEntity}.<br>
+     * <p>Creates a S2C packet for spawning the entity on the client.<br>
+     * Required for any entity that doesn't extend {@link net.minecraft.entity.LivingEntity LivingEntity}.</p>
      * To use, simply override {@link Entity#createSpawnPacket()} with the following:<pre>
      * &#64;Override
      * public Packet&lt;?&gt; createSpawnPacket() {
