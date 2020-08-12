@@ -131,11 +131,7 @@ extends java.lang.Object</pre>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static org.apache.logging.log4j.message.MessageFactory</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/LoggerUtil.html#createMessageFactory-java.lang.String-">createMessageFactory</a></span>(java.lang.String&nbsp;loggerName)</code>
-<div class="block">Creates a <code>MessageFactory</code> suited for the current environment.<br>
- If this is a development environment, simply returns the
- an instance of the default message factory (which is <code>ParameterizedMessageFactory</code>).<br>
- Otherwise, returns a special message factory that appends the logger's name to the start of the message (which also supports
- parameters, so no need to worry).</div>
+<div class="block">Creates a <code>MessageFactory</code> suited for the current environment.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
@@ -173,7 +169,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>createMessageFactory</h4>
 <pre>public static&nbsp;org.apache.logging.log4j.message.MessageFactory&nbsp;createMessageFactory(java.lang.String&nbsp;loggerName)</pre>
-<div class="block">Creates a <code>MessageFactory</code> suited for the current environment.<br>
+<div class="block"><p>Creates a <code>MessageFactory</code> suited for the current environment.</p>
  If this is a development environment, simply returns the
  an instance of the default message factory (which is <code>ParameterizedMessageFactory</code>).<br>
  Otherwise, returns a special message factory that appends the logger's name to the start of the message (which also supports
