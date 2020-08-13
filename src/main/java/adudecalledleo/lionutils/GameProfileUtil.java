@@ -22,9 +22,8 @@ public final class GameProfileUtil {
     private static boolean warnedAboutIncompleteProfile = false;
 
     /**
-     * Sets the session service that we should use.<br>
-     * This is set automatically by {@linkplain adudecalledleo.lionutils.mixin.MixinSkullBlockEntity a mixin},
-     * so you probably shouldn't call this.
+     * <p>Sets the session service that we should use.</p>
+     * This is set automatically, so you shouldn't need to call this.
      * @param sessionService session service to use
      */
     public static void setSessionService(MinecraftSessionService sessionService) {
@@ -32,9 +31,8 @@ public final class GameProfileUtil {
     }
 
     /**
-     * Sets the user cache we should use.<br>
-     * This is set automatically by {@linkplain adudecalledleo.lionutils.mixin.MixinSkullBlockEntity a mixin},
-     * so you probably shouldn't call this.
+     * <p>Sets the user cache we should use.</p>
+     * This is set automatically, so you shouldn't need to call this.
      * @param userCache user cache to use
      */
     public static void setUserCache(UserCache userCache) {
@@ -42,7 +40,7 @@ public final class GameProfileUtil {
     }
 
     /**
-     * Gets a {@link GameProfile}. Accepts either a {@link UUID}, a name, or both - but not neither!
+     * Gets a {@link GameProfile}. Accepts either a UUID, a name, or both - but not neither!
      * @param id player UUID
      * @param name player name
      * @return profile associated with the specified player
@@ -80,13 +78,25 @@ public final class GameProfileUtil {
 
     /**
      * Gets a player's name from their UUID.
-     * @param playerUUID player UUID
+     * @param playerID player UUID
      * @return the player's name, or {@link #PLAYER_NAME_UNKNOWN} if something went wrong (like the player not existing)
      */
-    public static String getPlayerName(UUID playerUUID) {
-        GameProfile profile = getGameProfile(playerUUID, null);
+    public static String getPlayerName(UUID playerID) {
+        GameProfile profile = getGameProfile(playerID, null);
         if (!profile.isComplete())
             return PLAYER_NAME_UNKNOWN;
         return profile.getName();
+    }
+
+    /**
+     * Gets a player's UUID from their name.
+     * @param playerName player name
+     * @return the player's UUID, or {@code null} if something went wrong (like the player not existing)
+     */
+    public static UUID findPlayerID(String playerName) {
+        GameProfile profile = getGameProfile(null, playerName);
+        if (!profile.isComplete())
+            return null;
+        return profile.getId();
     }
 }

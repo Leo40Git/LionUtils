@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "adudecalledleo.lionutils.internal.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinSkullBlockEntity"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -17,21 +17,34 @@ public final class GsonHolder {
         InitializerUtil.badConstructor();
     }
 
+    private static GsonBuilder baseGsonBuilder() {
+        return new GsonBuilder()
+                .setExclusionStrategies(new AnnotationExclusionStrategy<>(Exclude.class))
+                .registerTypeAdapter(Identifier.class, new IdentifierTypeAdapter())
+                .enableComplexMapKeySerialization()
+                .serializeSpecialFloatingPointValues()
+                .setLenient()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
+    }
+
     /**
      * {@link Gson} instance. Do you even need an explanation?<br>
      * Includes the following goodies: <ul>
      *     <li>Exclusion strategy for excluding fields annotated with the {@link Exclude} annotation.</li>
      *     <li>Type adapter for {@link Identifier}s, to serialize and deserialize them via their string representation.</li>
+     *     <li>{@linkplain GsonBuilder#enableComplexMapKeySerialization() Complex map key serialization}.</li>
+     *     <li>{@linkplain GsonBuilder#serializeSpecialFloatingPointValues() Support for serializing special floating point values.}</li>
+     *     <li>{@linkplain JsonReader#setLenient(boolean) Support for non-standard JSON features when deserializing}.</li>
      *     <li>{@code snake_case} field naming policy.</li>
      *     <li>Pretty printing!</li>
      * </ul>
      */
-    public static final Gson GSON = new GsonBuilder()
-            .setExclusionStrategies(new AnnotationExclusionStrategy<>(Exclude.class))
-            .registerTypeAdapter(Identifier.class, new IdentifierTypeAdapter())
-            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-            .setPrettyPrinting()
-            .create();
+    public static final Gson GSON = baseGsonBuilder().setPrettyPrinting().create();
+
+    /**
+     * {@link Gson} instance. Like {@link #GSON}, but without pretty printing.
+     */
+    public static final Gson GSON_COMPRESSED = baseGsonBuilder().create();
 
     private static class AnnotationExclusionStrategy<T extends Annotation> implements ExclusionStrategy {
         private final Class<T> annoClass;

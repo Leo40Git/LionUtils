@@ -13,16 +13,15 @@
   "license": "MIT",
   "icon": "assets/lionutils/icon.png",
   "environment": "*",
-  "entrypoints": {
-    "main": [
-      "adudecalledleo.lionutils.LionUtils"
-    ]
-  },
   "mixins": [
-    "lionutils.mixins.json"
+    "lionutils.mixins.json",
+    "lionutils.internal.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.9.0+build.204",
+    "fabricloader": ">=0.9.1+build.205",
     "minecraft": "1.16.2"
+  },
+  "custom": {
+    "modmenu:api": true
   }
 }

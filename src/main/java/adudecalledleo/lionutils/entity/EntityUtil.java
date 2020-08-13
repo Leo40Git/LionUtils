@@ -1,12 +1,11 @@
 package adudecalledleo.lionutils.entity;
 
 import adudecalledleo.lionutils.InitializerUtil;
+import adudecalledleo.lionutils.internal.fapibridge.FAPIBridgeProvider;
+import adudecalledleo.lionutils.internal.fapibridge.network.PacketContextBridge;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
-import net.fabricmc.fabric.api.network.PacketContext;
-import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
@@ -54,13 +53,13 @@ public final class EntityUtil {
         byteBuf.writeDouble(e.getZ());
         byteBuf.writeByte(MathHelper.floor(e.pitch * 256.0F / 360.0F));
         byteBuf.writeByte(MathHelper.floor(e.yaw * 256.0F / 360.0F));
-        return ServerSidePacketRegistry.INSTANCE.toPacket(packetID, byteBuf);
+        return FAPIBridgeProvider.PacketRegistry.SERVER.toPacket(packetID, byteBuf);
     }
 
     // @author UpcraftLP
     @SuppressWarnings("ConstantConditions")
     @Environment(EnvType.CLIENT)
-    private static void consumeSpawnPacket(PacketContext ctx, PacketByteBuf byteBuf) {
+    private static void consumeSpawnPacket(PacketContextBridge ctx, PacketByteBuf byteBuf) {
         EntityType<?> et = Registry.ENTITY_TYPE.get(byteBuf.readVarInt());
         UUID uuid = byteBuf.readUuid();
         int entityId = byteBuf.readVarInt();
@@ -90,6 +89,6 @@ public final class EntityUtil {
      */
     @Environment(EnvType.CLIENT)
     public static void registerSpawnPacket(Identifier packetID) {
-        ClientSidePacketRegistry.INSTANCE.register(packetID, EntityUtil::consumeSpawnPacket);
+        FAPIBridgeProvider.PacketRegistry.CLIENT.register(packetID, EntityUtil::consumeSpawnPacket);
     }
 }

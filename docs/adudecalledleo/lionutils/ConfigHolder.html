@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":9,"i2":9,"i3":9,"i4":10,"i5":10,"i6":10,"i7":10};
+var methods = {"i0":10,"i1":9,"i2":9,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -162,44 +162,44 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../adudecalledleo/lionutils/ConfigHolder.html" title="class in adudecalledleo.lionutils">ConfigHolder</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/ConfigHolder.html#create-java.nio.file.Path-java.lang.Class-java.util.function.Supplier-java.util.function.BiConsumer-">create</a></span>(java.nio.file.Path&nbsp;configPath,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/ConfigHolder.html#create-java.nio.file.Path-java.lang.Class-java.util.function.Supplier-org.apache.logging.log4j.Logger-">create</a></span>(java.nio.file.Path&nbsp;configPath,
       java.lang.Class&lt;T&gt;&nbsp;configType,
       java.util.function.Supplier&lt;T&gt;&nbsp;defaultFactory,
-      java.util.function.BiConsumer&lt;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a>,java.lang.Exception&gt;&nbsp;exceptionHandler)</code>
+      org.apache.logging.log4j.Logger&nbsp;logger)</code>
 <div class="block">Constructs a <a href="../../adudecalledleo/lionutils/ConfigHolder.html" title="class in adudecalledleo.lionutils"><code>ConfigHolder</code></a>.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="../../adudecalledleo/lionutils/ConfigHolder.html" title="class in adudecalledleo.lionutils">ConfigHolder</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/ConfigHolder.html#create-java.lang.String-java.lang.Class-java.util.function.Supplier-java.util.function.BiConsumer-">create</a></span>(java.lang.String&nbsp;configName,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/ConfigHolder.html#create-java.lang.String-java.lang.Class-java.util.function.Supplier-org.apache.logging.log4j.Logger-">create</a></span>(java.lang.String&nbsp;configName,
       java.lang.Class&lt;T&gt;&nbsp;configType,
       java.util.function.Supplier&lt;T&gt;&nbsp;defaultFactory,
-      java.util.function.BiConsumer&lt;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a>,java.lang.Exception&gt;&nbsp;exceptionHandler)</code>
+      org.apache.logging.log4j.Logger&nbsp;logger)</code>
 <div class="block">Constructs a <a href="../../adudecalledleo/lionutils/ConfigHolder.html" title="class in adudecalledleo.lionutils"><code>ConfigHolder</code></a>.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>static java.util.function.BiConsumer&lt;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a>,java.lang.Exception&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/ConfigHolder.html#createExceptionHandler-org.apache.logging.log4j.Logger-">createExceptionHandler</a></span>(org.apache.logging.log4j.Logger&nbsp;logger)</code>
-<div class="block">Creates a default exception handler that outputs to a <code>Logger</code>.</div>
-</td>
-</tr>
-<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../adudecalledleo/lionutils/ConfigHolder.html" title="type parameter in ConfigHolder">T</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/ConfigHolder.html#get--">get</a></span>()</code>
 <div class="block">Gets the config POJO.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/ConfigHolder.html#load--">load</a></span>()</code>
 <div class="block">Loads the config POJO from the file.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/ConfigHolder.html#removeListener-java.util.function.BiConsumer-">removeListener</a></span>(java.util.function.BiConsumer&lt;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a>,<a href="../../adudecalledleo/lionutils/ConfigHolder.html" title="type parameter in ConfigHolder">T</a>&gt;&nbsp;listener)</code>
 <div class="block">Removes a listener.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/ConfigHolder.html#reset--">reset</a></span>()</code>
+<div class="block">Loads the default config POJO.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
@@ -230,23 +230,7 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="createExceptionHandler-org.apache.logging.log4j.Logger-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createExceptionHandler</h4>
-<pre>public static&nbsp;java.util.function.BiConsumer&lt;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a>,java.lang.Exception&gt;&nbsp;createExceptionHandler(org.apache.logging.log4j.Logger&nbsp;logger)</pre>
-<div class="block">Creates a default exception handler that outputs to a <code>Logger</code>.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>logger</code> - logger to output to</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the exception handler</dd>
-</dl>
-</li>
-</ul>
-<a name="create-java.nio.file.Path-java.lang.Class-java.util.function.Supplier-java.util.function.BiConsumer-">
+<a name="create-java.nio.file.Path-java.lang.Class-java.util.function.Supplier-org.apache.logging.log4j.Logger-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -255,7 +239,7 @@ extends java.lang.Object</pre>
 <pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../adudecalledleo/lionutils/ConfigHolder.html" title="class in adudecalledleo.lionutils">ConfigHolder</a>&lt;T&gt;&nbsp;create(java.nio.file.Path&nbsp;configPath,
                                          java.lang.Class&lt;T&gt;&nbsp;configType,
                                          java.util.function.Supplier&lt;T&gt;&nbsp;defaultFactory,
-                                         java.util.function.BiConsumer&lt;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a>,java.lang.Exception&gt;&nbsp;exceptionHandler)</pre>
+                                         org.apache.logging.log4j.Logger&nbsp;logger)</pre>
 <div class="block">Constructs a <a href="../../adudecalledleo/lionutils/ConfigHolder.html" title="class in adudecalledleo.lionutils"><code>ConfigHolder</code></a>.</div>
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
@@ -264,13 +248,13 @@ extends java.lang.Object</pre>
 <dd><code>configPath</code> - path to config file, relative to the main config directory</dd>
 <dd><code>configType</code> - type of config POJO</dd>
 <dd><code>defaultFactory</code> - factory to create default POJO</dd>
-<dd><code>exceptionHandler</code> - exception handler</dd>
+<dd><code>logger</code> - logger to use</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the configuration handler</dd>
 </dl>
 </li>
 </ul>
-<a name="create-java.lang.String-java.lang.Class-java.util.function.Supplier-java.util.function.BiConsumer-">
+<a name="create-java.lang.String-java.lang.Class-java.util.function.Supplier-org.apache.logging.log4j.Logger-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -279,7 +263,7 @@ extends java.lang.Object</pre>
 <pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="../../adudecalledleo/lionutils/ConfigHolder.html" title="class in adudecalledleo.lionutils">ConfigHolder</a>&lt;T&gt;&nbsp;create(java.lang.String&nbsp;configName,
                                          java.lang.Class&lt;T&gt;&nbsp;configType,
                                          java.util.function.Supplier&lt;T&gt;&nbsp;defaultFactory,
-                                         java.util.function.BiConsumer&lt;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a>,java.lang.Exception&gt;&nbsp;exceptionHandler)</pre>
+                                         org.apache.logging.log4j.Logger&nbsp;logger)</pre>
 <div class="block">Constructs a <a href="../../adudecalledleo/lionutils/ConfigHolder.html" title="class in adudecalledleo.lionutils"><code>ConfigHolder</code></a>.</div>
 <dl>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
@@ -289,7 +273,7 @@ extends java.lang.Object</pre>
                    If this doesn't end with ".json", it will be appended</dd>
 <dd><code>configType</code> - type of config POJO</dd>
 <dd><code>defaultFactory</code> - factory to create default POJO</dd>
-<dd><code>exceptionHandler</code> - exception handler</dd>
+<dd><code>logger</code> - logger to use</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the configuration handler</dd>
 </dl>
@@ -327,6 +311,16 @@ extends java.lang.Object</pre>
 <h4>save</h4>
 <pre>public&nbsp;void&nbsp;save()</pre>
 <div class="block">Saves the config POJO to the file.</div>
+</li>
+</ul>
+<a name="reset--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>reset</h4>
+<pre>public&nbsp;void&nbsp;reset()</pre>
+<div class="block">Loads the default config POJO.</div>
 </li>
 </ul>
 <a name="addListener-java.util.function.BiConsumer-">

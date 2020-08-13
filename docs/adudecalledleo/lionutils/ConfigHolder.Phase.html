@@ -141,13 +141,23 @@ extends java.lang.Enum&lt;<a href="../../adudecalledleo/lionutils/ConfigHolder.P
 <th class="colOne" scope="col">Enum Constant and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html#LOAD">LOAD</a></span></code>
-<div class="block">Deserializing the config from a file.</div>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html#POST_LOAD">POST_LOAD</a></span></code>
+<div class="block">After deserializing the config from a file.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html#SAVE">SAVE</a></span></code>
-<div class="block">Serializing the config to a file.</div>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html#POST_SAVE">POST_SAVE</a></span></code>
+<div class="block">After serializing the config to a file.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html#PRE_LOAD">PRE_LOAD</a></span></code>
+<div class="block">Before deserializing the config from a file.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html#PRE_SAVE">PRE_SAVE</a></span></code>
+<div class="block">Before serializing the config to a file.</div>
 </td>
 </tr>
 </table>
@@ -207,24 +217,44 @@ the order they are declared.</div>
 <!--   -->
 </a>
 <h3>Enum Constant Detail</h3>
-<a name="LOAD">
+<a name="PRE_LOAD">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>LOAD</h4>
-<pre>public static final&nbsp;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a> LOAD</pre>
-<div class="block">Deserializing the config from a file.</div>
+<h4>PRE_LOAD</h4>
+<pre>public static final&nbsp;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a> PRE_LOAD</pre>
+<div class="block">Before deserializing the config from a file.</div>
 </li>
 </ul>
-<a name="SAVE">
+<a name="POST_LOAD">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>POST_LOAD</h4>
+<pre>public static final&nbsp;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a> POST_LOAD</pre>
+<div class="block">After deserializing the config from a file.</div>
+</li>
+</ul>
+<a name="PRE_SAVE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>PRE_SAVE</h4>
+<pre>public static final&nbsp;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a> PRE_SAVE</pre>
+<div class="block">Before serializing the config to a file.</div>
+</li>
+</ul>
+<a name="POST_SAVE">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>SAVE</h4>
-<pre>public static final&nbsp;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a> SAVE</pre>
-<div class="block">Serializing the config to a file.</div>
+<h4>POST_SAVE</h4>
+<pre>public static final&nbsp;<a href="../../adudecalledleo/lionutils/ConfigHolder.Phase.html" title="enum in adudecalledleo.lionutils">ConfigHolder.Phase</a> POST_SAVE</pre>
+<div class="block">After serializing the config to a file.</div>
 </li>
 </ul>
 </li>

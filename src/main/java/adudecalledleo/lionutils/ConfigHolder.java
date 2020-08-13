@@ -26,19 +26,27 @@ public class ConfigHolder<T> {
      */
     public enum Phase {
         /**
-         * Deserializing the config from a file.
+         * Before deserializing the config from a file.
          */
-        LOAD,
+        PRE_LOAD,
         /**
-         * Serializing the config to a file.
+         * After deserializing the config from a file.
          */
-        SAVE
+        POST_LOAD,
+        /**
+         * Before serializing the config to a file.
+         */
+        PRE_SAVE,
+        /**
+         * After serializing the config to a file.
+         */
+        POST_SAVE
     }
 
     private final Path configPath;
     private final Class<T> configType;
     private final Supplier<T> defaultFactory;
-    private final BiConsumer<Phase, Exception> exceptionHandler;
+    private final Logger logger;
 
     private final List<BiConsumer<Phase, T>> listeners = new ArrayList<>();
     private final List<BiConsumer<Phase, T>> listenersToAdd = new ArrayList<>();
@@ -47,31 +55,11 @@ public class ConfigHolder<T> {
     private T config;
 
     private ConfigHolder(Path configPath, Class<T> configType,
-            Supplier<T> defaultFactory, BiConsumer<Phase, Exception> exceptionHandler) {
+            Supplier<T> defaultFactory, Logger logger) {
         this.configPath = configPath;
         this.configType = configType;
         this.defaultFactory = defaultFactory;
-        this.exceptionHandler = exceptionHandler;
-    }
-
-    /**
-     * Creates a default exception handler that outputs to a {@link Logger}.
-     * @param logger logger to output to
-     * @return the exception handler
-     */
-    public static BiConsumer<Phase, Exception> createExceptionHandler(Logger logger) {
-        return (phase, e) -> {
-            String msg = "Exception in config holder";
-            switch (phase) {
-            case LOAD:
-                msg = "Exception while loading config, continuing with default values";
-                break;
-            case SAVE:
-                msg = "Exception while saving config";
-                break;
-            }
-            logger.error(msg, e);
-        };
+        this.logger = logger;
     }
 
     /**
@@ -79,14 +67,14 @@ public class ConfigHolder<T> {
      * @param configPath path to config file, relative to {@linkplain FabricLoader#getConfigDir() the main config directory}
      * @param configType type of config POJO
      * @param defaultFactory factory to create default POJO
-     * @param exceptionHandler exception handler
+     * @param logger logger to use
      * @param <T> type of config POJO
      * @return the configuration handler
      */
     public static <T> ConfigHolder<T> create(Path configPath, Class<T> configType,
-            Supplier<T> defaultFactory, BiConsumer<Phase, Exception> exceptionHandler) {
+            Supplier<T> defaultFactory, Logger logger) {
         return new ConfigHolder<>(FabricLoader.getInstance().getConfigDir().resolve(configPath), configType,
-                defaultFactory, exceptionHandler);
+                defaultFactory, logger);
     }
 
     /**
@@ -95,15 +83,15 @@ public class ConfigHolder<T> {
      *                   If this doesn't end with ".json", it will be appended
      * @param configType type of config POJO
      * @param defaultFactory factory to create default POJO
-     * @param exceptionHandler exception handler
+     * @param logger logger to use
      * @param <T> type of config POJO
      * @return the configuration handler
      */
     public static <T> ConfigHolder<T> create(String configName, Class<T> configType,
-            Supplier<T> defaultFactory, BiConsumer<Phase, Exception> exceptionHandler) {
+            Supplier<T> defaultFactory, Logger logger) {
         if (!configName.endsWith(".json"))
             configName += ".json";
-        return create(Paths.get(configName), configType, defaultFactory, exceptionHandler);
+        return create(Paths.get(configName), configType, defaultFactory, logger);
     }
 
     /**
@@ -121,16 +109,19 @@ public class ConfigHolder<T> {
      */
     public void load() {
         if (configPath.toFile().exists()) {
+            updateAndNotifyListeners(Phase.PRE_LOAD);
             try (BufferedReader br = Files.newBufferedReader(configPath)) {
                 config = GSON.fromJson(br, configType);
             } catch (Exception e) {
-                exceptionHandler.accept(Phase.LOAD, e);
+                logger.error("Exception while loading config from file \"" + configPath.getFileName().toString() + "\", " +
+                        "continuing with default values", e);
                 config = defaultFactory.get();
             } finally {
-                updateAndNotifyListeners(Phase.LOAD);
+                updateAndNotifyListeners(Phase.POST_LOAD);
             }
         } else {
-            config = defaultFactory.get();
+            logger.info("Config file does not exist, continuing with default values");
+            reset();
             save();
         }
     }
@@ -139,13 +130,23 @@ public class ConfigHolder<T> {
      * Saves the config POJO to the file.
      */
     public void save() {
+        updateAndNotifyListeners(Phase.PRE_SAVE);
         try (BufferedWriter bw = Files.newBufferedWriter(configPath)) {
             GSON.toJson(config, bw);
         } catch (Exception e) {
-            exceptionHandler.accept(Phase.SAVE, e);
+            logger.error("Exception while saving config to file \"" + configPath.getFileName().toString() + "\"", e);
         } finally {
-            updateAndNotifyListeners(Phase.SAVE);
+            updateAndNotifyListeners(Phase.POST_SAVE);
         }
+    }
+
+    /**
+     * Loads the default config POJO.
+     */
+    public void reset() {
+        updateAndNotifyListeners(Phase.PRE_LOAD);
+        config = defaultFactory.get();
+        updateAndNotifyListeners(Phase.PRE_LOAD);
     }
 
     /**
@@ -165,10 +166,7 @@ public class ConfigHolder<T> {
     }
 
     private void updateAndNotifyListeners(Phase phase) {
-        listeners.addAll(listenersToAdd);
-        listenersToAdd.clear();
-        listeners.removeAll(listenersToRemove);
-        listenersToRemove.clear();
+        ListUtil.addAndRemove(listeners, listenersToAdd, listenersToRemove);
         for (BiConsumer<Phase, T> listener : listeners)
             listener.accept(phase, config);
     }

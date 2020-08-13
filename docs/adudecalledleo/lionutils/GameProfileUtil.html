@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":9};
+var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -150,32 +150,34 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>static java.util.UUID</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/GameProfileUtil.html#findPlayerID-java.lang.String-">findPlayerID</a></span>(java.lang.String&nbsp;playerName)</code>
+<div class="block">Gets a player's UUID from their name.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>static com.mojang.authlib.GameProfile</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/GameProfileUtil.html#getGameProfile-java.util.UUID-java.lang.String-">getGameProfile</a></span>(java.util.UUID&nbsp;id,
               java.lang.String&nbsp;name)</code>
 <div class="block">Gets a <code>GameProfile</code>.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/GameProfileUtil.html#getPlayerName-java.util.UUID-">getPlayerName</a></span>(java.util.UUID&nbsp;playerUUID)</code>
-<div class="block">Gets a player's name from their UUID.</div>
-</td>
-</tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/GameProfileUtil.html#setSessionService-com.mojang.authlib.minecraft.MinecraftSessionService-">setSessionService</a></span>(com.mojang.authlib.minecraft.MinecraftSessionService&nbsp;sessionService)</code>
-<div class="block">Sets the session service that we should use.<br>
- This is set automatically by <a href="../../adudecalledleo/lionutils/mixin/MixinSkullBlockEntity.html" title="class in adudecalledleo.lionutils.mixin">a mixin</a>,
- so you probably shouldn't call this.</div>
+<td class="colFirst"><code>static java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/GameProfileUtil.html#getPlayerName-java.util.UUID-">getPlayerName</a></span>(java.util.UUID&nbsp;playerID)</code>
+<div class="block">Gets a player's name from their UUID.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/GameProfileUtil.html#setSessionService-com.mojang.authlib.minecraft.MinecraftSessionService-">setSessionService</a></span>(com.mojang.authlib.minecraft.MinecraftSessionService&nbsp;sessionService)</code>
+<div class="block">Sets the session service that we should use.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../adudecalledleo/lionutils/GameProfileUtil.html#setUserCache-net.minecraft.util.UserCache-">setUserCache</a></span>(net.minecraft.util.UserCache&nbsp;userCache)</code>
-<div class="block">Sets the user cache we should use.<br>
- This is set automatically by <a href="../../adudecalledleo/lionutils/mixin/MixinSkullBlockEntity.html" title="class in adudecalledleo.lionutils.mixin">a mixin</a>,
- so you probably shouldn't call this.</div>
+<div class="block">Sets the user cache we should use.</div>
 </td>
 </tr>
 </table>
@@ -229,9 +231,8 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>setSessionService</h4>
 <pre>public static&nbsp;void&nbsp;setSessionService(com.mojang.authlib.minecraft.MinecraftSessionService&nbsp;sessionService)</pre>
-<div class="block">Sets the session service that we should use.<br>
- This is set automatically by <a href="../../adudecalledleo/lionutils/mixin/MixinSkullBlockEntity.html" title="class in adudecalledleo.lionutils.mixin">a mixin</a>,
- so you probably shouldn't call this.</div>
+<div class="block"><p>Sets the session service that we should use.</p>
+ This is set automatically, so you shouldn't need to call this.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>sessionService</code> - session service to use</dd>
@@ -245,9 +246,8 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>setUserCache</h4>
 <pre>public static&nbsp;void&nbsp;setUserCache(net.minecraft.util.UserCache&nbsp;userCache)</pre>
-<div class="block">Sets the user cache we should use.<br>
- This is set automatically by <a href="../../adudecalledleo/lionutils/mixin/MixinSkullBlockEntity.html" title="class in adudecalledleo.lionutils.mixin">a mixin</a>,
- so you probably shouldn't call this.</div>
+<div class="block"><p>Sets the user cache we should use.</p>
+ This is set automatically, so you shouldn't need to call this.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>userCache</code> - user cache to use</dd>
@@ -262,7 +262,7 @@ extends java.lang.Object</pre>
 <h4>getGameProfile</h4>
 <pre>public static&nbsp;com.mojang.authlib.GameProfile&nbsp;getGameProfile(java.util.UUID&nbsp;id,
                                                             java.lang.String&nbsp;name)</pre>
-<div class="block">Gets a <code>GameProfile</code>. Accepts either a <code>UUID</code>, a name, or both - but not neither!</div>
+<div class="block">Gets a <code>GameProfile</code>. Accepts either a UUID, a name, or both - but not neither!</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>id</code> - player UUID</dd>
@@ -275,16 +275,32 @@ extends java.lang.Object</pre>
 <a name="getPlayerName-java.util.UUID-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getPlayerName</h4>
-<pre>public static&nbsp;java.lang.String&nbsp;getPlayerName(java.util.UUID&nbsp;playerUUID)</pre>
+<pre>public static&nbsp;java.lang.String&nbsp;getPlayerName(java.util.UUID&nbsp;playerID)</pre>
 <div class="block">Gets a player's name from their UUID.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>playerUUID</code> - player UUID</dd>
+<dd><code>playerID</code> - player UUID</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the player's name, or <a href="../../adudecalledleo/lionutils/GameProfileUtil.html#PLAYER_NAME_UNKNOWN"><code>PLAYER_NAME_UNKNOWN</code></a> if something went wrong (like the player not existing)</dd>
+</dl>
+</li>
+</ul>
+<a name="findPlayerID-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>findPlayerID</h4>
+<pre>public static&nbsp;java.util.UUID&nbsp;findPlayerID(java.lang.String&nbsp;playerName)</pre>
+<div class="block">Gets a player's UUID from their name.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>playerName</code> - player name</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the player's UUID, or <code>null</code> if something went wrong (like the player not existing)</dd>
 </dl>
 </li>
 </ul>

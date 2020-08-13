@@ -91,7 +91,8 @@
 <li class="blockList">
 <hr>
 <br>
-<pre>@Retention(value=RUNTIME)
+<pre>@Documented
+ @Retention(value=RUNTIME)
  @Target(value=FIELD)
 public @interface <span class="memberNameLabel">Exclude</span></pre>
 <div class="block">Fields annotated with this will be excluded from serialization and deserialization via <a href="../../../adudecalledleo/lionutils/serialize/GsonHolder.html#GSON"><code>GsonHolder.GSON</code></a>.</div>

@@ -1,4 +1,4 @@
-package adudecalledleo.lionutils.mixin;
+package adudecalledleo.lionutils.internal.mixin;
 
 import adudecalledleo.lionutils.GameProfileUtil;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
@@ -9,13 +9,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-/**
- * Mixin to give {@link GameProfileUtil} its required {@link MinecraftSessionService} and {@link UserCache}.
- * @see GameProfileUtil#setSessionService(MinecraftSessionService)
- * @see GameProfileUtil#setUserCache(UserCache)
- */
 @Mixin(SkullBlockEntity.class)
-public abstract class MixinSkullBlockEntity {
+abstract class MixinSkullBlockEntity {
     @Inject(method = "setSessionService", at = @At("TAIL"))
     private static void parcels$setSessionService(MinecraftSessionService value, CallbackInfo ci) {
         GameProfileUtil.setSessionService(value);

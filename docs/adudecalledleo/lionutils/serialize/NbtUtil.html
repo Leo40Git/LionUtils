@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9};
+var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -129,26 +129,40 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>static boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../adudecalledleo/lionutils/serialize/NbtUtil.html#containsBlockPos-net.minecraft.nbt.CompoundTag-java.lang.String-">containsBlockPos</a></span>(net.minecraft.nbt.CompoundTag&nbsp;tag,
+                java.lang.String&nbsp;key)</code>
+<div class="block">Checks if a <code>CompoundTag</code> contains a <code>BlockPos</code>.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>static boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../adudecalledleo/lionutils/serialize/NbtUtil.html#containsBlockPosArray-net.minecraft.nbt.CompoundTag-java.lang.String-">containsBlockPosArray</a></span>(net.minecraft.nbt.CompoundTag&nbsp;tag,
+                     java.lang.String&nbsp;key)</code>
+<div class="block">Checks if a <code>CompoundTag</code> contains a <code>BlockPos</code> array.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>static net.minecraft.nbt.Tag</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../adudecalledleo/lionutils/serialize/NbtUtil.html#fromJson-com.google.gson.JsonElement-">fromJson</a></span>(com.google.gson.JsonElement&nbsp;element)</code>
 <div class="block">Converts a <code>JsonElement</code> into an NBT tag.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>static net.minecraft.util.math.BlockPos</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../adudecalledleo/lionutils/serialize/NbtUtil.html#getBlockPos-net.minecraft.nbt.CompoundTag-java.lang.String-">getBlockPos</a></span>(net.minecraft.nbt.CompoundTag&nbsp;tag,
            java.lang.String&nbsp;key)</code>
 <div class="block">Reads a <code>BlockPos</code> from a <code>CompoundTag</code>.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>static net.minecraft.util.math.BlockPos[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../adudecalledleo/lionutils/serialize/NbtUtil.html#getBlockPosArray-net.minecraft.nbt.CompoundTag-java.lang.String-">getBlockPosArray</a></span>(net.minecraft.nbt.CompoundTag&nbsp;tag,
                 java.lang.String&nbsp;key)</code>
 <div class="block">Reads a <code>BlockPos</code> array from a <code>CompoundTag</code>.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../adudecalledleo/lionutils/serialize/NbtUtil.html#setBlockPos-net.minecraft.nbt.CompoundTag-java.lang.String-net.minecraft.util.math.BlockPos-">setBlockPos</a></span>(net.minecraft.nbt.CompoundTag&nbsp;tag,
            java.lang.String&nbsp;key,
@@ -156,7 +170,7 @@ extends java.lang.Object</pre>
 <div class="block">Writes a <code>BlockPos</code> to a <code>CompoundTag</code>.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../adudecalledleo/lionutils/serialize/NbtUtil.html#setBlockPosArray-net.minecraft.nbt.CompoundTag-java.lang.String-net.minecraft.util.math.BlockPos...-">setBlockPosArray</a></span>(net.minecraft.nbt.CompoundTag&nbsp;tag,
                 java.lang.String&nbsp;key,
@@ -164,7 +178,7 @@ extends java.lang.Object</pre>
 <div class="block">Writes a <code>BlockPos</code> array to a <code>CompoundTag</code>.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../adudecalledleo/lionutils/serialize/NbtUtil.html#setBlockPosArray-net.minecraft.nbt.CompoundTag-java.lang.String-java.util.List-">setBlockPosArray</a></span>(net.minecraft.nbt.CompoundTag&nbsp;tag,
                 java.lang.String&nbsp;key,
@@ -172,7 +186,7 @@ extends java.lang.Object</pre>
 <div class="block">Writes a <code>BlockPos</code> list to a <code>CompoundTag</code>.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static com.google.gson.JsonElement</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../adudecalledleo/lionutils/serialize/NbtUtil.html#toJson-net.minecraft.nbt.Tag-">toJson</a></span>(net.minecraft.nbt.Tag&nbsp;tag)</code>
 <div class="block">Converts an NBT tag into a <code>JsonElement</code>.</div>
@@ -232,6 +246,24 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a name="containsBlockPos-net.minecraft.nbt.CompoundTag-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>containsBlockPos</h4>
+<pre>public static&nbsp;boolean&nbsp;containsBlockPos(net.minecraft.nbt.CompoundTag&nbsp;tag,
+                                       java.lang.String&nbsp;key)</pre>
+<div class="block">Checks if a <code>CompoundTag</code> contains a <code>BlockPos</code>.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>tag</code> - source tag</dd>
+<dd><code>key</code> - key to check</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>true</code> if block position is present, <code>false</code> otherwise</dd>
+</dl>
+</li>
+</ul>
 <a name="getBlockPos-net.minecraft.nbt.CompoundTag-java.lang.String-">
 <!--   -->
 </a>
@@ -265,6 +297,24 @@ extends java.lang.Object</pre>
 <dd><code>tag</code> - destination tag</dd>
 <dd><code>key</code> - key to write to</dd>
 <dd><code>pos</code> - block position to write</dd>
+</dl>
+</li>
+</ul>
+<a name="containsBlockPosArray-net.minecraft.nbt.CompoundTag-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>containsBlockPosArray</h4>
+<pre>public static&nbsp;boolean&nbsp;containsBlockPosArray(net.minecraft.nbt.CompoundTag&nbsp;tag,
+                                            java.lang.String&nbsp;key)</pre>
+<div class="block">Checks if a <code>CompoundTag</code> contains a <code>BlockPos</code> array.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>tag</code> - source tag</dd>
+<dd><code>key</code> - key to check</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>true</code> if block position array is present, <code>false</code> otherwise</dd>
 </dl>
 </li>
 </ul>

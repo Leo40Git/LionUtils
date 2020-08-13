@@ -38,13 +38,23 @@ public final class NbtUtil {
     }
 
     /**
+     * Checks if a {@link CompoundTag} contains a {@link BlockPos}.
+     * @param tag source tag
+     * @param key key to check
+     * @return {@code true} if block position is present, {@code false} otherwise
+     */
+    public static boolean containsBlockPos(CompoundTag tag, String key) {
+        return tag.contains(key, /* NbtType.LONG */ 4);
+    }
+
+    /**
      * Reads a {@link BlockPos} from a {@link CompoundTag}.
      * @param tag source tag
      * @param key key to read from
      * @return the block position, or {@code null} if the key isn't associated with one
      */
     public static BlockPos getBlockPos(CompoundTag tag, String key) {
-        if (!tag.contains(key, /* NbtType.LONG */ 4))
+        if (!containsBlockPos(tag, key))
             return null;
         return BlockPos.fromLong(tag.getLong(key));
     }
@@ -59,7 +69,15 @@ public final class NbtUtil {
         tag.putLong(key, pos.asLong());
     }
 
-    private static final BlockPos[] EMPTY_POS_ARRAY = new BlockPos[0];
+    /**
+     * Checks if a {@link CompoundTag} contains a {@link BlockPos} array.
+     * @param tag source tag
+     * @param key key to check
+     * @return {@code true} if block position array is present, {@code false} otherwise
+     */
+    public static boolean containsBlockPosArray(CompoundTag tag, String key) {
+        return tag.contains(key, /* NbtType.LONG_ARRAY */ 12);
+    }
 
     /**
      * Reads a {@link BlockPos} array from a {@link CompoundTag}.
@@ -68,8 +86,8 @@ public final class NbtUtil {
      * @return the block position array, or an empty array if the key isn't associated with one
      */
     public static BlockPos[] getBlockPosArray(CompoundTag tag, String key) {
-        if (!tag.contains(key, /* NbtType.LONG_ARRAY */ 12))
-            return EMPTY_POS_ARRAY;
+        if (!containsBlockPosArray(tag, key))
+            return new BlockPos[0];
         return Arrays.stream(tag.getLongArray(key)).mapToObj(BlockPos::fromLong).toArray(BlockPos[]::new);
     }
 
