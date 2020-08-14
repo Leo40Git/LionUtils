@@ -1,21 +1,28 @@
 package adudecalledleo.lionutils.internal.fapibridge.impl;
 
+import adudecalledleo.lionutils.internal.fapibridge.FAPIBridgeProvider;
+import adudecalledleo.lionutils.internal.fapibridge.impl.network.ClientPacketRegistryBridgeImpl;
+import adudecalledleo.lionutils.internal.fapibridge.impl.network.ServerPacketRegistryBridgeImpl;
 import net.fabricmc.loader.api.FabricLoader;
+import org.apache.logging.log4j.Logger;
 
-import static adudecalledleo.lionutils.internal.fapibridge.FAPIBridgeProvider.LOGGER;
+public final class FAPIBridgeInitializer {
+    public static void init(Logger logger) {
+        if (!FabricLoader.getInstance().isModLoaded("fabric")) {
+            logger.warn("!!!!! WARNING !!!!!");
+            logger.warn("Fabric API Bridge was accessed, but Fabric API isn't installed!");
+            logger.warn("Proceeding with no-op bridge - no FAPI methods will be called!");
+            logger.warn("Expect bad things to happen!!!");
+            logger.warn("!!!!! WARNING !!!!!");
+            return;
+        }
+        PacketRegistry.init();
+    }
 
-public class FAPIBridgeInitializer {
-
-    public static void init() {
-        FabricLoader loader = FabricLoader.getInstance();
-        if (loader.isModLoaded("fabric")) {
-            PacketRegistryBridgeInitializer.init();
-        } else {
-            LOGGER.warn("!!!!! WARNING !!!!!");
-            LOGGER.warn("Fabric API Bridge was accessed, but Fabric API isn't installed!");
-            LOGGER.warn("Proceeding with no-op bridge - no FAPI methods will be called!");
-            LOGGER.warn("Expect bad things to happen!!!");
-            LOGGER.warn("!!!!! WARNING !!!!!");
+    private static final class PacketRegistry {
+        public static void init() {
+            FAPIBridgeProvider.PacketRegistry.CLIENT = ClientPacketRegistryBridgeImpl.INSTANCE;
+            FAPIBridgeProvider.PacketRegistry.SERVER = ServerPacketRegistryBridgeImpl.INSTANCE;
         }
     }
 }

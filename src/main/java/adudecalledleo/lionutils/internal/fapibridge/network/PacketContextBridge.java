@@ -7,5 +7,6 @@ import net.minecraft.util.thread.ThreadExecutor;
 public interface PacketContextBridge {
     EnvType getPacketEnvironment();
     PlayerEntity getPlayer();
+    @SuppressWarnings("rawtypes")
     ThreadExecutor getTaskQueue();
 }

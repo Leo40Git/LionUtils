@@ -1,0 +1,14 @@
+=== DISCLAIMER START ===
+
+Classes inside this package and its subpackages are for INTERNAL USE ONLY.
+
+ADudeCalledLeo/Leo40Git holds no warranty to classes that depend on these internal classes,
+that are damaged during an update.
+
+===  DISCLAIMER END  ===
+
+====================================================================================
+| - Fabric API Bridge mk.0 -                                                       |
+| The *sole* purpose of this entire subsystem is so utilities that need Fabric API |
+| don't kill everything when FAPI isn't present.                                   |
+====================================================================================

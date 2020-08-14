@@ -71,8 +71,8 @@ public final class GameProfileUtil {
     }
 
     /**
-     * Default return value of {@link #getPlayerName(UUID)} if something goes wrong.<br>
-     * @implNote This name is illegal, as it contains characters which are not normally allowed in names.
+     * <p>Default return value of {@link #getPlayerName(UUID)} if something goes wrong.</p>
+     * This name is illegal, as it contains characters which are not normally allowed in names.
      */
     public static final String PLAYER_NAME_UNKNOWN = "<???>";
 

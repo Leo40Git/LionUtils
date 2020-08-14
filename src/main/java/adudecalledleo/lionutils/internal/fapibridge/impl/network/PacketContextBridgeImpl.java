@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.network.PacketContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.thread.ThreadExecutor;
 
-public class PacketContextBridgeImpl implements PacketContextBridge {
+public final class PacketContextBridgeImpl implements PacketContextBridge {
     private final PacketContext packetContext;
 
     public PacketContextBridgeImpl(PacketContext packetContext) {
@@ -23,6 +23,7 @@ public class PacketContextBridgeImpl implements PacketContextBridge {
         return packetContext.getPlayer();
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
     public ThreadExecutor getTaskQueue() {
         return packetContext.getTaskQueue();

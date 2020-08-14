@@ -20,7 +20,7 @@ import static adudecalledleo.lionutils.serialize.GsonHolder.GSON;
  * ({@linkplain adudecalledleo.lionutils.serialize.GsonHolder#GSON Gson}, to be exact).
  * @param <T> POJO config type
  */
-public class ConfigHolder<T> {
+public final class ConfigHolder<T> {
     /**
      * Config processing phase.
      */
