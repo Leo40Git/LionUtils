@@ -74,6 +74,10 @@ public final class GsonHolder {
 
         @Override
         public void write(JsonWriter out, Identifier value) throws IOException {
+            if (value == null) {
+                out.nullValue();
+                return;
+            }
             if ("minecraft".equals(value.getNamespace()))
                 // only write the path, since no namespace == namespace "minecraft"
                 out.value(value.getPath());

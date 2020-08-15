@@ -36,9 +36,13 @@ public final class LoggerUtil {
             this.prefix = prefix;
         }
 
+        private String p(String message) {
+            return prefix + message;
+        }
+
         @Override
         public Message newMessage(String message) {
-            return new SimpleMessage(prefix + message);
+            return new SimpleMessage(p(message));
         }
 
         @Override
@@ -53,7 +57,7 @@ public final class LoggerUtil {
 
         @Override
         public Message newMessage(String message, Object... params) {
-            return new ParameterizedMessage(prefix + message, params);
+            return new ParameterizedMessage(p(message), params);
         }
     }
 

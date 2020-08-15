@@ -132,7 +132,7 @@ extends java.lang.Object</pre>
 <tr class="rowColor">
 <td class="colFirst"><code>static com.google.gson.Gson</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../adudecalledleo/lionutils/serialize/GsonHolder.html#GSON_COMPRESSED">GSON_COMPRESSED</a></span></code>
-<div class="block"><code>Gson</code> instance.</div>
+<div class="block"><code>Gson</code> instance for "compressed" JSON.</div>
 </td>
 </tr>
 </table>
@@ -172,7 +172,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>GSON</h4>
 <pre>public static final&nbsp;com.google.gson.Gson GSON</pre>
-<div class="block"><code>Gson</code> instance. Do you even need an explanation?<br>
+<div class="block"><p><code>Gson</code> instance. Do you even need an explanation?</p>
  Includes the following goodies: <ul>
      <li>Exclusion strategy for excluding fields annotated with the <a href="../../../adudecalledleo/lionutils/serialize/Exclude.html" title="annotation in adudecalledleo.lionutils.serialize"><code>Exclude</code></a> annotation.</li>
      <li>Type adapter for <code>Identifier</code>s, to serialize and deserialize them via their string representation.</li>
@@ -191,7 +191,8 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>GSON_COMPRESSED</h4>
 <pre>public static final&nbsp;com.google.gson.Gson GSON_COMPRESSED</pre>
-<div class="block"><code>Gson</code> instance. Like <a href="../../../adudecalledleo/lionutils/serialize/GsonHolder.html#GSON"><code>GSON</code></a>, but without pretty printing.</div>
+<div class="block"><p><code>Gson</code> instance for "compressed" JSON.</p>
+ Has the same features as <a href="../../../adudecalledleo/lionutils/serialize/GsonHolder.html#GSON"><code>GSON</code></a>, but without pretty printing.</div>
 </li>
 </ul>
 </li>

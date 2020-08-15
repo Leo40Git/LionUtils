@@ -1,25 +1,11 @@
 package adudecalledleo.lionutils.entity;
 
 import adudecalledleo.lionutils.InitializerUtil;
-import adudecalledleo.lionutils.internal.fapibridge.FAPIBridgeProvider;
-import adudecalledleo.lionutils.internal.fapibridge.network.PacketContextBridge;
-import io.netty.buffer.Unpooled;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.network.Packet;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.registry.Registry;
-
-import java.util.UUID;
+import net.minecraft.util.math.Vec3d;
 
 /**
- * Utilities for dealing with entities.
+ * Helper class for dealing with entities.
  */
 public final class EntityUtil {
     private EntityUtil() {
@@ -27,68 +13,24 @@ public final class EntityUtil {
     }
 
     /**
-     * <p>Creates a S2C packet for spawning the entity on the client.<br>
-     * Required for any entity that doesn't extend {@link net.minecraft.entity.LivingEntity LivingEntity}.</p>
-     * To use, simply override {@link Entity#createSpawnPacket()} with the following:<pre>
-     * &#64;Override
-     * public Packet&lt;?&gt; createSpawnPacket() {
-     *     return EntityUtil.createSpawnPacket(this, packetID);
-     * }
-     * </pre>
-     * Make sure you register your {@code packetId} on the client-side with {@link #registerSpawnPacket(Identifier)}!
-     * @param e entity to create spawn packet for
-     * @param packetID spawn packet ID
-     * @return a spawn packet for the specified entity
-     * @author UpcraftLP
+     * Sets an {@link Entity}'s position.
+     * @param e entity
+     * @param x new X position
+     * @param y new Y position
+     * @param z new Z position
      */
-    public static Packet<?> createSpawnPacket(Entity e, Identifier packetID) {
-        if (e.world.isClient)
-            return null;
-        PacketByteBuf byteBuf = new PacketByteBuf(Unpooled.buffer());
-        byteBuf.writeVarInt(Registry.ENTITY_TYPE.getRawId(e.getType()));
-        byteBuf.writeUuid(e.getUuid());
-        byteBuf.writeVarInt(e.getEntityId());
-        byteBuf.writeDouble(e.getX());
-        byteBuf.writeDouble(e.getY());
-        byteBuf.writeDouble(e.getZ());
-        byteBuf.writeByte(MathHelper.floor(e.pitch * 256.0F / 360.0F));
-        byteBuf.writeByte(MathHelper.floor(e.yaw * 256.0F / 360.0F));
-        return FAPIBridgeProvider.PacketRegistry.SERVER.toPacket(packetID, byteBuf);
-    }
-
-    // @author UpcraftLP
-    @SuppressWarnings("ConstantConditions")
-    @Environment(EnvType.CLIENT)
-    private static void consumeSpawnPacket(PacketContextBridge ctx, PacketByteBuf byteBuf) {
-        EntityType<?> et = Registry.ENTITY_TYPE.get(byteBuf.readVarInt());
-        UUID uuid = byteBuf.readUuid();
-        int entityId = byteBuf.readVarInt();
-        double x = byteBuf.readDouble();
-        double y = byteBuf.readDouble();
-        double z = byteBuf.readDouble();
-        float pitch = (byteBuf.readByte() * 360) / 256.0F;
-        float yaw = (byteBuf.readByte() * 360) / 256.0F;
-        ctx.getTaskQueue().execute(() -> {
-            ClientWorld world = MinecraftClient.getInstance().world;
-            Entity e = et.create(world);
-            e.updateTrackedPosition(x, y, z);
-            e.setPos(x, y, z);
-            e.pitch = pitch;
-            e.yaw = yaw;
-            e.setEntityId(entityId);
-            e.setUuid(uuid);
-            world.addEntity(entityId, e);
-        });
+    public static void setPos(Entity e, double x, double y, double z) {
+        e.updateTrackedPosition(x, y, z);
+        e.setPos(x, y, z);
     }
 
     /**
-     * Registers a handler for an entity spawn packet received from the server.<br>
-     * Should be used in tandem with {@link #createSpawnPacket(Entity, Identifier)} on the server-side.
-     * @param packetID spawn packet ID
-     * @author UpcraftLP
+     * Sets an {@link Entity}'s position.
+     * @param e entity
+     * @param pos new position
      */
-    @Environment(EnvType.CLIENT)
-    public static void registerSpawnPacket(Identifier packetID) {
-        FAPIBridgeProvider.PacketRegistry.CLIENT.register(packetID, EntityUtil::consumeSpawnPacket);
+    public static void setPos(Entity e, Vec3d pos) {
+        e.method_30228(pos); // like updateTrackedPosition(pos,x, pos.y, pos.z) but skips a redundant Vec3d alloc
+        e.setPos(pos.x, pos.y, pos.z); // unfortunately, there's no method that directly sets Entity.pos...
     }
 }
