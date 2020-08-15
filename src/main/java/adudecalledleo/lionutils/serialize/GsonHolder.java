@@ -68,7 +68,7 @@ public final class GsonHolder {
     private static class IdentifierTypeAdapter extends TypeAdapter<Identifier> {
         @Override
         public Identifier read(JsonReader in) throws IOException {
-            return new Identifier(in.nextString());
+            return Identifier.tryParse(in.nextString());
         }
 
         @Override
