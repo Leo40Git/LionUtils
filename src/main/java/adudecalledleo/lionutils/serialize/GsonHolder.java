@@ -28,7 +28,7 @@ public final class GsonHolder {
     }
 
     /**
-     * {@link Gson} instance. Do you even need an explanation?<br>
+     * <p>{@link Gson} instance. Do you even need an explanation?</p>
      * Includes the following goodies: <ul>
      *     <li>Exclusion strategy for excluding fields annotated with the {@link Exclude} annotation.</li>
      *     <li>Type adapter for {@link Identifier}s, to serialize and deserialize them via their string representation.</li>
@@ -42,7 +42,8 @@ public final class GsonHolder {
     public static final Gson GSON = baseGsonBuilder().setPrettyPrinting().create();
 
     /**
-     * {@link Gson} instance. Like {@link #GSON}, but without pretty printing.
+     * <p>{@link Gson} instance for "compressed" JSON.</p>
+     * Has the same features as {@link #GSON}, but without pretty printing.
      */
     public static final Gson GSON_COMPRESSED = baseGsonBuilder().create();
 
