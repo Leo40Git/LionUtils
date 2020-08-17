@@ -59,6 +59,31 @@ public class ConfigHolder<T extends Config> {
     }
 
     /**
+     * Constructs a {@link Builder}.
+     * @param configPath path to config file, relative to {@linkplain FabricLoader#getConfigDir() the main config directory}
+     * @param configType type of config POJO
+     * @param defaultFactory factory to create default POJO.<br>
+     *                       this should <em>always</em> return a new instance.
+     * @return the builder instance
+     * @since 4.1.0
+     */
+    public static <T extends Config> Builder<T> builder(Path configPath, Class<T> configType, Supplier<T> defaultFactory) {
+        return new Builder<T>(configPath, configType, defaultFactory);
+    }
+
+    /**
+     * Constructs a {@link Builder}.
+     * @param configName path to config file, relative to {@linkplain FabricLoader#getConfigDir() the main config directory}
+     * @param configType type of config POJO
+     * @param defaultFactory factory to create default POJO
+     * @return the builder instance
+     * @since 4.1.0
+     */
+    public static <T extends Config> Builder<T> builder(String configName, Class<T> configType, Supplier<T> defaultFactory) {
+        return new Builder<T>(configName, configType, defaultFactory);
+    }
+
+    /**
      * Builds a {@link ConfigHolder} instance.
      * @param <T> type of config POJO
      */
@@ -69,14 +94,7 @@ public class ConfigHolder<T extends Config> {
         private Logger logger;
         private ObjectFormat objectFormat;
 
-        /**
-         * Constructs a {@code Builder}.
-         * @param configPath path to config file, relative to {@linkplain FabricLoader#getConfigDir() the main config directory}
-         * @param configType type of config POJO
-         * @param defaultFactory factory to create default POJO.<br>
-         *                       this should <em>always</em> return a new instance.
-         */
-        public Builder(Path configPath, Class<T> configType, Supplier<T> defaultFactory) {
+        private Builder(Path configPath, Class<T> configType, Supplier<T> defaultFactory) {
             this.configPath = FabricLoader.getInstance().getConfigDir().resolve(configPath);
             this.configType = configType;
             this.defaultFactory = defaultFactory;
@@ -84,13 +102,7 @@ public class ConfigHolder<T extends Config> {
             objectFormat = GsonHolder.FORMAT;
         }
 
-        /**
-         * Constructs a {@code Builder}.
-         * @param configName path to config file, relative to {@linkplain FabricLoader#getConfigDir() the main config directory}
-         * @param configType type of config POJO
-         * @param defaultFactory factory to create default POJO
-         */
-        public Builder(String configName, Class<T> configType, Supplier<T> defaultFactory) {
+        private Builder(String configName, Class<T> configType, Supplier<T> defaultFactory) {
             this(Paths.get(configName), configType, defaultFactory);
         }
 
@@ -98,18 +110,22 @@ public class ConfigHolder<T extends Config> {
          * <p>Sets the {@link Logger} to use.</p>
          * By default, a {@linkplain LoggerUtil#NULL_LOGGER null logger} is used.
          * @param logger logger to use
+         * @return this builder
          */
-        public void setLogger(Logger logger) {
+        public Builder<T> setLogger(Logger logger) {
             this.logger = logger;
+            return this;
         }
 
         /**
          * <p>Sets the {@link ObjectFormat} to use to save and load the configuration POJO.</p>
          * By default, {@link GsonHolder#FORMAT} is used.
          * @param objectFormat object format to use
+         * @return this builder
          */
-        public void setObjectFormat(ObjectFormat objectFormat) {
+        public Builder<T> setObjectFormat(ObjectFormat objectFormat) {
             this.objectFormat = objectFormat;
+            return this;
         }
 
         /**
