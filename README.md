@@ -22,3 +22,6 @@ dependencies {
 ```
 The latest version can be found here:  
 [![Download](https://api.bintray.com/packages/adudecalledleo/mcmods.fabric/lionutils/images/download.svg)](https://bintray.com/adudecalledleo/mcmods.fabric/lionutils/_latestVersion)
+
+# Extensions
+- [LionUtils-Jankson](https://github.com/Leo40Git/LionUtils-Jankson) - `ObjectFormat` binding for Jankson
