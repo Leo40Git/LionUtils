@@ -9,14 +9,14 @@ First, add my Fabric mod repository to your `build.gradle`:
 ```gradle
 repositories {
 	maven {
-		url  "https://dl.bintray.com/adudecalledleo/mcmods.fabric"
+		url 'https://dl.bintray.com/adudecalledleo/mcmods.fabric'
 	}
 }
 ```
 Then, to include it:
 ```gradle
 dependencies {
-  modImplementation "adudecalledleo.mcmods.fabric:lionutils:${project.lionutils_version}"
+  modApi "adudecalledleo.mcmods.fabric:lionutils:${project.lionutils_version}"
   include "adudecalledleo.mcmods.fabric:lionutils:${project.lionutils_version}"
 }
 ```
