@@ -21,25 +21,24 @@ public final class FAPIBridgeProvider {
         InitializerUtil.badConstructor();
     }
 
-    private static class ProviderSubclass {
-        static {
-            init();
-        }
-    }
-
-    public static final class PacketRegistry extends ProviderSubclass {
+    public static final class PacketRegistry {
         private PacketRegistry() {
             InitializerUtil.badConstructor();
         }
-        public static ClientPacketRegistryBridge CLIENT = NOpClientPacketRegistryBridge.INSTANCE;
-        public static ServerPacketRegistryBridge SERVER = NOpServerPacketRegistryBridge.INSTANCE;
+        public static ClientPacketRegistryBridge CLIENT;
+        public static ServerPacketRegistryBridge SERVER;
+        static {
+            CLIENT = NOpClientPacketRegistryBridge.INSTANCE;
+            SERVER = NOpServerPacketRegistryBridge.INSTANCE;
+            init();
+        }
     }
 
     private static boolean initialized = false;
     private static void init() {
         if (initialized)
             return;
-        FAPIBridgeInitializer.init(LOGGER);
+        FAPIBridgeInitializer.init();
         initialized = true;
         LOGGER.info("Fabric API Bridge initialized.");
     }
