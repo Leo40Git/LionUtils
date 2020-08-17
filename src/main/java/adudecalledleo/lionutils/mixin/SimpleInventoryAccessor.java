@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 /**
  * Allows getting and setting the backing stack list.
+ * @since 2.0.0
  */
 @Mixin(SimpleInventory.class)
 public interface SimpleInventoryAccessor {

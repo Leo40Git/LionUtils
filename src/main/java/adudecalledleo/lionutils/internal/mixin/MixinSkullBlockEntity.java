@@ -12,12 +12,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(SkullBlockEntity.class)
 abstract class MixinSkullBlockEntity {
     @Inject(method = "setSessionService", at = @At("TAIL"))
-    private static void parcels$setSessionService(MinecraftSessionService value, CallbackInfo ci) {
+    private static void lionutils$setSessionService(MinecraftSessionService value, CallbackInfo ci) {
         GameProfileUtil.setSessionService(value);
     }
 
     @Inject(method = "setUserCache", at = @At("TAIL"))
-    private static void parcels$setUserCache(UserCache value, CallbackInfo ci) {
+    private static void lionutils$setUserCache(UserCache value, CallbackInfo ci) {
         GameProfileUtil.setUserCache(value);
     }
 }

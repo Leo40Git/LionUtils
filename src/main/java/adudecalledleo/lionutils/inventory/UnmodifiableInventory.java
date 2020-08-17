@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 
 /**
  * Unmodifiable variant of {@link Inventory}.
+ * @since 2.0.0
  */
 public interface UnmodifiableInventory extends Inventory {
     @Override

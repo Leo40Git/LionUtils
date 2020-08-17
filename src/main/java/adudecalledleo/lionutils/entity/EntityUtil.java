@@ -6,6 +6,7 @@ import net.minecraft.util.math.Vec3d;
 
 /**
  * Helper class for dealing with entities.
+ * @since 3.0.0
  */
 public final class EntityUtil {
     private EntityUtil() {

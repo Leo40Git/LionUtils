@@ -1,6 +1,9 @@
 package adudecalledleo.lionutils.serialize;
 
 import adudecalledleo.lionutils.InitializerUtil;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.nbt.CompoundTag;
@@ -13,19 +16,11 @@ import java.util.List;
 
 /**
  * Helper class for dealing with reading from and writing to NBT tags.
+ * @since 2.0.0
  */
 public final class NbtUtil {
     private NbtUtil() {
         InitializerUtil.badConstructor();
-    }
-
-    /**
-     * Converts an NBT tag into a {@link JsonElement}.
-     * @param tag source tag
-     * @return the JSON element
-     */
-    public static JsonElement toJson(Tag tag) {
-        return NbtOps.INSTANCE.convertTo(JsonOps.INSTANCE, tag);
     }
 
     /**
@@ -38,10 +33,49 @@ public final class NbtUtil {
     }
 
     /**
+     * Converts an NBT tag into a {@link JsonElement}.
+     * @param tag source tag
+     * @return the JSON element
+     */
+    public static JsonElement toJson(Tag tag) {
+        return NbtOps.INSTANCE.convertTo(JsonOps.INSTANCE, tag);
+    }
+
+    private static final Gson CONVERT_GSON = new GsonBuilder()
+            .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
+            .create();
+
+    /**
+     * <p>Converts an NBT tag into an object.</p>
+     * Equivalent to <code>{@link Gson#fromJson(JsonElement, Class) Gson.fromJson}({@link #toJson(Tag) toJson}(src), typeOfT)</code>.
+     * @param src tag to convert
+     * @param typeOfT type of object to convert to
+     * @param <T> type of object to convert to
+     * @return the resulting object
+     * @since 4.0.0
+     */
+    public static <T> T fromTag(Tag src, Class<T> typeOfT) {
+        return CONVERT_GSON.fromJson(toJson(src), typeOfT);
+    }
+
+    /**
+     * <p>Converts an object into an NBT tag.</p>
+     * Equivalent to <code>{@link #fromJson(JsonElement) fromJson}({@link Gson#toJsonTree(Object) Gson.toJsonTree}(src))</code>.
+     * @param src object to convert
+     * @param <T> type of object to convert
+     * @return the resulting NBT tag
+     * @since 4.0.0
+     */
+    public static <T> Tag toTag(T src) {
+        return fromJson(CONVERT_GSON.toJsonTree(src));
+    }
+
+    /**
      * Checks if a {@link CompoundTag} contains a {@link BlockPos}.
      * @param tag source tag
      * @param key key to check
      * @return {@code true} if block position is present, {@code false} otherwise
+     * @since 3.0.0
      */
     public static boolean containsBlockPos(CompoundTag tag, String key) {
         return tag.contains(key, /* NbtType.LONG */ 4);
@@ -74,6 +108,7 @@ public final class NbtUtil {
      * @param tag source tag
      * @param key key to check
      * @return {@code true} if block position array is present, {@code false} otherwise
+     * @since 3.0.0
      */
     public static boolean containsBlockPosArray(CompoundTag tag, String key) {
         return tag.contains(key, /* NbtType.LONG_ARRAY */ 12);

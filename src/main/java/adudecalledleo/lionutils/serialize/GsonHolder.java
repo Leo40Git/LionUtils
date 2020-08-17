@@ -11,16 +11,20 @@ import java.lang.annotation.Annotation;
 
 /**
  * Holds a {@link Gson} instance that has some extra goodies.
+ * @since 1.0.0
  */
 public final class GsonHolder {
     private GsonHolder() {
         InitializerUtil.badConstructor();
     }
 
+    private static final AnnotationExclusionStrategy EXCLUDE_STRATEGY = new AnnotationExclusionStrategy(Exclude.class);
+    private static final IdentifierTypeAdapter IDENTIFIER_TYPE_ADAPTER = new IdentifierTypeAdapter();
+
     private static GsonBuilder baseGsonBuilder() {
         return new GsonBuilder()
-                .setExclusionStrategies(new AnnotationExclusionStrategy<>(Exclude.class))
-                .registerTypeAdapter(Identifier.class, new IdentifierTypeAdapter())
+                .setExclusionStrategies(EXCLUDE_STRATEGY)
+                .registerTypeAdapter(Identifier.class, IDENTIFIER_TYPE_ADAPTER)
                 .enableComplexMapKeySerialization()
                 .serializeSpecialFloatingPointValues()
                 .setLenient()
@@ -44,13 +48,26 @@ public final class GsonHolder {
     /**
      * <p>{@link Gson} instance for "compressed" JSON.</p>
      * Has the same features as {@link #GSON}, but without pretty printing.
+     * @since 3.0.0
      */
     public static final Gson GSON_COMPRESSED = baseGsonBuilder().create();
 
-    private static class AnnotationExclusionStrategy<T extends Annotation> implements ExclusionStrategy {
-        private final Class<T> annoClass;
+    /**
+     * {@link ObjectFormat} instance that wraps {@link #GSON}.
+     * @since 4.0.0
+     */
+    public static final ObjectFormat FORMAT = new GsonObjectFormat(GSON);
 
-        private AnnotationExclusionStrategy(Class<T> annoClass) {
+    /**
+     * {@link ObjectFormat} instance that wraps {@link #GSON_COMPRESSED}.
+     * @since 4.0.0
+     */
+    public static final ObjectFormat FORMAT_COMPRESSED = new GsonObjectFormat(GSON_COMPRESSED);
+
+    private static class AnnotationExclusionStrategy implements ExclusionStrategy {
+        private final Class<? extends Annotation> annoClass;
+
+        private AnnotationExclusionStrategy(Class<? extends Annotation> annoClass) {
             this.annoClass = annoClass;
         }
 

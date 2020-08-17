@@ -13,6 +13,7 @@ import net.minecraft.util.math.Direction;
  * {@linkplain #appendProperties(StateManager.Builder) appends the property to the block} and
  * {@linkplain #getPlacementState(ItemPlacementContext) automatically configures the placement state}.
  * @see HorizontalFacingBlock
+ * @since 1.0.0
  */
 public class ProperHorizontalFacingBlock extends HorizontalFacingBlock {
     public ProperHorizontalFacingBlock(Settings settings) {

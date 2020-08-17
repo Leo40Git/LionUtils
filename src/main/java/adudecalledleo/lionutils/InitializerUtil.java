@@ -2,6 +2,7 @@ package adudecalledleo.lionutils;
 
 /**
  * Helper class for initializer classes.
+ * @since 1.0.0
  */
 public final class InitializerUtil {
     private InitializerUtil() {

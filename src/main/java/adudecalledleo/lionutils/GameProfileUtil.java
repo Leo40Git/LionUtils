@@ -9,6 +9,7 @@ import java.util.UUID;
 
 /**
  * Helper class for obtaining {@link GameProfile}s smartly.
+ * @since 1.0.0
  */
 public final class GameProfileUtil {
     private GameProfileUtil() {
@@ -92,6 +93,7 @@ public final class GameProfileUtil {
      * Gets a player's UUID from their name.
      * @param playerName player name
      * @return the player's UUID, or {@code null} if something went wrong (like the player not existing)
+     * @since 3.0.0
      */
     public static UUID findPlayerID(String playerName) {
         GameProfile profile = getGameProfile(null, playerName);

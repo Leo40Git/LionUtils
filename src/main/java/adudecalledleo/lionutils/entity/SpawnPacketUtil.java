@@ -22,6 +22,7 @@ import java.util.UUID;
 
 /**
  * Helper class for dealing with entity spawn packets.
+ * @since 3.0.0
  */
 @RequiresFabricAPI
 public final class SpawnPacketUtil {
@@ -46,7 +47,7 @@ public final class SpawnPacketUtil {
      */
     public static Packet<?> create(Entity e, Identifier packetID) {
         if (e.world.isClient)
-            throw new IllegalStateException("createSpawnPacket called from client-side!");
+            throw new IllegalStateException("SpawnPacketUtil.create called from client-side!");
         PacketByteBuf byteBuf = new PacketByteBuf(Unpooled.buffer());
         byteBuf.writeVarInt(Registry.ENTITY_TYPE.getRawId(e.getType()));
         byteBuf.writeUuid(e.getUuid());

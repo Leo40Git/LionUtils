@@ -9,6 +9,11 @@ import adudecalledleo.lionutils.internal.fapibridge.network.ClientPacketRegistry
 import adudecalledleo.lionutils.internal.fapibridge.network.ServerPacketRegistryBridge;
 import org.apache.logging.log4j.Logger;
 
+// +------------------------------------------------+
+// | Fabric API Bridge Subsystem mk. -1             |
+// | Util class -> FAPIBridgeProvider -> Fabric API |
+// | If FAPI is not present, redirects to a no-op   |
+// +------------------------------------------------+
 public final class FAPIBridgeProvider {
     private static final Logger LOGGER = LoggerUtil.getLogger("LionUtils|FAPIBridge");
 

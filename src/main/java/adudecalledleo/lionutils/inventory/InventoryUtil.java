@@ -10,6 +10,7 @@ import net.minecraft.util.collection.DefaultedList;
 
 /**
  * Utilities for dealing with {@link Inventory}s and "raw inventories" ({@link DefaultedList}s of {@link ItemStack}s).
+ * @since 2.0.0
  */
 public final class InventoryUtil {
     private InventoryUtil() {

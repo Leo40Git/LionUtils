@@ -5,7 +5,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
 /**
- * Helper class
+ * Helper class for dealing with networking.
+ * @since 3.0.0
  */
 public final class NetworkUtil {
     private NetworkUtil() {

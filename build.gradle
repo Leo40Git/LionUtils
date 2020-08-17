@@ -60,7 +60,7 @@ task lionutilsJavadoc(type: Javadoc) {
     classpath = sourceSets.main.runtimeClasspath
     exclude 'adudecalledleo/lionutils/internal/**'
     destinationDir file('docs')
-    title 'LionUtils API'
+    title "LionUtils ${version.toString().split("\\+")[0]} API"
 
     options.memberLevel = JavadocMemberLevel.PROTECTED
     options.splitIndex = true
