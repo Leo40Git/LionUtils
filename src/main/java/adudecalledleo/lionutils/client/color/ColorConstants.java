@@ -6,6 +6,7 @@ import adudecalledleo.lionutils.InitializerUtil;
  * Contains color constants.
  * @since 4.0.0
  */
+@SuppressWarnings({"unused", "RedundantSuppression"})
 public final class ColorConstants {
     private ColorConstants() {
         InitializerUtil.badConstructor();
