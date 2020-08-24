@@ -7,7 +7,6 @@ import com.google.gson.stream.JsonWriter;
 import net.minecraft.util.Identifier;
 
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 
 /**
  * Holds a {@link Gson} instance that has some extra goodies.
@@ -18,12 +17,14 @@ public final class GsonHolder {
         InitializerUtil.badConstructor();
     }
 
-    private static final AnnotationExclusionStrategy EXCLUDE_STRATEGY = new AnnotationExclusionStrategy(Exclude.class);
+    private static final ExcludeStrategy EXCLUDE_STRATEGY_SERIALIZE = new ExcludeStrategy(Exclude.Type.FROM_SERIALIZATION);
+    private static final ExcludeStrategy EXCLUDE_STRATEGY_DESERIALIZE = new ExcludeStrategy(Exclude.Type.FROM_DESERIALIZATION);
     private static final IdentifierTypeAdapter IDENTIFIER_TYPE_ADAPTER = new IdentifierTypeAdapter();
 
     private static GsonBuilder baseGsonBuilder() {
         return new GsonBuilder()
-                .setExclusionStrategies(EXCLUDE_STRATEGY)
+                .addSerializationExclusionStrategy(EXCLUDE_STRATEGY_SERIALIZE)
+                .addDeserializationExclusionStrategy(EXCLUDE_STRATEGY_DESERIALIZE)
                 .registerTypeAdapter(Identifier.class, IDENTIFIER_TYPE_ADAPTER)
                 .enableComplexMapKeySerialization()
                 .serializeSpecialFloatingPointValues()
@@ -64,11 +65,11 @@ public final class GsonHolder {
      */
     public static final ObjectFormat FORMAT_COMPRESSED = new GsonObjectFormat(GSON_COMPRESSED);
 
-    private static class AnnotationExclusionStrategy implements ExclusionStrategy {
-        private final Class<? extends Annotation> annoClass;
+    private static class ExcludeStrategy implements ExclusionStrategy {
+        private final Exclude.Type type;
 
-        private AnnotationExclusionStrategy(Class<? extends Annotation> annoClass) {
-            this.annoClass = annoClass;
+        private ExcludeStrategy(Exclude.Type type) {
+            this.type = type;
         }
 
         @Override
@@ -78,7 +79,11 @@ public final class GsonHolder {
 
         @Override
         public boolean shouldSkipField(FieldAttributes f) {
-            return f.getAnnotation(annoClass) != null;
+            Exclude exclude = f.getAnnotation(Exclude.class);
+            if (exclude == null)
+                return true;
+            Exclude.Type type = exclude.value();
+            return type == Exclude.Type.BOTH || this.type == type;
         }
     }
 

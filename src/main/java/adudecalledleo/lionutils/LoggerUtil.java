@@ -40,7 +40,7 @@ public final class LoggerUtil {
             this.prefix = prefix;
         }
 
-        private String p(String message) {
+        private String p(Object message) {
             return prefix + message;
         }
 
@@ -51,12 +51,12 @@ public final class LoggerUtil {
 
         @Override
         public Message newMessage(Object message) {
-            return new SimpleMessage(prefix + message);
+            return new SimpleMessage(p(message));
         }
 
         @Override
         public Message newMessage(CharSequence message) {
-            return new SimpleMessage(prefix + message);
+            return new SimpleMessage(p(message));
         }
 
         @Override
@@ -169,13 +169,11 @@ public final class LoggerUtil {
         }
 
         @Override
-        public void logMessage(String fqcn, Level level, Marker marker, Message message, Throwable t) {
-
-        }
+        public void logMessage(String fqcn, Level level, Marker marker, Message message, Throwable t) { }
 
         @Override
         public Level getLevel() {
-            return Level.TRACE;
+            return Level.OFF;
         }
     }
 }

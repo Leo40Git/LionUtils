@@ -1,5 +1,7 @@
-package adudecalledleo.lionutils;
+package adudecalledleo.lionutils.network;
 
+import adudecalledleo.lionutils.InitializerUtil;
+import adudecalledleo.lionutils.LoggerUtil;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import net.minecraft.util.UserCache;

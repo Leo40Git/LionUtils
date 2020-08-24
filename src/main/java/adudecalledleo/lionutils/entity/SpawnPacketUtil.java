@@ -1,7 +1,7 @@
 package adudecalledleo.lionutils.entity;
 
 import adudecalledleo.lionutils.InitializerUtil;
-import adudecalledleo.lionutils.NetworkUtil;
+import adudecalledleo.lionutils.network.PacketBufUtil;
 import adudecalledleo.lionutils.RequiresFabricAPI;
 import adudecalledleo.lionutils.internal.fapibridge.FAPIBridgeProvider;
 import adudecalledleo.lionutils.internal.fapibridge.network.PacketContextBridge;
@@ -52,9 +52,9 @@ public final class SpawnPacketUtil {
         byteBuf.writeVarInt(Registry.ENTITY_TYPE.getRawId(e.getType()));
         byteBuf.writeUuid(e.getUuid());
         byteBuf.writeVarInt(e.getEntityId());
-        NetworkUtil.writeVec3d(byteBuf, e.getPos());
-        NetworkUtil.writeAngle(byteBuf, e.pitch);
-        NetworkUtil.writeAngle(byteBuf, e.yaw);
+        PacketBufUtil.writeVec3d(byteBuf, e.getPos());
+        PacketBufUtil.writeAngle(byteBuf, e.pitch);
+        PacketBufUtil.writeAngle(byteBuf, e.yaw);
         return FAPIBridgeProvider.PacketRegistry.SERVER.toPacket(packetID, byteBuf);
     }
 
@@ -65,9 +65,9 @@ public final class SpawnPacketUtil {
         EntityType<?> et = Registry.ENTITY_TYPE.get(byteBuf.readVarInt());
         UUID uuid = byteBuf.readUuid();
         int entityId = byteBuf.readVarInt();
-        Vec3d pos = NetworkUtil.readVec3d(byteBuf);
-        float pitch = NetworkUtil.readAngle(byteBuf);
-        float yaw = NetworkUtil.readAngle(byteBuf);
+        Vec3d pos = PacketBufUtil.readVec3d(byteBuf);
+        float pitch = PacketBufUtil.readAngle(byteBuf);
+        float yaw = PacketBufUtil.readAngle(byteBuf);
         ctx.getTaskQueue().execute(() -> {
             ClientWorld world = MinecraftClient.getInstance().world;
             Entity e = et.create(world);

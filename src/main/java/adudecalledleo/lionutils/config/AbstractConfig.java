@@ -5,6 +5,7 @@ package adudecalledleo.lionutils.config;
  * @since 4.0.0
  */
 public abstract class AbstractConfig implements Config {
+    @SuppressWarnings("RedundantThrows")
     @Override
-    public void verify() { }
+    public void verify() throws ConfigVerificationException { }
 }

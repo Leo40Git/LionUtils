@@ -5,11 +5,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 
-public final class NOpServerPacketRegistryBridge extends NOpPacketRegistryBridge
+public final class NullServerPacketRegistryBridge extends NullPacketRegistryBridge
         implements ServerPacketRegistryBridge {
-    public static final ServerPacketRegistryBridge INSTANCE = new NOpServerPacketRegistryBridge();
+    public static final ServerPacketRegistryBridge INSTANCE = new NullServerPacketRegistryBridge();
 
-    private NOpServerPacketRegistryBridge() {
+    private NullServerPacketRegistryBridge() {
     }
 
     @Override

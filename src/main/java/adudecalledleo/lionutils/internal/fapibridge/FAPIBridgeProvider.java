@@ -3,17 +3,18 @@ package adudecalledleo.lionutils.internal.fapibridge;
 import adudecalledleo.lionutils.InitializerUtil;
 import adudecalledleo.lionutils.LoggerUtil;
 import adudecalledleo.lionutils.internal.fapibridge.impl.FAPIBridgeInitializer;
-import adudecalledleo.lionutils.internal.fapibridge.impl.nop.network.NOpClientPacketRegistryBridge;
-import adudecalledleo.lionutils.internal.fapibridge.impl.nop.network.NOpServerPacketRegistryBridge;
+import adudecalledleo.lionutils.internal.fapibridge.impl.nop.network.NullClientPacketRegistryBridge;
+import adudecalledleo.lionutils.internal.fapibridge.impl.nop.network.NullServerPacketRegistryBridge;
 import adudecalledleo.lionutils.internal.fapibridge.network.ClientPacketRegistryBridge;
 import adudecalledleo.lionutils.internal.fapibridge.network.ServerPacketRegistryBridge;
 import org.apache.logging.log4j.Logger;
 
-// +------------------------------------------------+
-// | Fabric API Bridge Subsystem mk. -1             |
-// | Util class -> FAPIBridgeProvider -> Fabric API |
-// | If FAPI is not present, redirects to a no-op   |
-// +------------------------------------------------+
+// +-----------------------------------------------------------------+
+// | Fabric API Bridge Subsystem mk. -1                              |
+// | Util class -> FAPIBridgeProvider -> Fabric API                  |
+// | If FAPI is not present, errors out with  a proper error message |
+// | rather than a NoClassDefFoundError                              |
+// +-----------------------------------------------------------------+
 public final class FAPIBridgeProvider {
     private static final Logger LOGGER = LoggerUtil.getLogger("LionUtils|FAPIBridge");
 
@@ -28,8 +29,8 @@ public final class FAPIBridgeProvider {
         public static ClientPacketRegistryBridge CLIENT;
         public static ServerPacketRegistryBridge SERVER;
         static {
-            CLIENT = NOpClientPacketRegistryBridge.INSTANCE;
-            SERVER = NOpServerPacketRegistryBridge.INSTANCE;
+            CLIENT = NullClientPacketRegistryBridge.INSTANCE;
+            SERVER = NullServerPacketRegistryBridge.INSTANCE;
             init();
         }
     }

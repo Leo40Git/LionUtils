@@ -4,11 +4,11 @@ import adudecalledleo.lionutils.internal.fapibridge.network.ClientPacketRegistry
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 
-public final class NOpClientPacketRegistryBridge extends NOpPacketRegistryBridge
+public final class NullClientPacketRegistryBridge extends NullPacketRegistryBridge
         implements ClientPacketRegistryBridge {
-    public static final ClientPacketRegistryBridge INSTANCE = new NOpClientPacketRegistryBridge();
+    public static final ClientPacketRegistryBridge INSTANCE = new NullClientPacketRegistryBridge();
 
-    private NOpClientPacketRegistryBridge() {
+    private NullClientPacketRegistryBridge() {
     }
 
     @Override

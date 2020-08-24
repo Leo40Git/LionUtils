@@ -1,6 +1,6 @@
 package adudecalledleo.lionutils.internal.mixin;
 
-import adudecalledleo.lionutils.GameProfileUtil;
+import adudecalledleo.lionutils.network.GameProfileUtil;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import net.minecraft.block.entity.SkullBlockEntity;
 import net.minecraft.util.UserCache;

@@ -1,15 +1,16 @@
-package adudecalledleo.lionutils;
+package adudecalledleo.lionutils.network;
 
+import adudecalledleo.lionutils.InitializerUtil;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
 /**
- * Helper class for dealing with networking.
- * @since 3.0.0
+ * Helper class for dealing with reading from and writing to {@link PacketByteBuf}s.
+ * @since 5.0.0
  */
-public final class NetworkUtil {
-    private NetworkUtil() {
+public final class PacketBufUtil {
+    private PacketBufUtil() {
         InitializerUtil.badConstructor();
     }
 

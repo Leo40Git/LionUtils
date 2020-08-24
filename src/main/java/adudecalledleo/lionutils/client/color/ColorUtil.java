@@ -1,6 +1,9 @@
 package adudecalledleo.lionutils.client.color;
 
 import adudecalledleo.lionutils.InitializerUtil;
+import net.minecraft.util.math.MathHelper;
+
+import java.util.function.IntUnaryOperator;
 
 /**
  * Helper class for dealing with colors.
@@ -140,7 +143,7 @@ public final class ColorUtil {
      * @return the modified color
      */
     public static int withRed(int orig, int r) {
-        return orig & ~0xFF | packRed(r);
+        return orig & 0xFFFFFF00 | packRed(r);
     }
 
     /**
@@ -150,7 +153,7 @@ public final class ColorUtil {
      * @return the modified color
      */
     public static int withGreen(int orig, int g) {
-        return orig & ~0xFF00 | packGreen(g);
+        return orig & 0xFFFF00FF | packGreen(g);
     }
 
     /**
@@ -160,7 +163,7 @@ public final class ColorUtil {
      * @return the modified color
      */
     public static int withBlue(int orig, int b) {
-        return orig & ~0xFF0000 | packBlue(b);
+        return orig & 0xFF00FFFF | packBlue(b);
     }
 
     /**
@@ -170,19 +173,92 @@ public final class ColorUtil {
      * @return the modified color
      */
     public static int withAlpha(int orig, int a) {
-        return orig & ~0xFF000000 | packAlpha(a);
+        return orig & 0x00FFFFFF | packAlpha(a);
+    }
+
+    /**
+     * Modifies a color's red, green and blue components.
+     * @param orig original color
+     * @param modifier component modifier
+     * @return the modified color
+     * @since 5.0.0
+     */
+    public static int modify(int orig, IntUnaryOperator modifier) {
+        int r = modifier.applyAsInt(unpackRed(orig));
+        int g = modifier.applyAsInt(unpackGreen(orig));
+        int b = modifier.applyAsInt(unpackBlue(orig));
+        return pack(r, g, b, unpackAlpha(orig));
     }
 
     /**
      * Multiplies a color's red, green and blue components.
      * @param orig original color
-     * @param scalar component scalar
-     * @return the modified color
+     * @param multiplier component multiplier
+     * @return the multiplied color
      */
-    public static int multiply(int orig, float scalar) {
-        int r = (int)(unpackRed(orig) * scalar);
-        int b = (int)(unpackGreen(orig) * scalar);
-        int g = (int)(unpackBlue(orig) * scalar);
-        return pack(r, g, b, unpackAlpha(orig));
+    public static int multiply(int orig, float multiplier) {
+        return modify(orig, comp -> MathHelper.floor(comp * multiplier));
+    }
+
+    /**
+     * Inverts a color.
+     * @param orig original color
+     * @return the inverted color
+     * @since 5.0.0
+     */
+    public static int invert(int orig) {
+        return modify(orig, comp -> -comp);
+    }
+
+    /**
+     * Represents what value to use when converting a color into grayscale.
+     * @since 5.0.0
+     */
+    public enum GrayscaleStyle {
+        /**
+         * Use the red component's value.
+         */
+        RED,
+        /**
+         * Use the green component's value.
+         */
+        GREEN,
+        /**
+         * Use the blue component's value.
+         */
+        BLUE,
+        /**
+         * Use the average of the red, green and blue components' values.
+         */
+        AVERAGE
+    }
+
+    /**
+     * Converts a color into grayscale.
+     * @param orig original color
+     * @param style style
+     * @return the grayscaled color
+     * @since 5.0.0
+     */
+    public static int grayscale(int orig, GrayscaleStyle style) {
+        int v = 0;
+        switch (style) {
+        case RED:
+            v = unpackRed(orig);
+            break;
+        case GREEN:
+            v = unpackGreen(orig);
+            break;
+        case BLUE:
+            v = unpackBlue(orig);
+            break;
+        case AVERAGE:
+            v = unpackRed(orig);
+            v += unpackGreen(orig);
+            v += unpackBlue(orig);
+            v = MathHelper.floor(v / 3f);
+            break;
+        }
+        return pack(v, v, v, unpackAlpha(orig));
     }
 }

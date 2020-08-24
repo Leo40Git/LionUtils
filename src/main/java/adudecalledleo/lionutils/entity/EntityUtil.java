@@ -31,7 +31,7 @@ public final class EntityUtil {
      * @param pos new position
      */
     public static void setPos(Entity e, Vec3d pos) {
-        e.method_30228(pos); // like updateTrackedPosition(pos,x, pos.y, pos.z) but skips a redundant Vec3d alloc
-        e.setPos(pos.x, pos.y, pos.z); // unfortunately, there's no method that directly sets Entity.pos...
+        e.updateTrackedPosition(pos);
+        e.setPos(pos.x, pos.y, pos.z); // !! redundant Vec3d alloc here, nothing I can do about it tho :(
     }
 }

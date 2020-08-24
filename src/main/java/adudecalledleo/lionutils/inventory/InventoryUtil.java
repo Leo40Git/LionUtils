@@ -49,6 +49,15 @@ public final class InventoryUtil {
         return new UnmodifiableDelegatingInventory(inventory);
     }
 
+    /**
+     * Creates a 0-size inventory.
+     * @return the empty inventory.
+     * @since 5.0.0
+     */
+    public static UnmodifiableInventory empty() {
+        return new EmptyInventory();
+    }
+
     private static class UnmodifiableSimpleInventory extends SimpleInventory implements UnmodifiableInventory {
         public UnmodifiableSimpleInventory(DefaultedList<ItemStack> stacks) {
             super(stacks.size());
@@ -106,6 +115,31 @@ public final class InventoryUtil {
         @Override
         public boolean canPlayerUse(PlayerEntity player) {
             return delegate.canPlayerUse(player);
+        }
+    }
+
+    private static class EmptyInventory implements UnmodifiableInventory {
+        @Override
+        public int size() {
+            return 0;
+        }
+
+        @Override
+        public boolean isEmpty() {
+            return true;
+        }
+
+        @Override
+        public ItemStack getStack(int slot) {
+            return ItemStack.EMPTY;
+        }
+
+        @Override
+        public void markDirty() { }
+
+        @Override
+        public boolean canPlayerUse(PlayerEntity player) {
+            return true;
         }
     }
 }
