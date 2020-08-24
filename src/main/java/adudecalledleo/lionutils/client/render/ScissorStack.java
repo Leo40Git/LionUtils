@@ -8,7 +8,11 @@ import org.lwjgl.opengl.GL11;
 import java.util.ArrayDeque;
 
 /**
- * Helper class for managing OpenGL's "scissor test" feature using a stack-based approach.
+ * <p>Helper class for managing OpenGL's "scissor test" feature using a stack-based approach.</p>
+ * {@linkplain #push(int, int, int, int) Adding a frame to the stack} will expand the current scissoring rect
+ * to expand to accommodate all the frames in the stack.<br>
+ * {@link #reset(int, int, int, int)} can be used to "directly" set the scissoring rect to the
+ * specified position and size.
  * @since 5.0.0
  * @author Juuxel
  */
@@ -60,6 +64,34 @@ public final class ScissorStack {
     }
 
     /**
+     * Clears the scissoring rect stack.
+     */
+    public static void clear() {
+        FRAMES.clear();
+        refreshScissorRect();
+    }
+
+    /**
+     * Resets the scissoring state to the specified rect. Equivalent to:<pre>
+     * {@link #clear() ScissorStack.clear()};
+     * {@link #push(int, int, int, int) ScissorStack.push}(x, y, width, height);
+     * </pre>
+     * @param x X position
+     * @param y Y position
+     * @param width width
+     * @param height height
+     */
+    public static void reset(int x, int y, int width, int height) {
+        if (width < 0)
+            throw new IllegalArgumentException("width < 0!");
+        if (height < 0)
+            throw new IllegalArgumentException("height < 0!");
+        FRAMES.clear();
+        FRAMES.push(new Frame(x, y, width, height));
+        refreshScissorRect();
+    }
+
+    /**
      * Checks if the scissoring rect stack is empty.
      * @return {@code true} if stack is empty, {@code false} otherwise
      */
@@ -74,19 +106,20 @@ public final class ScissorStack {
      */
     public static void refreshScissorRect() {
         if (FRAMES.isEmpty()) {
-            // disable scissor testing since we don't need it anymore
+            // disable scissor testing, since we don't need it anymore
             GL11.glDisable(GL11.GL_SCISSOR_TEST);
             return;
         }
 
+        // (re)enable scissor testing
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
 
+        // calculate the largest rect that covers *all* the rects on the stack
         int x = Integer.MIN_VALUE;
         int y = Integer.MIN_VALUE;
         int width = -1;
         int height = -1;
 
-        // calculate the largest rect that covers *all* the rects on the stack
         for (Frame frame : FRAMES) {
             if (x < frame.x)
                 x = frame.x;
@@ -98,12 +131,15 @@ public final class ScissorStack {
                 height = frame.height - (y - frame.y);
         }
 
+        // grab some values for scaling
         Window window = MinecraftClient.getInstance().getWindow();
         int windowHeight = window.getHeight();
         double scale = window.getScaleFactor();
         int scaledWidth = (int) (width * scale);
         int scaledHeight = (int) (height * scale);
 
+        // send our rect to GL! this scales the coordinates and corrects the Y value,
+        // since GL expects the bottom-left point of the rect and *also* the bottom of the screen to be 0 here
         // expression for Y coordinate adapted from vini2003's Spinnery (code snippet released under WTFPL)
         GL11.glScissor((int) (x * scale), (int) (windowHeight - (y * scale) - scaledHeight), scaledWidth, scaledHeight);
     }
