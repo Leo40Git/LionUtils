@@ -92,15 +92,22 @@ public final class GameProfileUtil {
     }
 
     /**
+     * <p>Default return value of {@link #findPlayerID(String)} if something goes wrong.</p>
+     * This is a <a href="http://tools.ietf.org/html/rfc4122#section-4.1.7">nil UUID</a>.
+     * @since 5.0.0
+     */
+    public static final UUID PLAYER_ID_UNKNOWN = new UUID(0, 0);
+
+    /**
      * Gets a player's UUID from their name.
      * @param playerName player name
-     * @return the player's UUID, or {@code null} if something went wrong (like the player not existing)
+     * @return the player's UUID, or {@link #PLAYER_ID_UNKNOWN} if something went wrong (like the player not existing)
      * @since 3.0.0
      */
     public static UUID findPlayerID(String playerName) {
         GameProfile profile = getGameProfile(null, playerName);
         if (!profile.isComplete())
-            return null;
+            return PLAYER_ID_UNKNOWN;
         return profile.getId();
     }
 }
