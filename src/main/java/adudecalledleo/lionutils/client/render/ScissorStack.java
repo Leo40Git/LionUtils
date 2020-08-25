@@ -10,12 +10,12 @@ import java.util.NoSuchElementException;
 
 /**
  * <p>Helper class for managing OpenGL's "scissor test" feature using a stack-based approach.</p>
- * {@linkplain #push(int, int, int, int) Adding a frame to the stack} will expand the current scissoring rect
- * to accommodate all the frames on the stack.<br>
- * {@link #set(int, int, int, int)} can be used to "directly" set the scissoring rect to the
- * specified position and size.
- * @since 5.0.0
+ * {@linkplain #push(int, int, int, int) Adding a frame to the stack} will expand the current scissoring rect to
+ * accommodate all the frames on the stack.<br> {@link #set(int, int, int, int)} can be used to "directly" set the
+ * scissoring rect to the specified position and size.
+ *
  * @author Juuxel
+ * @since 5.0.0
  */
 public class ScissorStack {
     private ScissorStack() {
@@ -58,6 +58,7 @@ public class ScissorStack {
 
     /**
      * Gets the current stack mode.
+     *
      * @return the stack mode
      */
     public static Mode getMode() {
@@ -66,7 +67,9 @@ public class ScissorStack {
 
     /**
      * Sets the current stack mode.
-     * @param mode new stack mode
+     *
+     * @param mode
+     *         new stack mode
      */
     public static void setMode(Mode mode) {
         ScissorStack.mode = mode;
@@ -74,10 +77,15 @@ public class ScissorStack {
 
     /**
      * Pushes a new frame onto the stack.
-     * @param x X position
-     * @param y Y position
-     * @param width width
-     * @param height height
+     *
+     * @param x
+     *         X position
+     * @param y
+     *         Y position
+     * @param width
+     *         width
+     * @param height
+     *         height
      */
     public static void push(int x, int y, int width, int height) {
         if (width < 0)
@@ -90,7 +98,9 @@ public class ScissorStack {
 
     /**
      * Pops the last frame from the stack.
-     * @throws NoSuchElementException if the frame stack is empty.
+     *
+     * @throws NoSuchElementException
+     *         if the frame stack is empty.
      */
     public static void pop() {
         if (isEmpty())
@@ -114,10 +124,15 @@ public class ScissorStack {
      * {@link #clear() ScissorStack.clear()};
      * {@link #push(int, int, int, int) ScissorStack.push}(x, y, width, height);
      * </pre>
-     * @param x X position
-     * @param y Y position
-     * @param width width
-     * @param height height
+     *
+     * @param x
+     *         X position
+     * @param y
+     *         Y position
+     * @param width
+     *         width
+     * @param height
+     *         height
      */
     public static void set(int x, int y, int width, int height) {
         if (width < 0)
@@ -131,6 +146,7 @@ public class ScissorStack {
 
     /**
      * Checks if the scissoring rect stack is empty.
+     *
      * @return {@code true} if stack is empty, {@code false} otherwise
      */
     public static boolean isEmpty() {
@@ -140,7 +156,6 @@ public class ScissorStack {
     /**
      * <p>Refreshes the current scissoring rect.</p>
      * This is called automatically, so you shouldn't need to call this yourself.
-     * @author Juuxel, vini2003
      */
     public static void refreshScissorRect() {
         if (FRAMES.isEmpty()) {

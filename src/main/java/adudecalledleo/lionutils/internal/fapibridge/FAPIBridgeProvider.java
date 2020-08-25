@@ -26,8 +26,10 @@ public final class FAPIBridgeProvider {
         private PacketRegistry() {
             InitializerUtil.badConstructor();
         }
+
         public static ClientPacketRegistryBridge CLIENT;
         public static ServerPacketRegistryBridge SERVER;
+
         static {
             CLIENT = NullClientPacketRegistryBridge.INSTANCE;
             SERVER = NullServerPacketRegistryBridge.INSTANCE;
@@ -36,6 +38,7 @@ public final class FAPIBridgeProvider {
     }
 
     private static boolean initialized = false;
+
     private static void init() {
         if (initialized)
             return;

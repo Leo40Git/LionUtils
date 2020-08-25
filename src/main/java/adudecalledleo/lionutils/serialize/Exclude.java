@@ -4,6 +4,7 @@ import java.lang.annotation.*;
 
 /**
  * Fields annotated with this will be excluded from serialization and deserialization via {@link GsonHolder#GSON}.
+ *
  * @since 1.0.0
  */
 @Documented
@@ -12,6 +13,7 @@ import java.lang.annotation.*;
 public @interface Exclude {
     /**
      * Represents the exclusion policy to use.
+     *
      * @since 5.0.0
      */
     enum Type {
@@ -31,7 +33,9 @@ public @interface Exclude {
 
     /**
      * The exclusion policy to use. Defaults to {@link Type#BOTH}.
+     *
      * @return exclusion policy to use
+     *
      * @since 5.0.0
      */
     Type value() default Type.BOTH;

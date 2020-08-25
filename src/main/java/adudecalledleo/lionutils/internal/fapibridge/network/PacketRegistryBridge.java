@@ -6,5 +6,6 @@ import net.minecraft.util.Identifier;
 
 public interface PacketRegistryBridge {
     Packet<?> toPacket(Identifier packetID, PacketByteBuf byteBuf);
+
     void register(Identifier packetID, PacketConsumerBridge consumer);
 }

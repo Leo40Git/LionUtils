@@ -10,6 +10,7 @@ import net.minecraft.util.collection.DefaultedList;
 
 /**
  * Utilities for dealing with {@link Inventory}s and "raw inventories" ({@link DefaultedList}s of {@link ItemStack}s).
+ *
  * @since 2.0.0
  */
 public final class InventoryUtil {
@@ -19,7 +20,9 @@ public final class InventoryUtil {
 
     /**
      * Wraps a "raw inventory" into an {@link Inventory}.
-     * @param stacks stack list
+     *
+     * @param stacks
+     *         stack list
      * @return the wrapper inventory
      */
     @SuppressWarnings("ConstantConditions")
@@ -31,7 +34,9 @@ public final class InventoryUtil {
 
     /**
      * Wraps a "raw inventory" into an {@link UnmodifiableInventory}.
-     * @param stacks stack list
+     *
+     * @param stacks
+     *         stack list
      * @return the wrapper inventory
      */
     public static UnmodifiableInventory unmodOf(DefaultedList<ItemStack> stacks) {
@@ -40,7 +45,9 @@ public final class InventoryUtil {
 
     /**
      * Wraps a standard {@link Inventory} into an {@link UnmodifiableInventory}.
-     * @param inventory inventory
+     *
+     * @param inventory
+     *         inventory
      * @return the wrapper inventory
      */
     public static UnmodifiableInventory unmodOf(Inventory inventory) {
@@ -51,7 +58,9 @@ public final class InventoryUtil {
 
     /**
      * Creates a 0-size inventory.
+     *
      * @return the empty inventory.
+     *
      * @since 5.0.0
      */
     public static UnmodifiableInventory empty() {

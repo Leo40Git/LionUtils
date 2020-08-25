@@ -11,6 +11,7 @@ import java.util.UUID;
 
 /**
  * Helper class for obtaining {@link GameProfile}s smartly.
+ *
  * @since 1.0.0
  */
 public final class GameProfileUtil {
@@ -27,7 +28,9 @@ public final class GameProfileUtil {
     /**
      * <p>Sets the session service that we should use.</p>
      * This is set automatically, so you shouldn't need to call this.
-     * @param sessionService session service to use
+     *
+     * @param sessionService
+     *         session service to use
      */
     public static void setSessionService(MinecraftSessionService sessionService) {
         GameProfileUtil.sessionService = sessionService;
@@ -36,7 +39,9 @@ public final class GameProfileUtil {
     /**
      * <p>Sets the user cache we should use.</p>
      * This is set automatically, so you shouldn't need to call this.
-     * @param userCache user cache to use
+     *
+     * @param userCache
+     *         user cache to use
      */
     public static void setUserCache(UserCache userCache) {
         GameProfileUtil.userCache = userCache;
@@ -44,8 +49,11 @@ public final class GameProfileUtil {
 
     /**
      * Gets a {@link GameProfile}. Accepts either a UUID, a name, or both - but not neither!
-     * @param id player UUID
-     * @param name player name
+     *
+     * @param id
+     *         player UUID
+     * @param name
+     *         player name
      * @return profile associated with the specified player
      */
     public static GameProfile getGameProfile(UUID id, String name) {
@@ -81,8 +89,11 @@ public final class GameProfileUtil {
 
     /**
      * Gets a player's name from their UUID.
-     * @param playerID player UUID
-     * @return the player's name, or {@link #PLAYER_NAME_UNKNOWN} if something went wrong (like the player not existing)
+     *
+     * @param playerID
+     *         player UUID
+     * @return the player's name, or {@link #PLAYER_NAME_UNKNOWN} if something went wrong (like the player not
+     *         existing)
      */
     public static String getPlayerName(UUID playerID) {
         GameProfile profile = getGameProfile(playerID, null);
@@ -94,14 +105,18 @@ public final class GameProfileUtil {
     /**
      * <p>Default return value of {@link #findPlayerID(String)} if something goes wrong.</p>
      * This is a <a href="http://tools.ietf.org/html/rfc4122#section-4.1.7">nil UUID</a>.
+     *
      * @since 5.0.0
      */
     public static final UUID PLAYER_ID_UNKNOWN = new UUID(0, 0);
 
     /**
      * Gets a player's UUID from their name.
-     * @param playerName player name
+     *
+     * @param playerName
+     *         player name
      * @return the player's UUID, or {@link #PLAYER_ID_UNKNOWN} if something went wrong (like the player not existing)
+     *
      * @since 3.0.0
      */
     public static UUID findPlayerID(String playerName) {

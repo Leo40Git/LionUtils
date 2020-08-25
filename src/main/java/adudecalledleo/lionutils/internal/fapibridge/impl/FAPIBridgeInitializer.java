@@ -4,7 +4,6 @@ import adudecalledleo.lionutils.internal.fapibridge.FAPIBridgeProvider;
 import adudecalledleo.lionutils.internal.fapibridge.impl.network.ClientPacketRegistryBridgeImpl;
 import adudecalledleo.lionutils.internal.fapibridge.impl.network.ServerPacketRegistryBridgeImpl;
 import net.fabricmc.loader.api.FabricLoader;
-import org.apache.logging.log4j.Logger;
 
 public final class FAPIBridgeInitializer {
     public static void init() {

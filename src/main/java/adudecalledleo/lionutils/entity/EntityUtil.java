@@ -6,6 +6,7 @@ import net.minecraft.util.math.Vec3d;
 
 /**
  * Helper class for dealing with entities.
+ *
  * @since 3.0.0
  */
 public final class EntityUtil {
@@ -15,10 +16,15 @@ public final class EntityUtil {
 
     /**
      * Sets an {@link Entity}'s position.
-     * @param e entity
-     * @param x new X position
-     * @param y new Y position
-     * @param z new Z position
+     *
+     * @param e
+     *         entity
+     * @param x
+     *         new X position
+     * @param y
+     *         new Y position
+     * @param z
+     *         new Z position
      */
     public static void setPos(Entity e, double x, double y, double z) {
         e.updateTrackedPosition(x, y, z);
@@ -27,8 +33,11 @@ public final class EntityUtil {
 
     /**
      * Sets an {@link Entity}'s position.
-     * @param e entity
-     * @param pos new position
+     *
+     * @param e
+     *         entity
+     * @param pos
+     *         new position
      */
     public static void setPos(Entity e, Vec3d pos) {
         e.updateTrackedPosition(pos);

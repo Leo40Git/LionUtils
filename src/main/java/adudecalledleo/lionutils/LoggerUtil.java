@@ -10,6 +10,7 @@ import org.apache.logging.log4j.spi.AbstractLogger;
 
 /**
  * Helper class for configuring and obtaining {@link Logger}s.
+ *
  * @since 2.0.0
  */
 public final class LoggerUtil {
@@ -19,11 +20,13 @@ public final class LoggerUtil {
 
     /**
      * <p>Creates a {@link MessageFactory} suited for the current environment.</p>
-     * If this is a {@linkplain FabricLoader#isDevelopmentEnvironment() development environment}, simply returns the
-     * an instance of the default message factory (which is {@link ParameterizedMessageFactory}).<br>
-     * Otherwise, returns a special message factory that appends the logger's name to the start of the message
-     * (which also supports parameters).
-     * @param loggerName logger name
+     * If this is a {@linkplain FabricLoader#isDevelopmentEnvironment() development environment}, simply returns the an
+     * instance of the default message factory (which is {@link ParameterizedMessageFactory}).<br> Otherwise, returns a
+     * special message factory that appends the logger's name to the start of the message (which also supports
+     * parameters).
+     *
+     * @param loggerName
+     *         logger name
      * @return message factory
      */
     public static MessageFactory createMessageFactory(String loggerName) {
@@ -67,7 +70,9 @@ public final class LoggerUtil {
 
     /**
      * Returns a {@link Logger} with the specified name.
-     * @param name logger name
+     *
+     * @param name
+     *         logger name
      * @return the logger
      */
     public static Logger getLogger(String name) {
@@ -76,6 +81,7 @@ public final class LoggerUtil {
 
     /**
      * {@link Logger} that never actually prints messages.
+     *
      * @since 4.0.0
      */
     public static final Logger NULL_LOGGER = new NullLogger();

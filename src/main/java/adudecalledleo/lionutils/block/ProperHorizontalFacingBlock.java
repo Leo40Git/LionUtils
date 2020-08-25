@@ -9,9 +9,10 @@ import net.minecraft.util.math.Direction;
 
 /**
  * <p>{@link Block} that faces one of four cardinal directions. Facing property is {@link #FACING}.</p>
- * Unlike {@link HorizontalFacingBlock}, this
- * {@linkplain #appendProperties(StateManager.Builder) appends the property to the block} and
- * {@linkplain #getPlacementState(ItemPlacementContext) automatically configures the placement state}.
+ * Unlike {@link HorizontalFacingBlock}, this {@linkplain #appendProperties(StateManager.Builder) appends the property
+ * to the block} and {@linkplain #getPlacementState(ItemPlacementContext) automatically configures the placement
+ * state}.
+ *
  * @see HorizontalFacingBlock
  * @since 1.0.0
  */

@@ -1,10 +1,10 @@
 package adudecalledleo.lionutils.entity;
 
 import adudecalledleo.lionutils.InitializerUtil;
-import adudecalledleo.lionutils.network.PacketBufUtil;
 import adudecalledleo.lionutils.RequiresFabricAPI;
 import adudecalledleo.lionutils.internal.fapibridge.FAPIBridgeProvider;
 import adudecalledleo.lionutils.internal.fapibridge.network.PacketContextBridge;
+import adudecalledleo.lionutils.network.PacketBufUtil;
 import io.netty.buffer.Unpooled;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -22,6 +22,7 @@ import java.util.UUID;
 
 /**
  * Helper class for dealing with entity spawn packets.
+ *
  * @since 3.0.0
  */
 @RequiresFabricAPI
@@ -40,10 +41,12 @@ public final class SpawnPacketUtil {
      * }
      * </pre>
      * Make sure you register your {@code packetId} on the client-side with {@link #register(Identifier)}!
-     * @param e entity to create spawn packet for
-     * @param packetID spawn packet ID
+     *
+     * @param e
+     *         entity to create spawn packet for
+     * @param packetID
+     *         spawn packet ID
      * @return a spawn packet for the specified entity
-     * @author UpcraftLP
      */
     public static Packet<?> create(Entity e, Identifier packetID) {
         if (e.world.isClient)
@@ -81,10 +84,11 @@ public final class SpawnPacketUtil {
     }
 
     /**
-     * Registers a handler for an entity spawn packet received from the server.<br>
-     * Should be used in tandem with {@link #create(Entity, Identifier)} on the server-side.
-     * @param packetID spawn packet ID
-     * @author UpcraftLP
+     * Registers a handler for an entity spawn packet received from the server.<br> Should be used in tandem with {@link
+     * #create(Entity, Identifier)} on the server-side.
+     *
+     * @param packetID
+     *         spawn packet ID
      */
     @Environment(EnvType.CLIENT)
     public static void register(Identifier packetID) {

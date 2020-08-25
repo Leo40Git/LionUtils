@@ -21,7 +21,9 @@ import java.util.function.Supplier;
 
 /**
  * Holds, loads and saves a POJO configuration.
- * @param <T> POJO configuration type
+ *
+ * @param <T>
+ *         POJO configuration type
  * @since 4.0.0
  */
 public class ConfigHolder<T extends Config> {
@@ -46,6 +48,7 @@ public class ConfigHolder<T extends Config> {
         SAVE,
         /**
          * Signals that the configuration POJO has been verified after being loaded from the file.
+         *
          * @since 5.0.0
          */
         VERIFY
@@ -78,35 +81,49 @@ public class ConfigHolder<T extends Config> {
 
     /**
      * Constructs a {@link Builder}.
-     * @param configPath path to config file, relative to {@linkplain FabricLoader#getConfigDir() the main config directory}
-     * @param configType type of config POJO
-     * @param defaultFactory factory to create default POJO.<br>
-     *                       this should <em>always</em> return a new instance.
-     * @param <T> POJO configuration type
+     *
+     * @param configPath
+     *         path to config file, relative to {@linkplain FabricLoader#getConfigDir() the main config directory}
+     * @param configType
+     *         type of config POJO
+     * @param defaultFactory
+     *         factory to create default POJO.<br> this should <em>always</em> return a new instance.
+     * @param <T>
+     *         POJO configuration type
      * @return the builder instance
+     *
      * @since 4.1.0
      */
-    public static <T extends Config> Builder<T> builder(Path configPath, Class<T> configType, Supplier<T> defaultFactory) {
+    public static <T extends Config> Builder<T> builder(Path configPath, Class<T> configType,
+            Supplier<T> defaultFactory) {
         return new Builder<>(configPath, configType, defaultFactory);
     }
 
     /**
      * Constructs a {@link Builder}.
-     * @param configName path to config file, relative to {@linkplain FabricLoader#getConfigDir() the main config directory}
-     * @param configType type of config POJO
-     * @param defaultFactory factory to create default POJO.<br>
-     *                       this should <em>always</em> return a new instance.
-     * @param <T> POJO configuration type
+     *
+     * @param configName
+     *         path to config file, relative to {@linkplain FabricLoader#getConfigDir() the main config directory}
+     * @param configType
+     *         type of config POJO
+     * @param defaultFactory
+     *         factory to create default POJO.<br> this should <em>always</em> return a new instance.
+     * @param <T>
+     *         POJO configuration type
      * @return the builder instance
+     *
      * @since 4.1.0
      */
-    public static <T extends Config> Builder<T> builder(String configName, Class<T> configType, Supplier<T> defaultFactory) {
+    public static <T extends Config> Builder<T> builder(String configName, Class<T> configType,
+            Supplier<T> defaultFactory) {
         return new Builder<>(configName, configType, defaultFactory);
     }
 
     /**
      * Constructs a {@link ConfigHolder} instance.
-     * @param <T> POJO configuration type
+     *
+     * @param <T>
+     *         POJO configuration type
      */
     public static class Builder<T extends Config> {
         private static final BiConsumer<Event, Throwable> NOP_EXCEPTION_HANDLER = (event, t) -> { };
@@ -132,7 +149,9 @@ public class ConfigHolder<T extends Config> {
         /**
          * <p>Sets the {@link ObjectFormat} to use to save and load the configuration POJO.</p>
          * By default, {@link GsonHolder#FORMAT} is used.
-         * @param objectFormat object format to use
+         *
+         * @param objectFormat
+         *         object format to use
          * @return this builder
          */
         public Builder<T> setObjectFormat(ObjectFormat objectFormat) {
@@ -143,7 +162,9 @@ public class ConfigHolder<T extends Config> {
         /**
          * <p>Sets the {@link Logger} to use.</p>
          * By default, a {@linkplain LoggerUtil#NULL_LOGGER null logger} is used.
-         * @param logger logger to use
+         *
+         * @param logger
+         *         logger to use
          * @return this builder
          */
         public Builder<T> setLogger(Logger logger) {
@@ -153,8 +174,11 @@ public class ConfigHolder<T extends Config> {
 
         /**
          * Sets the {@link Marker} to use.
-         * @param marker marker to use
+         *
+         * @param marker
+         *         marker to use
          * @return this builder
+         *
          * @since 5.0.0
          */
         public Builder<T> setMarker(Marker marker) {
@@ -165,8 +189,11 @@ public class ConfigHolder<T extends Config> {
         /**
          * <p>Sets the exception handler to call when an exception occurs.</p>
          * By default, a no-op implementation is used.
-         * @param exceptionHandler exception handler to use
+         *
+         * @param exceptionHandler
+         *         exception handler to use
          * @return this builder
+         *
          * @since 5.0.0
          */
         public Builder<T> setExceptionHandler(BiConsumer<Event, Throwable> exceptionHandler) {
@@ -176,6 +203,7 @@ public class ConfigHolder<T extends Config> {
 
         /**
          * Constructs a {@link ConfigHolder}.
+         *
          * @return the configuration holder
          */
         public ConfigHolder<T> build() {
@@ -186,6 +214,7 @@ public class ConfigHolder<T extends Config> {
 
     /**
      * Gets the configuration POJO.
+     *
      * @return the configuration POJO
      */
     public T get() {
@@ -196,6 +225,7 @@ public class ConfigHolder<T extends Config> {
 
     /**
      * Gets an instance of the default configuration POJO.
+     *
      * @return the default POJO
      */
     public T getDefault() {
@@ -264,7 +294,9 @@ public class ConfigHolder<T extends Config> {
 
     /**
      * Adds a listener that will be called when the config is loaded or saved.
-     * @param listener listener to add
+     *
+     * @param listener
+     *         listener to add
      */
     public void addListener(BiConsumer<Event, T> listener) {
         listenersToAdd.add(listener);
@@ -272,7 +304,9 @@ public class ConfigHolder<T extends Config> {
 
     /**
      * Removes a listener. It will no longer be called when the config is loaded or saved.
-     * @param listener listener to remove
+     *
+     * @param listener
+     *         listener to remove
      */
     public void removeListener(BiConsumer<Event, T> listener) {
         listenersToRemove.add(listener);
