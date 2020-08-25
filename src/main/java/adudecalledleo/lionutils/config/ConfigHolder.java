@@ -105,7 +105,7 @@ public class ConfigHolder<T extends Config> {
     }
 
     /**
-     * Builds a {@link ConfigHolder} instance.
+     * Constructs a {@link ConfigHolder} instance.
      * @param <T> POJO configuration type
      */
     public static class Builder<T extends Config> {

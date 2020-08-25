@@ -6,17 +6,18 @@ import net.minecraft.client.util.Window;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayDeque;
+import java.util.NoSuchElementException;
 
 /**
  * <p>Helper class for managing OpenGL's "scissor test" feature using a stack-based approach.</p>
  * {@linkplain #push(int, int, int, int) Adding a frame to the stack} will expand the current scissoring rect
- * to expand to accommodate all the frames in the stack.<br>
- * {@link #reset(int, int, int, int)} can be used to "directly" set the scissoring rect to the
+ * to accommodate all the frames on the stack.<br>
+ * {@link #set(int, int, int, int)} can be used to "directly" set the scissoring rect to the
  * specified position and size.
  * @since 5.0.0
  * @author Juuxel
  */
-public final class ScissorStack {
+public class ScissorStack {
     private ScissorStack() {
         InitializerUtil.badConstructor();
     }
@@ -38,7 +39,41 @@ public final class ScissorStack {
     }
 
     /**
-     * Pushes a new scissoring rect onto the stack.
+     * Represents the stack mode.
+     */
+    public enum Mode {
+        /**
+         * <p>Only the last frame in the stack will be used for determining the final scissoring rect.</p>
+         * This is the default mode.
+         */
+        ABSOLUTE,
+        /**
+         * <p>All frames will be accommodated from when determining the final scissoring rect.</p>
+         * This will make the final scissoring rect expand to accommodate all frames on the stack.
+         */
+        ADDITIVE
+    }
+
+    private static Mode mode = Mode.ABSOLUTE;
+
+    /**
+     * Gets the current stack mode.
+     * @return the stack mode
+     */
+    public static Mode getMode() {
+        return mode;
+    }
+
+    /**
+     * Sets the current stack mode.
+     * @param mode new stack mode
+     */
+    public static void setMode(Mode mode) {
+        ScissorStack.mode = mode;
+    }
+
+    /**
+     * Pushes a new frame onto the stack.
      * @param x X position
      * @param y Y position
      * @param width width
@@ -54,17 +89,18 @@ public final class ScissorStack {
     }
 
     /**
-     * Pops the last scissoring rect from the stack.
+     * Pops the last frame from the stack.
+     * @throws NoSuchElementException if the frame stack is empty.
      */
     public static void pop() {
         if (isEmpty())
-            throw new IllegalStateException("Tried to pop when frame stack was empty!");
+            throw new NoSuchElementException("Tried to pop when frame stack was empty!");
         FRAMES.pop();
         refreshScissorRect();
     }
 
     /**
-     * Clears the scissoring rect stack.
+     * Clears the frame stack.
      */
     public static void clear() {
         FRAMES.clear();
@@ -72,7 +108,9 @@ public final class ScissorStack {
     }
 
     /**
-     * Resets the scissoring state to the specified rect. Equivalent to:<pre>
+     * <p>Forcibly sets the scissoring state to the specified frame.</p>
+     * <p>Note that {@link #pop()} still must be called afterwards.</p>
+     * Equivalent to:<pre>
      * {@link #clear() ScissorStack.clear()};
      * {@link #push(int, int, int, int) ScissorStack.push}(x, y, width, height);
      * </pre>
@@ -81,7 +119,7 @@ public final class ScissorStack {
      * @param width width
      * @param height height
      */
-    public static void reset(int x, int y, int width, int height) {
+    public static void set(int x, int y, int width, int height) {
         if (width < 0)
             throw new IllegalArgumentException("width < 0!");
         if (height < 0)
@@ -129,6 +167,9 @@ public final class ScissorStack {
                 width = frame.width - (x - frame.x);
             if (height == -1 || y + height > frame.y + frame.height)
                 height = frame.height - (y - frame.y);
+            // if we're in ABSOLUTE mode, stop after the first frame in the stack
+            if (mode == Mode.ABSOLUTE)
+                break;
         }
 
         // grab some values for scaling

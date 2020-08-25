@@ -237,7 +237,7 @@ public final class ColorUtil {
      * Converts a color into grayscale.
      * @param orig original color
      * @param style style
-     * @return the grayscaled color
+     * @return the grayscale color
      * @since 5.0.0
      */
     public static int grayscale(int orig, GrayscaleStyle style) {
