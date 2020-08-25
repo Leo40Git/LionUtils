@@ -10,9 +10,13 @@ import java.util.NoSuchElementException;
 
 /**
  * <p>Helper class for managing OpenGL's "scissor test" feature using a stack-based approach.</p>
- * {@linkplain #push(int, int, int, int) Adding a frame to the stack} will expand the current scissoring rect to
+ * The behavior of this class can be changed via {@link #setMode(Mode)}:<ul>
+ * <li>If set to {@link Mode#ABSOLUTE ABSOLUTE}, the last frame on the stack will be directly sent as the scissoring
+ * rect.</li>
+ * <li>If set to {@link Mode#ADDITIVE ADDITIVE}, adding a frame to the stack will expand the current scissoring rect to
  * accommodate all the frames on the stack.<br> {@link #set(int, int, int, int)} can be used to "directly" set the
- * scissoring rect to the specified position and size.
+ * scissoring rect to the specified position and size.</li>
+ * </ul>
  *
  * @author Juuxel
  * @since 5.0.0
