@@ -16,17 +16,24 @@ public class UnmodifiableSlotRef extends SlotRef {
      *         inventory to refer to
      * @param slot
      *         index of slot to refer to
+     * @return the constructed slot reference
      */
-    public UnmodifiableSlotRef(Inventory inventory, int slot) {
+    public static UnmodifiableSlotRef create(Inventory inventory, int slot) {
+        if (inventory == null)
+            throw new IllegalArgumentException("inventory == null!");
+        if (slot < 0 || slot >= inventory.size())
+            throw new IndexOutOfBoundsException(
+                    "slot index " + slot + " is out of bounds for inventory of size" + inventory.size());
+        return new UnmodifiableSlotRef(inventory, slot);
+    }
+
+    protected UnmodifiableSlotRef(Inventory inventory, int slot) {
         super(inventory, slot);
     }
 
     /**
      * <p>{@inheritDoc}</p>
      * Does nothing here.
-     *
-     * @param stack
-     *         {@inheritDoc}
      */
     @Override
     public void setStack(ItemStack stack) { }
@@ -34,10 +41,6 @@ public class UnmodifiableSlotRef extends SlotRef {
     /**
      * <p>{@inheritDoc}</p>
      * Does nothing here.
-     *
-     * @param amount
-     *         {@inheritDoc}
-     * @return {@inheritDoc}
      */
     @Override
     public ItemStack splitStack(int amount) {
@@ -47,8 +50,6 @@ public class UnmodifiableSlotRef extends SlotRef {
     /**
      * <p>{@inheritDoc}</p>
      * Does nothing here.
-     *
-     * @return {@inheritDoc}
      */
     @Override
     public ItemStack removeStack() {

@@ -21,7 +21,7 @@ import java.util.NoSuchElementException;
  * @author Juuxel
  * @since 5.0.0
  */
-public class ScissorStack {
+public final class ScissorStack {
     private ScissorStack() {
         InitializerUtil.badConstructor();
     }

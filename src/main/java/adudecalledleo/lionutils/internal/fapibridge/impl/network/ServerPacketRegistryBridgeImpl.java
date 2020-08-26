@@ -1,5 +1,6 @@
 package adudecalledleo.lionutils.internal.fapibridge.impl.network;
 
+import adudecalledleo.lionutils.InitializerUtil;
 import adudecalledleo.lionutils.internal.fapibridge.network.ServerPacketRegistryBridge;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,6 +13,7 @@ public final class ServerPacketRegistryBridgeImpl extends PacketRegistryBridgeIm
 
     private ServerPacketRegistryBridgeImpl() {
         super(ServerSidePacketRegistry.INSTANCE);
+        InitializerUtil.singletonCheck(INSTANCE);
     }
 
     @Override

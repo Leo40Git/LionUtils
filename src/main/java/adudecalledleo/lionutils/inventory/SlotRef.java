@@ -2,13 +2,14 @@ package adudecalledleo.lionutils.inventory;
 
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Clearable;
 
 /**
  * Represents a reference to a slot in an {@link Inventory}.
  *
  * @since 5.0.0
  */
-public class SlotRef {
+public class SlotRef implements Clearable {
     /**
      * The {@link Inventory} being referred to.
      */
@@ -25,8 +26,18 @@ public class SlotRef {
      *         inventory to refer to
      * @param slot
      *         index of slot to refer to
+     * @return the constructed slot reference
      */
-    public SlotRef(Inventory inventory, int slot) {
+    public static SlotRef create(Inventory inventory, int slot) {
+        if (inventory == null)
+            throw new IllegalArgumentException("inventory == null!");
+        if (slot < 0 || slot >= inventory.size())
+            throw new IllegalArgumentException(
+                    "slot index " + slot + " is out of bounds for inventory of size" + inventory.size());
+        return new SlotRef(inventory, slot);
+    }
+
+    protected SlotRef(Inventory inventory, int slot) {
         this.inventory = inventory;
         this.slot = slot;
     }
@@ -68,5 +79,22 @@ public class SlotRef {
      */
     public ItemStack removeStack() {
         return inventory.removeStack(slot);
+    }
+
+    /**
+     * Checks if this reference is empty.
+     *
+     * @return {@code true} if reference is empty, {@code false} otherwise.
+     */
+    public boolean isEmpty() {
+        return false;
+    }
+
+    /**
+     * Delegates to {@link #removeStack()}.
+     */
+    @Override
+    public void clear() {
+        removeStack();
     }
 }

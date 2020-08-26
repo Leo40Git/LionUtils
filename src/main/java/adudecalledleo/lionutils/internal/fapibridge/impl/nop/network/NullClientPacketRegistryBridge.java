@@ -1,5 +1,6 @@
 package adudecalledleo.lionutils.internal.fapibridge.impl.nop.network;
 
+import adudecalledleo.lionutils.InitializerUtil;
 import adudecalledleo.lionutils.internal.fapibridge.network.ClientPacketRegistryBridge;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
@@ -9,6 +10,7 @@ public final class NullClientPacketRegistryBridge extends NullPacketRegistryBrid
     public static final ClientPacketRegistryBridge INSTANCE = new NullClientPacketRegistryBridge();
 
     private NullClientPacketRegistryBridge() {
+        InitializerUtil.singletonCheck(INSTANCE);
     }
 
     @Override

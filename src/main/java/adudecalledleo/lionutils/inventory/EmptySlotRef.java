@@ -1,5 +1,6 @@
 package adudecalledleo.lionutils.inventory;
 
+import adudecalledleo.lionutils.InitializerUtil;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 
@@ -16,6 +17,7 @@ public final class EmptySlotRef extends UnmodifiableSlotRef {
 
     private EmptySlotRef() {
         super(null, -1);
+        InitializerUtil.singletonCheck(INSTANCE);
     }
 
     /**
@@ -27,5 +29,13 @@ public final class EmptySlotRef extends UnmodifiableSlotRef {
     @Override
     public ItemStack getStack() {
         return ItemStack.EMPTY;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isEmpty() {
+        return true;
     }
 }

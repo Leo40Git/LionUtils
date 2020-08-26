@@ -202,7 +202,7 @@ public final class InventoryUtil {
                         key -= inventory.size();
                         continue;
                     }
-                    return new SlotRef(inventory, key);
+                    return SlotRef.create(inventory, key);
                 }
                 return EmptySlotRef.INSTANCE;
             });
