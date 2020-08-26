@@ -9,11 +9,23 @@ import net.minecraft.item.ItemStack;
  * @since 2.0.0
  */
 public interface UnmodifiableInventory extends Inventory {
+    /**
+     * <p>{@inheritDoc}</p>
+     * Does nothing here.
+     *
+     * @return {@link ItemStack#EMPTY}
+     */
     @Override
     default ItemStack removeStack(int slot, int amount) {
         return ItemStack.EMPTY;
     }
 
+    /**
+     * <p>{@inheritDoc}</p>
+     * Does nothing here.
+     *
+     * @return {@link ItemStack#EMPTY}
+     */
     @Override
     default ItemStack removeStack(int slot) {
         return ItemStack.EMPTY;
