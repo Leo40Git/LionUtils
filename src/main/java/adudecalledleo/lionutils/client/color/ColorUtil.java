@@ -167,6 +167,30 @@ public final class ColorUtil {
     }
 
     /**
+     * Represents a color component.
+     *
+     * @since 5.0.0
+     */
+    public enum Component {
+        /**
+         * Represents the red component.
+         */
+        RED,
+        /**
+         * Represents the green component.
+         */
+        GREEN,
+        /**
+         * Represents the blue component.
+         */
+        BLUE,
+        /**
+         * Represents the alpha component.
+         */
+        ALPHA
+    }
+
+    /**
      * Replaces a color's red component with the specified value.
      *
      * @param orig
@@ -219,6 +243,29 @@ public final class ColorUtil {
     }
 
     /**
+     * Modifies a color's red, green, blue and alpha components.
+     *
+     * @param orig
+     *         original color
+     * @param modifier
+     *         component modifier
+     * @param modAlpha
+     *         whether to modify the alpha component or not
+     * @return the modified color
+     *
+     * @since 5.0.0
+     */
+    public static int modify(int orig, IntUnaryOperator modifier, boolean modAlpha) {
+        int r = modifier.applyAsInt(unpackRed(orig));
+        int g = modifier.applyAsInt(unpackGreen(orig));
+        int b = modifier.applyAsInt(unpackBlue(orig));
+        int a = unpackAlpha(orig);
+        if (modAlpha)
+            a = modifier.applyAsInt(a);
+        return pack(r, g, b, a);
+    }
+
+    /**
      * Modifies a color's red, green and blue components.
      *
      * @param orig
@@ -230,10 +277,45 @@ public final class ColorUtil {
      * @since 5.0.0
      */
     public static int modify(int orig, IntUnaryOperator modifier) {
-        int r = modifier.applyAsInt(unpackRed(orig));
-        int g = modifier.applyAsInt(unpackGreen(orig));
-        int b = modifier.applyAsInt(unpackBlue(orig));
-        return pack(r, g, b, unpackAlpha(orig));
+        return modify(orig, modifier, false);
+    }
+
+    /**
+     * Represents a color component modifier.
+     *
+     * @since 5.0.0
+     */
+    @FunctionalInterface
+    public interface ComponentModifier {
+        /**
+         * Modifies a color component.
+         *
+         * @param comp
+         *         component type
+         * @param orig
+         *         component value
+         * @return the new component value
+         */
+        int modify(Component comp, int orig);
+    }
+
+    /**
+     * Modifies a color's red, green, blue and alpha components.
+     *
+     * @param orig
+     *         original color
+     * @param modifier
+     *         component modifier
+     * @return the modified color
+     *
+     * @since 5.0.0
+     */
+    public static int modify(int orig, ComponentModifier modifier) {
+        int r = modifier.modify(Component.RED, unpackRed(orig));
+        int g = modifier.modify(Component.GREEN, unpackGreen(orig));
+        int b = modifier.modify(Component.BLUE, unpackBlue(orig));
+        int a = modifier.modify(Component.ALPHA, unpackAlpha(orig));
+        return pack(r, g, b, a);
     }
 
     /**
