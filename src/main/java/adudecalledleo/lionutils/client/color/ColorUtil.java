@@ -158,7 +158,7 @@ public final class ColorUtil {
      * @return the individual components in RGBA order
      */
     public static int[] unpack(int color) {
-        return new int[]{
+        return new int[] {
                 unpackRed(color),
                 unpackGreen(color),
                 unpackBlue(color),
