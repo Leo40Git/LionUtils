@@ -162,7 +162,13 @@ public final class ScissorStack {
      * This is called automatically, so you shouldn't need to call this yourself.
      */
     public static void refreshScissorRect() {
+        Window window = MinecraftClient.getInstance().getWindow();
+
         if (FRAMES.isEmpty()) {
+            // set the scissoring rect to be the entire screen
+            // this shouldn't be necessary, since we also disable scissor testing entirely here,
+            // but just in case...
+            GL11.glScissor(0, window.getScaledHeight(), window.getScaledWidth(), window.getScaledHeight());
             // disable scissor testing, since we don't need it anymore
             GL11.glDisable(GL11.GL_SCISSOR_TEST);
             return;
@@ -192,14 +198,13 @@ public final class ScissorStack {
         }
 
         // grab some values for scaling
-        Window window = MinecraftClient.getInstance().getWindow();
         int windowHeight = window.getHeight();
         double scale = window.getScaleFactor();
         int scaledWidth = (int) (width * scale);
         int scaledHeight = (int) (height * scale);
 
         // send our rect to GL! this scales the coordinates and corrects the Y value,
-        // since GL expects the bottom-left point of the rect and *also* the bottom of the screen to be 0 here
+        // since GL expects the bottom-left point of the rect and *also* expects the bottom of the screen to be 0 here
         // expression for Y coordinate adapted from vini2003's Spinnery (code snippet released under WTFPL)
         GL11.glScissor((int) (x * scale), (int) (windowHeight - (y * scale) - scaledHeight), scaledWidth, scaledHeight);
     }
