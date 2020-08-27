@@ -23,7 +23,7 @@ public final class ColorUtil {
      * @return the resulting color
      */
     public static int packRed(int r) {
-        return r & 0xFF;
+        return (r & 0xFF) << 16;
     }
 
     /**
@@ -45,7 +45,7 @@ public final class ColorUtil {
      * @return the resulting color
      */
     public static int packBlue(int b) {
-        return (b & 0xFF) << 16;
+        return b & 0xFF;
     }
 
     /**
@@ -96,10 +96,10 @@ public final class ColorUtil {
      * Packs a color.
      *
      * @param comps
-     *         the components
+     *         the components in RGB(A) order
      * @return the resulting color
      */
-    public static int pack(int... comps) {
+    public static int pack(int[] comps) {
         if (comps.length > 3)
             return pack(comps[0], comps[1], comps[2], comps[3]);
         else
@@ -114,7 +114,7 @@ public final class ColorUtil {
      * @return the red component
      */
     public static int unpackRed(int color) {
-        return color & 0xFF;
+        return (color << 16) & 0xFF;
     }
 
     /**
@@ -136,7 +136,7 @@ public final class ColorUtil {
      * @return the blue component
      */
     public static int unpackBlue(int color) {
-        return (color << 16) & 0xFF;
+        return color & 0xFF;
     }
 
     /**
@@ -155,7 +155,7 @@ public final class ColorUtil {
      *
      * @param color
      *         source color
-     * @return the individual components
+     * @return the individual components in RGBA order
      */
     public static int[] unpack(int color) {
         return new int[]{
@@ -200,7 +200,7 @@ public final class ColorUtil {
      * @return the modified color
      */
     public static int withRed(int orig, int r) {
-        return orig & 0xFFFFFF00 | packRed(r);
+        return orig & 0xFF00FFFF | packRed(r);
     }
 
     /**
@@ -226,7 +226,7 @@ public final class ColorUtil {
      * @return the modified color
      */
     public static int withBlue(int orig, int b) {
-        return orig & 0xFF00FFFF | packBlue(b);
+        return orig & 0xFFFFFF00 | packBlue(b);
     }
 
     /**
