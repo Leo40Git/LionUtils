@@ -1,6 +1,8 @@
 package adudecalledleo.lionutils.client.render;
 
 import adudecalledleo.lionutils.InitializerUtil;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.Window;
 import org.lwjgl.opengl.GL11;
@@ -21,6 +23,7 @@ import java.util.NoSuchElementException;
  * @author Juuxel
  * @since 5.0.0
  */
+@Environment(EnvType.CLIENT)
 public final class ScissorStack {
     private ScissorStack() {
         InitializerUtil.badConstructor();

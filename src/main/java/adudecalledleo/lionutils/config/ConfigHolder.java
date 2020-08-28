@@ -237,14 +237,27 @@ public class ConfigHolder<T extends Config> {
      */
     public void load() {
         if (configPath.toFile().exists()) {
-            if (load0()) {
-                try {
-                    config.verify();
-                } catch (ConfigVerificationException e) {
+            boolean defCfg = false;
+            try (BufferedReader br = Files.newBufferedReader(configPath)) {
+                config = objectFormat.read(br, configType);
+            } catch (IOException e) {
+                logAndHandleException("Failed loading config from file \"" + configPath.getFileName().toString() +
+                        "\", continuing with default values", e, Event.LOAD);
+                config = getDefault();
+                defCfg = true;
+            }
+            updateAndNotifyListeners(Event.LOAD);
+            try {
+                config.verify();
+            } catch (ConfigVerificationException e) {
+                if (defCfg) {
+                    throw new IllegalStateException("Default config is invalid?!" +
+                            "config.verify() threw exception after default config was loaded", e);
+                } else {
                     logAndHandleException("Loaded invalid config from file \"" + configPath.getFileName().toString() +
-                            "\", continuing with default values", e, Event.VERIFY);
-                    config = getDefault();
+                                    "\", continuing with default values", e, Event.VERIFY);
                 }
+                config = getDefault();
             }
             updateAndNotifyListeners(Event.VERIFY);
         } else {
@@ -252,22 +265,6 @@ public class ConfigHolder<T extends Config> {
             reset();
             save();
         }
-    }
-
-    // internal delegate that actually loads the POJO
-    // returns true if config.verify() needs to be called, false otherwise
-    private boolean load0() {
-        boolean needsVerify = true;
-        try (BufferedReader br = Files.newBufferedReader(configPath)) {
-            config = objectFormat.read(br, configType);
-        } catch (IOException e) {
-            logAndHandleException("Failed loading config from file \"" + configPath.getFileName().toString() +
-                    "\", continuing with default values", e, Event.LOAD);
-            config = getDefault();
-            needsVerify = false;
-        }
-        updateAndNotifyListeners(Event.LOAD);
-        return needsVerify;
     }
 
     /**

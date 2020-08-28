@@ -16,7 +16,7 @@ public final class EmptySlotRef extends UnmodifiableSlotRef {
     public static final EmptySlotRef INSTANCE = new EmptySlotRef();
 
     private EmptySlotRef() {
-        super(null, -1);
+        super(InventoryUtil.empty(), -1);
         InitializerUtil.singletonCheck(INSTANCE);
     }
 
