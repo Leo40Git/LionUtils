@@ -220,4 +220,10 @@ public interface HeapMemory extends AutoCloseable {
      *         address to put at that offset
      */
     void putAddress(long offset, long x);
+
+    /**
+     * Frees the block of memory and {@linkplain #isValid() invalidates this instance}.
+     */
+    @Override
+    void close();
 }
