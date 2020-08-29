@@ -1,6 +1,6 @@
 package adudecalledleo.lionutils.internal.unsafe.impl;
 
-import adudecalledleo.lionutils.unsafe.NativeMemory;
+import adudecalledleo.lionutils.unsafe.HeapMemory;
 import adudecalledleo.lionutils.unsafe.UnsafeAccess;
 import sun.misc.Unsafe;
 
@@ -18,7 +18,8 @@ public class UnsafeAccessImpl8D implements UnsafeAccess {
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 throw new RuntimeException("Failed to get Unsafe instance", e);
             } catch (ClassCastException e) {
-                throw new RuntimeException("Failed to cast Unsafe instance to Unsafe?? Something's wrong with this JVM", e);
+                throw new RuntimeException("Failed to cast Unsafe instance to Unsafe?? Something's wrong with this JVM",
+                        e);
             } catch (NullPointerException e) {
                 throw new RuntimeException("Unsafe holder field is not static?? Something's wrong with this JVM", e);
             }
@@ -26,88 +27,98 @@ public class UnsafeAccessImpl8D implements UnsafeAccess {
     }
 
     @Override
-    public NativeMemory allocate(long size) {
-        return new NativeMemoryImpl(size);
+    public int getInt(Object o, long offset) {
+        return theUnsafe.getInt(o, offset);
     }
 
     @Override
-    public byte getByte(long address) {
-        return theUnsafe.getByte(address);
+    public void putInt(Object o, long offset, int x) {
+        theUnsafe.putInt(o, offset, x);
     }
 
     @Override
-    public void putByte(long address, byte x) {
-        theUnsafe.putByte(address, x);
+    public Object getObject(Object o, long offset) {
+        return theUnsafe.getObject(o, offset);
     }
 
     @Override
-    public short getShort(long address) {
-        return theUnsafe.getShort(address);
+    public void putObject(Object o, long offset, Object x) {
+        theUnsafe.putObject(o, offset, x);
     }
 
     @Override
-    public void putShort(long address, short x) {
-        theUnsafe.putShort(address, x);
+    public boolean getBoolean(Object o, long offset) {
+        return theUnsafe.getBoolean(o, offset);
     }
 
     @Override
-    public char getChar(long address) {
-        return theUnsafe.getChar(address);
+    public void putBoolean(Object o, long offset, boolean x) {
+        theUnsafe.putBoolean(o, offset, x);
     }
 
     @Override
-    public void putChar(long address, char x) {
-        theUnsafe.putChar(address, x);
+    public byte getByte(Object o, long offset) {
+        return theUnsafe.getByte(offset);
     }
 
     @Override
-    public int getInt(long address) {
-        return theUnsafe.getInt(address);
+    public void putByte(Object o, long offset, byte x) {
+        theUnsafe.putByte(o, offset, x);
     }
 
     @Override
-    public void putInt(long address, int x) {
-        theUnsafe.putInt(address, x);
+    public short getShort(Object o, long offset) {
+        return theUnsafe.getShort(o, offset);
     }
 
     @Override
-    public long getLong(long address) {
-        return theUnsafe.getLong(address);
+    public void putShort(Object o, long offset, short x) {
+        theUnsafe.putShort(o, offset, x);
     }
 
     @Override
-    public void putLong(long address, long x) {
-        theUnsafe.putLong(address, x);
+    public char getChar(Object o, long offset) {
+        return theUnsafe.getChar(o, offset);
     }
 
     @Override
-    public float getFloat(long address) {
-        return theUnsafe.getFloat(address);
+    public void putChar(Object o, long offset, char x) {
+        theUnsafe.putChar(o, offset, x);
     }
 
     @Override
-    public void putFloat(long address, float x) {
-        theUnsafe.putFloat(address, x);
+    public long getLong(Object o, long offset) {
+        return theUnsafe.getLong(o, offset);
     }
 
     @Override
-    public double getDouble(long address) {
-        return theUnsafe.getDouble(address);
+    public void putLong(Object o, long offset, long x) {
+        theUnsafe.putLong(o, offset, x);
     }
 
     @Override
-    public void putDouble(long address, double x) {
-        theUnsafe.putDouble(address, x);
+    public float getFloat(Object o, long offset) {
+        return theUnsafe.getFloat(o, offset);
     }
 
     @Override
-    public long getAddress(long address) {
-        return theUnsafe.getAddress(address);
+    public void putFloat(Object o, long offset, float x) {
+        theUnsafe.putFloat(o, offset, x);
     }
 
     @Override
-    public void putAddress(long address, long x) {
-        theUnsafe.putAddress(address, x);
+    public double getDouble(Object o, long offset) {
+        return theUnsafe.getDouble(o, offset);
+    }
+
+    @Override
+    public void putDouble(Object o, long offset, double x) {
+        theUnsafe.putDouble(o, offset, x);
+    }
+
+    @Override
+    public HeapMemory allocate(long size) {
+        return new HeapMemoryImpl(size);
     }
 
     @Override
@@ -193,12 +204,12 @@ public class UnsafeAccessImpl8D implements UnsafeAccess {
         return theUnsafe.pageSize();
     }
 
-    private final class NativeMemoryImpl implements NativeMemory {
+    private final class HeapMemoryImpl implements HeapMemory {
         private long size;
         private long address;
         private boolean valid;
 
-        private NativeMemoryImpl(long size) {
+        private HeapMemoryImpl(long size) {
             this.size = size;
             address = theUnsafe.allocateMemory(size);
             valid = true;
@@ -232,11 +243,6 @@ public class UnsafeAccessImpl8D implements UnsafeAccess {
         }
 
         @Override
-        public void clear() {
-            set(size, (byte) 0);
-        }
-
-        @Override
         public void reallocate(long newSize) {
             checkIsValid();
             address = theUnsafe.reallocateMemory(address, newSize);
@@ -244,7 +250,7 @@ public class UnsafeAccessImpl8D implements UnsafeAccess {
         }
 
         @Override
-        public void copyFrom(NativeMemory src, long srcOffset, long dstOffset, long bytes) {
+        public void copyFrom(HeapMemory src, long srcOffset, long dstOffset, long bytes) {
             checkIsValid();
             if (!src.isValid())
                 throw new IllegalStateException("Source native memory is invalid!");
@@ -254,97 +260,97 @@ public class UnsafeAccessImpl8D implements UnsafeAccess {
         @Override
         public byte getByte(long offset) {
             checkIsValid();
-            return UnsafeAccessImpl8D.this.getByte(address + offset);
+            return theUnsafe.getByte(address + offset);
         }
 
         @Override
         public void putByte(long offset, byte x) {
             checkIsValid();
-            UnsafeAccessImpl8D.this.putByte(address + offset, x);
+            theUnsafe.putByte(address + offset, x);
         }
 
         @Override
         public short getShort(long offset) {
             checkIsValid();
-            return UnsafeAccessImpl8D.this.getShort(address + offset);
+            return theUnsafe.getShort(address + offset);
         }
 
         @Override
         public void putShort(long offset, short x) {
             checkIsValid();
-            UnsafeAccessImpl8D.this.putShort(address + offset, x);
+            theUnsafe.putShort(address + offset, x);
         }
 
         @Override
         public char getChar(long offset) {
             checkIsValid();
-            return UnsafeAccessImpl8D.this.getChar(address + offset);
+            return theUnsafe.getChar(address + offset);
         }
 
         @Override
         public void putChar(long offset, char x) {
             checkIsValid();
-            UnsafeAccessImpl8D.this.putChar(address + offset, x);
+            theUnsafe.putChar(address + offset, x);
         }
 
         @Override
         public int getInt(long offset) {
             checkIsValid();
-            return UnsafeAccessImpl8D.this.getInt(address + offset);
+            return theUnsafe.getInt(address + offset);
         }
 
         @Override
         public void putInt(long offset, int x) {
             checkIsValid();
-            UnsafeAccessImpl8D.this.putInt(address + offset, x);
+            theUnsafe.putInt(address + offset, x);
         }
 
         @Override
         public long getLong(long offset) {
             checkIsValid();
-            return UnsafeAccessImpl8D.this.getLong(address + offset);
+            return theUnsafe.getLong(address + offset);
         }
 
         @Override
         public void putLong(long offset, long x) {
             checkIsValid();
-            UnsafeAccessImpl8D.this.putLong(address + offset, x);
+            theUnsafe.putLong(address + offset, x);
         }
 
         @Override
         public float getFloat(long offset) {
             checkIsValid();
-            return UnsafeAccessImpl8D.this.getFloat(address + offset);
+            return theUnsafe.getFloat(address + offset);
         }
 
         @Override
         public void putFloat(long offset, float x) {
             checkIsValid();
-            UnsafeAccessImpl8D.this.putFloat(address + offset, x);
+            theUnsafe.putFloat(address + offset, x);
         }
 
         @Override
         public double getDouble(long offset) {
             checkIsValid();
-            return UnsafeAccessImpl8D.this.getDouble(address + offset);
+            return theUnsafe.getDouble(address + offset);
         }
 
         @Override
         public void putDouble(long offset, double x) {
             checkIsValid();
-            UnsafeAccessImpl8D.this.putDouble(address + offset, x);
+            theUnsafe.putDouble(address + offset, x);
         }
 
         @Override
         public long getAddress(long offset) {
             checkIsValid();
-            return UnsafeAccessImpl8D.this.getAddress(address + offset);
+            return theUnsafe.getAddress(address + offset);
         }
 
         @Override
         public void putAddress(long offset, long x) {
             checkIsValid();
-            UnsafeAccessImpl8D.this.putAddress(address + offset, x);
+            theUnsafe.putAddress(address + offset, x);
         }
 
         @Override

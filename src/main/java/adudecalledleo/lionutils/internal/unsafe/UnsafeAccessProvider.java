@@ -14,21 +14,12 @@ public class UnsafeAccessProvider {
     public static boolean initAndCheckAvailable() {
         if (!initialized) {
             LOGGER.info("Initializing Unsafe access");
-            if (JavaVersion.get() <= 8) {
-                try {
-                    instance = new UnsafeAccessImpl8D();
-                } catch (Exception e) {
-                    LOGGER.error("Couldn't initialize Java <=8 implementation of Unsafe access", e);
-                }
-            } else {
-                // TODO
-                LOGGER.error("We don't support Java >=9 yet, sorry");
-                /*
-                try {
-                    instance = new UnsafeAccessImpl9U();
-                } catch (Exception e) {
-                    LOGGER.error("Couldn't initialize Java >=9 of Unsafe access", e);
-                }*/
+            if (JavaVersion.get() > 8)
+                LOGGER.warn("Warning: Unsafe access implementation intended for Java <= 8!");
+            try {
+                instance = new UnsafeAccessImpl8D();
+            } catch (Exception e) {
+                LOGGER.error("Couldn't initialize Java <=8 implementation of Unsafe access", e);
             }
             if (instance == null)
                 LOGGER.warn("Unsafe is unavailable!");

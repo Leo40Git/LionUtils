@@ -13,39 +13,43 @@ public interface UnsafeAccess {
         return UnsafeAccessProvider.getUnsafeAccess();
     }
 
-    NativeMemory allocate(long size);
+    int getInt(Object o, long offset);
 
-    byte getByte(long address);
+    void putInt(Object o, long offset, int x);
 
-    void putByte(long address, byte x);
+    Object getObject(Object o, long offset);
 
-    short getShort(long address);
+    void putObject(Object o, long offset, Object x);
 
-    void putShort(long address, short x);
+    boolean getBoolean(Object o, long offset);
 
-    char getChar(long address);
+    void putBoolean(Object o, long offset, boolean x);
 
-    void putChar(long address, char x);
+    byte getByte(Object o, long offset);
 
-    int getInt(long address);
+    void putByte(Object o, long offset, byte x);
 
-    void putInt(long address, int x);
+    short getShort(Object o, long offset);
 
-    long getLong(long address);
+    void putShort(Object o, long offset, short x);
 
-    void putLong(long address, long x);
+    char getChar(Object o, long offset);
 
-    float getFloat(long address);
+    void putChar(Object o, long offset, char x);
 
-    void putFloat(long address, float x);
+    long getLong(Object o, long offset);
 
-    double getDouble(long address);
+    void putLong(Object o, long offset, long x);
 
-    void putDouble(long address, double x);
+    float getFloat(Object o, long offset);
 
-    long getAddress(long address);
+    void putFloat(Object o, long offset, float x);
 
-    void putAddress(long address, long x);
+    double getDouble(Object o, long offset);
+
+    void putDouble(Object o, long offset, double x);
+
+    HeapMemory allocate(long size);
 
     void setMemory(Object base, long offset, long bytes, byte value);
 
