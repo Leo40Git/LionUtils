@@ -173,7 +173,9 @@ public class UnsafeAccessImpl implements UnsafeAccess {
             return Unsafe.ARRAY_FLOAT_BASE_OFFSET;
         if (arrayClass == double[].class)
             return Unsafe.ARRAY_DOUBLE_BASE_OFFSET;
-        return Unsafe.ARRAY_OBJECT_BASE_OFFSET;
+        if (Object[].class.isAssignableFrom(arrayClass))
+            return Unsafe.ARRAY_OBJECT_BASE_OFFSET;
+        throw new IllegalArgumentException("arrayClass is not, in fact, an array class!");
     }
 
     @Override
@@ -192,7 +194,9 @@ public class UnsafeAccessImpl implements UnsafeAccess {
             return Unsafe.ARRAY_FLOAT_INDEX_SCALE;
         if (arrayClass == double[].class)
             return Unsafe.ARRAY_DOUBLE_INDEX_SCALE;
-        return Unsafe.ARRAY_OBJECT_INDEX_SCALE;
+        if (Object[].class.isAssignableFrom(arrayClass))
+            return Unsafe.ARRAY_OBJECT_INDEX_SCALE;
+        throw new IllegalArgumentException("arrayClass is not, in fact, an array class!");
     }
 
     @Override
