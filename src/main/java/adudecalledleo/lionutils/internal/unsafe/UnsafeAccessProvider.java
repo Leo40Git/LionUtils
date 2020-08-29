@@ -13,7 +13,8 @@ public class UnsafeAccessProvider {
 
     public static boolean initAndCheckAvailable() {
         if (!initialized) {
-            LOGGER.info("Initializing Unsafe access, running Java {} FYI", JavaVersion.current());
+            LOGGER.info("Initializing Unsafe access, running Java {} by {} FYI", JavaVersion.current(),
+                    System.getProperty("java.vendor"));
             try {
                 instance = new UnsafeAccessImpl();
             } catch (Exception e) {

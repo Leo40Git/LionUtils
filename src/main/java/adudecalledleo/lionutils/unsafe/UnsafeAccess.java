@@ -236,6 +236,213 @@ public interface UnsafeAccess {
     void putObject(Object o, long offset, Object x);
 
     /**
+     * Gets a {@code boolean} from the base {@code Object}'s memory, with volatile load semantics.
+     *
+     * @param o
+     *         base object
+     * @param offset
+     *         offset
+     * @return {@code boolean} at that offset
+     */
+    boolean getBooleanVolatile(Object o, long offset);
+
+    /**
+     * Puts a {@code boolean} in the base {@code Object}'s memory, with volatile load semantics.
+     *
+     * @param o
+     *         base object
+     * @param offset
+     *         offset
+     * @param x
+     *         {@code boolean} to put at that offset
+     */
+    void putBooleanVolatile(Object o, long offset, boolean x);
+
+    /**
+     * Gets a {@code byte} from the base {@code Object}'s memory, with volatile load semantics.
+     *
+     * @param o
+     *         base object
+     * @param offset
+     *         offset
+     * @return {@code byte} at that offset
+     */
+    byte getByteVolatile(Object o, long offset);
+
+    /**
+     * Puts a {@code byte} in the base {@code Object}'s memory, with volatile load semantics.
+     *
+     * @param o
+     *         base object
+     * @param offset
+     *         offset
+     * @param x
+     *         {@code byte} to put at that offset
+     */
+    void putByteVolatile(Object o, long offset, byte x);
+
+    /**
+     * Gets a {@code short} from the base {@code Object}'s memory, with volatile load semantics.
+     *
+     * @param o
+     *         base object
+     * @param offset
+     *         offset
+     * @return {@code short} at that offset
+     */
+    short getShortVolatile(Object o, long offset);
+
+    /**
+     * Puts a {@code short} in the base {@code Object}'s memory, with volatile load semantics.
+     *
+     * @param o
+     *         base object
+     * @param offset
+     *         offset
+     * @param x
+     *         {@code short} to put at that offset
+     */
+    void putShortVolatile(Object o, long offset, short x);
+
+    /**
+     * Gets a {@code char} from the base {@code Object}'s memory, with volatile load semantics.
+     *
+     * @param o
+     *         base object
+     * @param offset
+     *         offset
+     * @return {@code char} at that offset
+     */
+    char getCharVolatile(Object o, long offset);
+
+    /**
+     * Puts a {@code char} in the base {@code Object}'s memory, with volatile load semantics.
+     *
+     * @param o
+     *         base object
+     * @param offset
+     *         offset
+     * @param x
+     *         {@code char} to put at that offset
+     */
+    void putCharVolatile(Object o, long offset, char x);
+
+    /**
+     * Gets an {@code int} from the base {@code Object}'s memory, with volatile load semantics.
+     *
+     * @param o
+     *         base object
+     * @param offset
+     *         offset
+     * @return {@code int} at that offset
+     */
+    int getIntVolatile(Object o, long offset);
+
+    /**
+     * Puts an {@code int} in the base {@code Object}'s memory, with volatile load semantics.
+     *
+     * @param o
+     *         base object
+     * @param offset
+     *         offset
+     * @param x
+     *         {@code int} to put at that offset
+     */
+    void putIntVolatile(Object o, long offset, int x);
+
+    /**
+     * Gets a {@code long} from the base {@code Object}'s memory, with volatile load semantics.
+     *
+     * @param o
+     *         base object
+     * @param offset
+     *         offset
+     * @return {@code long} at that offset
+     */
+    long getLongVolatile(Object o, long offset);
+
+    /**
+     * Puts a {@code long} in the base {@code Object}'s memory, with volatile load semantics.
+     *
+     * @param o
+     *         base object
+     * @param offset
+     *         offset
+     * @param x
+     *         {@code long} to put at that offset
+     */
+    void putLongVolatile(Object o, long offset, long x);
+
+    /**
+     * Gets a {@code float} from the base {@code Object}'s memory, with volatile load semantics.
+     *
+     * @param o
+     *         base object
+     * @param offset
+     *         offset
+     * @return {@code float} at that offset
+     */
+    float getFloatVolatile(Object o, long offset);
+
+    /**
+     * Puts a {@code float} in the base {@code Object}'s memory, with volatile load semantics.
+     *
+     * @param o
+     *         base object
+     * @param offset
+     *         offset
+     * @param x
+     *         {@code float} to put at that offset
+     */
+    void putFloatVolatile(Object o, long offset, float x);
+
+    /**
+     * Gets a {@code double} from the base {@code Object}'s memory, with volatile load semantics.
+     *
+     * @param o
+     *         base object
+     * @param offset
+     *         offset
+     * @return {@code double} at that offset
+     */
+    double getDoubleVolatile(Object o, long offset);
+
+    /**
+     * Puts a {@code double} in the base {@code Object}'s memory, with volatile load semantics.
+     *
+     * @param o
+     *         base object
+     * @param offset
+     *         offset
+     * @param x
+     *         {@code double} to put at that offset
+     */
+    void putDoubleVolatile(Object o, long offset, double x);
+
+    /**
+     * Gets a pointer to an {@code Object} from the base {@code Object}'s memory, with volatile load semantics.
+     *
+     * @param o
+     *         base object
+     * @param offset
+     *         offset
+     * @return {@code Object} at that offset
+     */
+    Object getObjectVolatile(Object o, long offset);
+
+    /**
+     * Puts a pointer to an {@code Object} in the base {@code Object}'s memory, with volatile load semantics.
+     *
+     * @param o
+     *         base object
+     * @param offset
+     *         offset
+     * @param x
+     *         {@code Object} to put at that offset
+     */
+    void putObjectVolatile(Object o, long offset, Object x);
+
+    /**
      * Sets all bytes in a section of the base {@code Object}'s memory to a specific value.
      *
      * @param base

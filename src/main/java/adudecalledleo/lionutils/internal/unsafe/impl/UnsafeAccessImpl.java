@@ -7,6 +7,7 @@ import sun.misc.Unsafe;
 import java.lang.reflect.Field;
 
 // Written for Java 8 and below, although it appears to work with Java 9 and above too
+// NOTE - Only tested with AdoptOpenJDK+HotSpot, may malfunction with other JDKs!
 public class UnsafeAccessImpl implements UnsafeAccess {
     private static Unsafe theUnsafe;
 
@@ -39,7 +40,7 @@ public class UnsafeAccessImpl implements UnsafeAccess {
 
     @Override
     public byte getByte(Object o, long offset) {
-        return theUnsafe.getByte(offset);
+        return theUnsafe.getByte(o, offset);
     }
 
     @Override
@@ -118,6 +119,96 @@ public class UnsafeAccessImpl implements UnsafeAccess {
     }
 
     @Override
+    public boolean getBooleanVolatile(Object o, long offset) {
+        return theUnsafe.getBooleanVolatile(o, offset);
+    }
+
+    @Override
+    public void putBooleanVolatile(Object o, long offset, boolean x) {
+        theUnsafe.putBooleanVolatile(o, offset, x);
+    }
+
+    @Override
+    public byte getByteVolatile(Object o, long offset) {
+        return theUnsafe.getByteVolatile(o, offset);
+    }
+
+    @Override
+    public void putByteVolatile(Object o, long offset, byte x) {
+        theUnsafe.putByteVolatile(o, offset, x);
+    }
+
+    @Override
+    public short getShortVolatile(Object o, long offset) {
+        return theUnsafe.getShortVolatile(o, offset);
+    }
+
+    @Override
+    public void putShortVolatile(Object o, long offset, short x) {
+        theUnsafe.putShortVolatile(o, offset, x);
+    }
+
+    @Override
+    public char getCharVolatile(Object o, long offset) {
+        return theUnsafe.getCharVolatile(o, offset);
+    }
+
+    @Override
+    public void putCharVolatile(Object o, long offset, char x) {
+        theUnsafe.putCharVolatile(o, offset, x);
+    }
+
+    @Override
+    public int getIntVolatile(Object o, long offset) {
+        return theUnsafe.getIntVolatile(o, offset);
+    }
+
+    @Override
+    public void putIntVolatile(Object o, long offset, int x) {
+        theUnsafe.putIntVolatile(o, offset, x);
+    }
+
+    @Override
+    public long getLongVolatile(Object o, long offset) {
+        return theUnsafe.getLongVolatile(o, offset);
+    }
+
+    @Override
+    public void putLongVolatile(Object o, long offset, long x) {
+        theUnsafe.putLongVolatile(o, offset, x);
+    }
+
+    @Override
+    public float getFloatVolatile(Object o, long offset) {
+        return theUnsafe.getFloatVolatile(o, offset);
+    }
+
+    @Override
+    public void putFloatVolatile(Object o, long offset, float x) {
+        theUnsafe.putFloatVolatile(o, offset, x);
+    }
+
+    @Override
+    public double getDoubleVolatile(Object o, long offset) {
+        return theUnsafe.getDoubleVolatile(o, offset);
+    }
+
+    @Override
+    public void putDoubleVolatile(Object o, long offset, double x) {
+        theUnsafe.putDoubleVolatile(o, offset, x);
+    }
+
+    @Override
+    public Object getObjectVolatile(Object o, long offset) {
+        return theUnsafe.getObjectVolatile(o, offset);
+    }
+
+    @Override
+    public void putObjectVolatile(Object o, long offset, Object x) {
+        theUnsafe.putObjectVolatile(o, offset, x);
+    }
+
+    @Override
     public void setMemory(Object base, long offset, long bytes, byte value) {
         theUnsafe.setMemory(base, offset, bytes, value);
     }
@@ -154,6 +245,11 @@ public class UnsafeAccessImpl implements UnsafeAccess {
 
     @Override
     public int arrayBaseOffset(Class<?> arrayClass) {
+        // Unsafe.arrayIndexScale completely halts the JVM with an nonexistent exception (java.lang.InvalidClassException)
+        // if given a non-array class (would be completely fine if the exception actually existed)
+        // luckily, Unsafe already has constants for every possible return value
+        if (!arrayClass.isArray())
+            throw new IllegalArgumentException("Class is not an array class!");
         if (arrayClass == byte[].class)
             return Unsafe.ARRAY_BYTE_BASE_OFFSET;
         if (arrayClass == short[].class)
@@ -168,13 +264,16 @@ public class UnsafeAccessImpl implements UnsafeAccess {
             return Unsafe.ARRAY_FLOAT_BASE_OFFSET;
         if (arrayClass == double[].class)
             return Unsafe.ARRAY_DOUBLE_BASE_OFFSET;
-        if (Object[].class.isAssignableFrom(arrayClass))
-            return Unsafe.ARRAY_OBJECT_BASE_OFFSET;
-        throw new IllegalArgumentException("arrayClass is not, in fact, an array class!");
+        return Unsafe.ARRAY_OBJECT_BASE_OFFSET;
     }
 
     @Override
     public int arrayIndexScale(Class<?> arrayClass) {
+        // Unsafe.arrayIndexScale completely halts the JVM with an nonexistent exception (java.lang.InvalidClassException)
+        // if given a non-array class (would be completely fine if the exception actually existed)
+        // luckily, Unsafe already has constants for every possible return value
+        if (!arrayClass.isArray())
+            throw new IllegalArgumentException("Class is not an array class!");
         if (arrayClass == byte[].class)
             return Unsafe.ARRAY_BYTE_INDEX_SCALE;
         if (arrayClass == short[].class)
@@ -189,9 +288,7 @@ public class UnsafeAccessImpl implements UnsafeAccess {
             return Unsafe.ARRAY_FLOAT_INDEX_SCALE;
         if (arrayClass == double[].class)
             return Unsafe.ARRAY_DOUBLE_INDEX_SCALE;
-        if (Object[].class.isAssignableFrom(arrayClass))
-            return Unsafe.ARRAY_OBJECT_INDEX_SCALE;
-        throw new IllegalArgumentException("arrayClass is not, in fact, an array class!");
+        return Unsafe.ARRAY_OBJECT_INDEX_SCALE;
     }
 
     @Override
