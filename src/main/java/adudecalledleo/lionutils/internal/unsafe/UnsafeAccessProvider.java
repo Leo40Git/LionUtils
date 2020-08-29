@@ -4,6 +4,7 @@ import adudecalledleo.lionutils.LoggerUtil;
 import adudecalledleo.lionutils.internal.unsafe.impl.UnsafeAccessImpl;
 import adudecalledleo.lionutils.unsafe.UnsafeAccess;
 import org.apache.logging.log4j.Logger;
+import org.spongepowered.asm.util.JavaVersion;
 
 public class UnsafeAccessProvider {
     private static final Logger LOGGER = LoggerUtil.getLogger("LionUtils|UnsafeAccess");
@@ -12,7 +13,7 @@ public class UnsafeAccessProvider {
 
     public static boolean initAndCheckAvailable() {
         if (!initialized) {
-            LOGGER.info("Initializing Unsafe access");
+            LOGGER.info("Initializing Unsafe access, running Java {} FYI", JavaVersion.current());
             try {
                 instance = new UnsafeAccessImpl();
             } catch (Exception e) {
