@@ -255,7 +255,7 @@ public class ConfigHolder<T extends Config> {
                             "config.verify() threw exception after default config was loaded", e);
                 } else {
                     logAndHandleException("Loaded invalid config from file \"" + configPath.getFileName().toString() +
-                                    "\", continuing with default values", e, Event.VERIFY);
+                            "\", continuing with default values", e, Event.VERIFY);
                 }
                 config = getDefault();
             }
