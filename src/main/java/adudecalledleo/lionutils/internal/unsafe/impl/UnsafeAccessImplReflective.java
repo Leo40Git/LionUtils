@@ -485,25 +485,8 @@ public class UnsafeAccessImplReflective implements UnsafeAccess {
 
         @Override
         public void copyFrom(HeapMemory src, long srcOffset, long dstOffset, long bytes) {
-            if (!src.isValid())
-                throw new IllegalStateException("Source native memory is invalid!");
-            if (!isValid())
-                throw new IllegalArgumentException("Destination native memory is invalid!");
-            if (srcOffset < 0)
-                throw new IllegalArgumentException("Source offset is negative!");
-            if (dstOffset < 0)
-                throw new IllegalArgumentException("Destination offset is negative");
-            long srcAddress = src.getAddress();
-            long srcSize = src.getSize();
-            if ((srcAddress + srcOffset) >= (srcAddress + srcSize)) {
-                throw new IllegalArgumentException(
-                        "Source offset of " + srcOffset + " is out of bounds for source of size " + srcSize);
-            }
-            if ((address + dstOffset) > (address + size)) {
-                throw new IllegalArgumentException(
-                        "Destination offset of " + srcOffset + " is out of bounds for destination of size " + srcSize);
-            }
-            copyMemory(null, srcAddress + srcOffset, null, address + dstOffset, bytes);
+            checkCopyFrom(src, srcOffset, dstOffset, bytes);
+            copyMemory(null, src.getAddress() + srcOffset, null, address + dstOffset, bytes);
         }
 
         @Override
