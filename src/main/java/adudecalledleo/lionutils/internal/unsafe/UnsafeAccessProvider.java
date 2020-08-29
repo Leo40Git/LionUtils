@@ -1,8 +1,7 @@
 package adudecalledleo.lionutils.internal.unsafe;
 
-import adudecalledleo.lionutils.JavaVersion;
 import adudecalledleo.lionutils.LoggerUtil;
-import adudecalledleo.lionutils.internal.unsafe.impl.UnsafeAccessImpl8D;
+import adudecalledleo.lionutils.internal.unsafe.impl.UnsafeAccessImpl;
 import adudecalledleo.lionutils.unsafe.UnsafeAccess;
 import org.apache.logging.log4j.Logger;
 
@@ -14,12 +13,10 @@ public class UnsafeAccessProvider {
     public static boolean initAndCheckAvailable() {
         if (!initialized) {
             LOGGER.info("Initializing Unsafe access");
-            if (JavaVersion.get() > 8)
-                LOGGER.warn("Warning: Unsafe access implementation intended for Java <= 8!");
             try {
-                instance = new UnsafeAccessImpl8D();
+                instance = new UnsafeAccessImpl();
             } catch (Exception e) {
-                LOGGER.error("Couldn't initialize Java <=8 implementation of Unsafe access", e);
+                LOGGER.error("Couldn't initialize Unsafe access implementation", e);
             }
             if (instance == null)
                 LOGGER.warn("Unsafe is unavailable!");

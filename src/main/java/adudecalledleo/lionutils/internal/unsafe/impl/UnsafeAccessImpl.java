@@ -6,10 +6,11 @@ import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
 
-public class UnsafeAccessImpl8D implements UnsafeAccess {
+// Written for Java 8 and below, although it appears to work with Java 9 and above too
+public class UnsafeAccessImpl implements UnsafeAccess {
     private static Unsafe theUnsafe;
 
-    public UnsafeAccessImpl8D() {
+    public UnsafeAccessImpl() {
         if (theUnsafe == null) {
             try {
                 Field unsafeHolder = Unsafe.class.getDeclaredField("theUnsafe");
