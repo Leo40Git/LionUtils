@@ -1,9 +1,10 @@
-package adudecalledleo.lionutils.block.entity;
+package adudecalledleo.lionutils.block.entity.listener;
 
 import adudecalledleo.lionutils.block.BaseBlockWithEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -27,9 +28,9 @@ public interface OnPlacedListener {
      * @param state
      *         state of block
      * @param placer
-     *         entity that placed the block
+     *         player that placed the block
      * @param itemStack
      *         stack entity was holding when placing the block
      */
-    void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack);
+    void onPlaced(World world, BlockPos pos, BlockState state, PlayerEntity placer, ItemStack itemStack);
 }
