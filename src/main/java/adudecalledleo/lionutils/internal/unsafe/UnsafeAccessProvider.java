@@ -1,12 +1,35 @@
 package adudecalledleo.lionutils.internal.unsafe;
 
 import adudecalledleo.lionutils.LoggerUtil;
-import adudecalledleo.lionutils.internal.unsafe.impl.UnsafeAccessImpl;
+import adudecalledleo.lionutils.internal.unsafe.impl.UnsafeAccessImplDirect;
+import adudecalledleo.lionutils.internal.unsafe.impl.UnsafeAccessImplReflective;
 import adudecalledleo.lionutils.unsafe.UnsafeAccess;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.util.JavaVersion;
 
+import java.util.function.Supplier;
+
 public class UnsafeAccessProvider {
+    private static final class ImplInfo {
+        public final String description;
+        public final Supplier<UnsafeAccess> implSupplier;
+
+        private ImplInfo(String description,
+                Supplier<UnsafeAccess> implSupplier) {
+            this.description = description;
+            this.implSupplier = implSupplier;
+        }
+
+        public UnsafeAccess getImpl() {
+            return implSupplier.get();
+        }
+    }
+
+    private static final ImplInfo[] IMPL_INFOS = new ImplInfo[] {
+            new ImplInfo("direct proxy with Unsafe instance storage", UnsafeAccessImplDirect::new),
+            new ImplInfo("reflection-based proxy", UnsafeAccessImplReflective::new),
+    };
+
     private static final Logger LOGGER = LoggerUtil.getLogger("LionUtils|UnsafeAccess");
     private static UnsafeAccess instance;
     private static boolean initialized = false;
@@ -15,10 +38,15 @@ public class UnsafeAccessProvider {
         if (!initialized) {
             LOGGER.info("Initializing Unsafe access, running Java {} by {} FYI", JavaVersion.current(),
                     System.getProperty("java.vendor"));
-            try {
-                instance = new UnsafeAccessImpl();
-            } catch (Exception e) {
-                LOGGER.error("Couldn't initialize Unsafe access implementation", e);
+            for (ImplInfo info : IMPL_INFOS) {
+                try {
+                    instance = info.getImpl();
+                } catch (Exception e) {
+                    LOGGER.error("Couldn't initialize Unsafe access implementation: " + info.description, e);
+                    continue;
+                }
+                LOGGER.info("Successfully initialized Unsafe access implementation: {}", info.description);
+                break;
             }
             if (instance == null)
                 LOGGER.warn("Unsafe is unavailable!");

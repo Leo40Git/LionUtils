@@ -8,10 +8,10 @@ import java.lang.reflect.Field;
 
 // Written for Java 8 and below, although it appears to work with Java 9 and above too
 // NOTE - Only tested with AdoptOpenJDK+HotSpot, may malfunction with other JDKs!
-public class UnsafeAccessImpl implements UnsafeAccess {
+public class UnsafeAccessImplDirect implements UnsafeAccess {
     private static Unsafe theUnsafe;
 
-    public UnsafeAccessImpl() {
+    public UnsafeAccessImplDirect() {
         if (theUnsafe == null) {
             try {
                 Field unsafeHolder = Unsafe.class.getDeclaredField("theUnsafe");
@@ -245,7 +245,7 @@ public class UnsafeAccessImpl implements UnsafeAccess {
 
     @Override
     public int arrayBaseOffset(Class<?> arrayClass) {
-        // Unsafe.arrayIndexScale completely halts the JVM with an nonexistent exception (java.lang.InvalidClassException)
+        // Unsafe.arrayBaseOffset completely halts the JVM with an nonexistent exception (java.lang.InvalidClassException)
         // if given a non-array class (would be completely fine if the exception actually existed)
         // luckily, Unsafe already has constants for every possible return value
         if (!arrayClass.isArray())
@@ -306,44 +306,15 @@ public class UnsafeAccessImpl implements UnsafeAccess {
         return new HeapMemoryImpl(size);
     }
 
-    private final class HeapMemoryImpl implements HeapMemory {
+    private final class HeapMemoryImpl extends BaseHeapMemoryImpl {
         private long size;
         private long address;
         private boolean valid;
 
         private HeapMemoryImpl(long size) {
-            this.size = size;
+            super(size);
             address = theUnsafe.allocateMemory(size);
-            valid = true;
             clear();
-        }
-
-        @Override
-        public long getSize() {
-            return size;
-        }
-
-        @Override
-        public long getAddress() {
-            return address;
-        }
-
-        @Override
-        public boolean isValid() {
-            return valid;
-        }
-
-        private void checkIsValid() {
-            if (!valid)
-                throw new IllegalStateException("Native memory is invalid!");
-        }
-
-        private void checkBounds(long offset) {
-            checkIsValid();
-            if (offset < 0)
-                throw new IllegalArgumentException("Offset is negative!");
-            if ((address + offset) >= (address + size))
-                throw new IllegalArgumentException("Offset of " + offset + " is out of bounds for size " + size);
         }
 
         @Override
