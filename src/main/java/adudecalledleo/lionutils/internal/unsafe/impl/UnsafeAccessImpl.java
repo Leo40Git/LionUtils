@@ -28,26 +28,6 @@ public class UnsafeAccessImpl implements UnsafeAccess {
     }
 
     @Override
-    public int getInt(Object o, long offset) {
-        return theUnsafe.getInt(o, offset);
-    }
-
-    @Override
-    public void putInt(Object o, long offset, int x) {
-        theUnsafe.putInt(o, offset, x);
-    }
-
-    @Override
-    public Object getObject(Object o, long offset) {
-        return theUnsafe.getObject(o, offset);
-    }
-
-    @Override
-    public void putObject(Object o, long offset, Object x) {
-        theUnsafe.putObject(o, offset, x);
-    }
-
-    @Override
     public boolean getBoolean(Object o, long offset) {
         return theUnsafe.getBoolean(o, offset);
     }
@@ -88,6 +68,16 @@ public class UnsafeAccessImpl implements UnsafeAccess {
     }
 
     @Override
+    public int getInt(Object o, long offset) {
+        return theUnsafe.getInt(o, offset);
+    }
+
+    @Override
+    public void putInt(Object o, long offset, int x) {
+        theUnsafe.putInt(o, offset, x);
+    }
+
+    @Override
     public long getLong(Object o, long offset) {
         return theUnsafe.getLong(o, offset);
     }
@@ -118,8 +108,13 @@ public class UnsafeAccessImpl implements UnsafeAccess {
     }
 
     @Override
-    public HeapMemory allocate(long size) {
-        return new HeapMemoryImpl(size);
+    public Object getObject(Object o, long offset) {
+        return theUnsafe.getObject(o, offset);
+    }
+
+    @Override
+    public void putObject(Object o, long offset, Object x) {
+        theUnsafe.putObject(o, offset, x);
     }
 
     @Override
@@ -207,6 +202,11 @@ public class UnsafeAccessImpl implements UnsafeAccess {
     @Override
     public int pageSize() {
         return theUnsafe.pageSize();
+    }
+
+    @Override
+    public HeapMemory allocate(long size) {
+        return new HeapMemoryImpl(size);
     }
 
     private final class HeapMemoryImpl implements HeapMemory {
