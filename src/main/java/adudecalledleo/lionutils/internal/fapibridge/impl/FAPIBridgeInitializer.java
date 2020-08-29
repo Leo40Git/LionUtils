@@ -7,8 +7,9 @@ import net.fabricmc.loader.api.FabricLoader;
 
 public final class FAPIBridgeInitializer {
     public static void init() {
-        assert FabricLoader.getInstance().isModLoaded("fabric") : "Utility that requires Fabric API was called " +
-                "without Fabric API being loaded! Please install Fabric API (and also add a dependency on FAPI to your mod).";
+        assert FabricLoader.getInstance().isModLoaded("fabric") :
+                "Utility that requires Fabric API was called without Fabric API being loaded!\n" +
+                        "Please install Fabric API (and also add a dependency on FAPI to your mod).";
         PacketRegistry.init();
     }
 

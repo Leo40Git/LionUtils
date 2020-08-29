@@ -3,8 +3,6 @@ package adudecalledleo.lionutils.internal.fapibridge;
 import adudecalledleo.lionutils.InitializerUtil;
 import adudecalledleo.lionutils.LoggerUtil;
 import adudecalledleo.lionutils.internal.fapibridge.impl.FAPIBridgeInitializer;
-import adudecalledleo.lionutils.internal.fapibridge.impl.nop.network.NullClientPacketRegistryBridge;
-import adudecalledleo.lionutils.internal.fapibridge.impl.nop.network.NullServerPacketRegistryBridge;
 import adudecalledleo.lionutils.internal.fapibridge.network.ClientPacketRegistryBridge;
 import adudecalledleo.lionutils.internal.fapibridge.network.ServerPacketRegistryBridge;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 // +-----------------------------------------------------------------+
 // | Fabric API Bridge Subsystem mk. -1                              |
 // | Util class -> FAPIBridgeProvider -> Fabric API                  |
-// | If FAPI is not present, errors out with  a proper error message |
+// | If FAPI is not present, errors out with a proper error message  |
 // | rather than a NoClassDefFoundError                              |
 // +-----------------------------------------------------------------+
 public final class FAPIBridgeProvider {
@@ -31,8 +29,6 @@ public final class FAPIBridgeProvider {
         public static ServerPacketRegistryBridge SERVER;
 
         static {
-            CLIENT = NullClientPacketRegistryBridge.INSTANCE;
-            SERVER = NullServerPacketRegistryBridge.INSTANCE;
             init();
         }
     }
