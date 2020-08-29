@@ -7,10 +7,10 @@ public interface HeapMemory extends AutoCloseable {
 
     boolean isValid();
 
-    void set(long bytes, byte value);
+    void set(long offset, long bytes, byte value);
 
     default void clear() {
-        set(getSize(), (byte) 0);
+        set(0, getSize(), (byte) 0);
     }
 
     void reallocate(long newSize);

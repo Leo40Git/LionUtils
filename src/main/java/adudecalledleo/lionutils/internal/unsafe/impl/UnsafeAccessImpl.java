@@ -237,10 +237,18 @@ public class UnsafeAccessImpl implements UnsafeAccess {
                 throw new IllegalStateException("Native memory is invalid!");
         }
 
-        @Override
-        public void set(long bytes, byte value) {
+        private void checkBounds(long offset) {
             checkIsValid();
-            setMemory(null, address, bytes, value);
+            if (offset < 0)
+                throw new IllegalArgumentException("Offset is negative!");
+            if ((address + offset) >= (address + size))
+                throw new IllegalArgumentException("Offset of " + offset + " is out of bounds for size " + size);
+        }
+
+        @Override
+        public void set(long offset, long bytes, byte value) {
+            checkBounds(offset);
+            setMemory(null, address + offset, bytes, value);
         }
 
         @Override
@@ -252,105 +260,120 @@ public class UnsafeAccessImpl implements UnsafeAccess {
 
         @Override
         public void copyFrom(HeapMemory src, long srcOffset, long dstOffset, long bytes) {
-            checkIsValid();
             if (!src.isValid())
                 throw new IllegalStateException("Source native memory is invalid!");
-            copyMemory(null, src.getAddress() + srcOffset, null, address + dstOffset, bytes);
+            if (!isValid())
+                throw new IllegalArgumentException("Destination native memory is invalid!");
+            if (srcOffset < 0)
+                throw new IllegalArgumentException("Source offset is negative!");
+            if (dstOffset < 0)
+                throw new IllegalArgumentException("Destination offset is negative");
+            long srcAddress = src.getAddress();
+            long srcSize = src.getSize();
+            if ((srcAddress + srcOffset) >= (srcAddress + srcSize)) {
+                throw new IllegalArgumentException(
+                        "Source offset of " + srcOffset + " is out of bounds for source of size " + srcSize);
+            }
+            if ((address + dstOffset) > (address + size)) {
+                throw new IllegalArgumentException(
+                        "Destination offset of " + srcOffset + " is out of bounds for destination of size " + srcSize);
+            }
+            copyMemory(null, srcAddress + srcOffset, null, address + dstOffset, bytes);
         }
 
         @Override
         public byte getByte(long offset) {
-            checkIsValid();
+            checkBounds(offset);
             return theUnsafe.getByte(address + offset);
         }
 
         @Override
         public void putByte(long offset, byte x) {
-            checkIsValid();
+            checkBounds(offset);
             theUnsafe.putByte(address + offset, x);
         }
 
         @Override
         public short getShort(long offset) {
-            checkIsValid();
+            checkBounds(offset);
             return theUnsafe.getShort(address + offset);
         }
 
         @Override
         public void putShort(long offset, short x) {
-            checkIsValid();
+            checkBounds(offset);
             theUnsafe.putShort(address + offset, x);
         }
 
         @Override
         public char getChar(long offset) {
-            checkIsValid();
+            checkBounds(offset);
             return theUnsafe.getChar(address + offset);
         }
 
         @Override
         public void putChar(long offset, char x) {
-            checkIsValid();
+            checkBounds(offset);
             theUnsafe.putChar(address + offset, x);
         }
 
         @Override
         public int getInt(long offset) {
-            checkIsValid();
+            checkBounds(offset);
             return theUnsafe.getInt(address + offset);
         }
 
         @Override
         public void putInt(long offset, int x) {
-            checkIsValid();
+            checkBounds(offset);
             theUnsafe.putInt(address + offset, x);
         }
 
         @Override
         public long getLong(long offset) {
-            checkIsValid();
+            checkBounds(offset);
             return theUnsafe.getLong(address + offset);
         }
 
         @Override
         public void putLong(long offset, long x) {
-            checkIsValid();
+            checkBounds(offset);
             theUnsafe.putLong(address + offset, x);
         }
 
         @Override
         public float getFloat(long offset) {
-            checkIsValid();
+            checkBounds(offset);
             return theUnsafe.getFloat(address + offset);
         }
 
         @Override
         public void putFloat(long offset, float x) {
-            checkIsValid();
+            checkBounds(offset);
             theUnsafe.putFloat(address + offset, x);
         }
 
         @Override
         public double getDouble(long offset) {
-            checkIsValid();
+            checkBounds(offset);
             return theUnsafe.getDouble(address + offset);
         }
 
         @Override
         public void putDouble(long offset, double x) {
-            checkIsValid();
+            checkBounds(offset);
             theUnsafe.putDouble(address + offset, x);
         }
 
         @Override
         public long getAddress(long offset) {
-            checkIsValid();
+            checkBounds(offset);
             return theUnsafe.getAddress(address + offset);
         }
 
         @Override
         public void putAddress(long offset, long x) {
-            checkIsValid();
+            checkBounds(offset);
             theUnsafe.putAddress(address + offset, x);
         }
 
