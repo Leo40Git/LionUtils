@@ -167,7 +167,7 @@ public final class ScissorStack {
     public static void refreshScissorRect() {
         Window window = MinecraftClient.getInstance().getWindow();
 
-        if (FRAMES.isEmpty()) {
+        if (isEmpty()) {
             // set the scissoring rect to be the entire screen
             // this shouldn't be necessary, since we also disable scissor testing entirely here,
             // but just in case...

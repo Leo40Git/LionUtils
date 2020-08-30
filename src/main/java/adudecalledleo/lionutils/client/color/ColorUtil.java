@@ -175,19 +175,49 @@ public final class ColorUtil {
         /**
          * Represents the red component.
          */
-        RED,
+        RED(ColorUtil::packRed, ColorUtil::unpackRed),
         /**
          * Represents the green component.
          */
-        GREEN,
+        GREEN(ColorUtil::packGreen, ColorUtil::unpackGreen),
         /**
          * Represents the blue component.
          */
-        BLUE,
+        BLUE(ColorUtil::packBlue, ColorUtil::unpackBlue),
         /**
          * Represents the alpha component.
          */
-        ALPHA
+        ALPHA(ColorUtil::packAlpha, ColorUtil::unpackAlpha);
+
+        private final IntUnaryOperator packOp;
+        private final IntUnaryOperator unpackOp;
+
+        Component(IntUnaryOperator packOp, IntUnaryOperator unpackOp) {
+            this.packOp = packOp;
+            this.unpackOp = unpackOp;
+        }
+
+        /**
+         * Packs the value as if it were this component into a color.
+         *
+         * @param value
+         *         component value
+         * @return the resulting color
+         */
+        public int pack(int value) {
+            return packOp.applyAsInt(value);
+        }
+
+        /**
+         * Unpacks this component's value from a color.
+         *
+         * @param color
+         *         color
+         * @return the component's value
+         */
+        public int unpack(int color) {
+            return unpackOp.applyAsInt(color);
+        }
     }
 
     /**
