@@ -1,9 +1,12 @@
 adudecalledleo.lionutils
 adudecalledleo.lionutils.block
+adudecalledleo.lionutils.block.entity.listener
 adudecalledleo.lionutils.client.color
 adudecalledleo.lionutils.client.render
 adudecalledleo.lionutils.config
 adudecalledleo.lionutils.entity
 adudecalledleo.lionutils.inventory
 adudecalledleo.lionutils.mixin
+adudecalledleo.lionutils.network
 adudecalledleo.lionutils.serialize
+adudecalledleo.lionutils.unsafe
