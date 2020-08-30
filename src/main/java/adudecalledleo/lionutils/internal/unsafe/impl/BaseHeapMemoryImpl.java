@@ -13,12 +13,12 @@ abstract class BaseHeapMemoryImpl implements HeapMemory {
     }
 
     @Override
-    public long getSize() {
+    public long size() {
         return size;
     }
 
     @Override
-    public long getAddress() {
+    public long address() {
         return address;
     }
 
@@ -49,8 +49,8 @@ abstract class BaseHeapMemoryImpl implements HeapMemory {
             throw new IllegalArgumentException("Source offset is negative!");
         if (dstOffset < 0)
             throw new IllegalArgumentException("Destination offset is negative");
-        long srcAddress = src.getAddress();
-        long srcSize = src.getSize();
+        long srcAddress = src.address();
+        long srcSize = src.size();
         if ((srcAddress + srcOffset + bytes) >= (srcAddress + srcSize)) throw new IllegalArgumentException(
                 "Source offset of " + srcOffset + " with byte count " + bytes +
                         " is out of bounds for source of size " + srcSize);

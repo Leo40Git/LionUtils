@@ -25,12 +25,12 @@ public class UnsafeAccessProvider {
         }
     }
 
-    private static final ImplInfo[] IMPL_INFOS = new ImplInfo[] {
-            new ImplInfo("direct proxy with Unsafe instance storage", UnsafeAccessImplDirect::new),
+    private static final ImplInfo[] IMPL_INFOS = {
+            new ImplInfo("direct proxy", UnsafeAccessImplDirect::new),
             new ImplInfo("reflection-based proxy", UnsafeAccessImplReflective::new),
     };
 
-    private static final Logger LOGGER = LoggerUtil.getLogger("LionUtils|UnsafeAccess");
+    static final Logger LOGGER = LoggerUtil.getLogger("LionUtils|UnsafeAccess");
     private static UnsafeAccess instance;
     private static boolean initialized = false;
 

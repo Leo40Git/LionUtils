@@ -6,10 +6,15 @@ import adudecalledleo.lionutils.unsafe.UnsafeAccess;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 // unlike the direct impl, here we store Method instances for each and every method that is exposed via UnsafeAccess
-// this avoids having to get the Unsafe instance directly, which is good since the holder field can change names very easily
+// this essentially just means we don't reference the Unsafe class directly, except during init
 public class UnsafeAccessImplReflective implements UnsafeAccess {
+    private final Class<?> unsafeClass;
+    private final Object unsafeInstance;
+
     // UnsafeAccess
     private final Method getBooleanMethod;
     private final Method putBooleanMethod;
@@ -54,9 +59,9 @@ public class UnsafeAccessImplReflective implements UnsafeAccess {
     private final Method staticFieldBaseMethod;
     private final Method shouldBeInitializedMethod;
     private final Method ensureClassInitializedMethod;
-    private final Method arrayBaseOffsetMethod;
-    private final Method arrayIndexScaleMethod;
-    private final Method addressSizeMethod;
+//    private final Method arrayBaseOffsetMethod;
+//    private final Method arrayIndexScaleMethod;
+//    private final Method addressSizeMethod;
     private final Method pageSizeMethod;
 
     // HeapMemory
@@ -80,7 +85,26 @@ public class UnsafeAccessImplReflective implements UnsafeAccess {
     private final Method reallocateMemoryMethod;
     private final Method freeMemoryMethod;
 
+    // Unsafe constants
+    private final int[] arrayBaseOffsets;
+    private final int[] arrayIndexScales;
+    private final int addressSize;
+
     public UnsafeAccessImplReflective() {
+        try {
+            unsafeClass = Class.forName("sun.misc.Unsafe");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Failed to get Unsafe class (sun.misc.Unsafe)", e);
+        }
+
+        try {
+            Field unsafeInstanceField = unsafeClass.getDeclaredField("theUnsafe");
+            unsafeInstanceField.setAccessible(true);
+            unsafeInstance = unsafeInstanceField.get(null);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException("Failed to get Unsafe instance (sun.misc.Unsafe.theUnsafe)");
+        }
+
         getBooleanMethod = getMethod("getBoolean", Object.class, long.class);
         putBooleanMethod = getMethod("putBoolean", Object.class, long.class, boolean.class);
         getByteMethod = getMethod("getByte", Object.class, long.class);
@@ -124,9 +148,9 @@ public class UnsafeAccessImplReflective implements UnsafeAccess {
         staticFieldBaseMethod = getMethod("staticFieldBase", Field.class);
         shouldBeInitializedMethod = getMethod("shouldBeInitialized", Class.class);
         ensureClassInitializedMethod = getMethod("ensureClassInitialized", Class.class);
-        arrayBaseOffsetMethod = getMethod("arrayBaseOffset", Class.class);
-        arrayIndexScaleMethod = getMethod("arrayIndexScale", Class.class);
-        addressSizeMethod = getMethod("addressSize");
+//        arrayBaseOffsetMethod = getMethod("arrayBaseOffset", Class.class);
+//        arrayIndexScaleMethod = getMethod("arrayIndexScale", Class.class);
+//        addressSizeMethod = getMethod("addressSize");
         pageSizeMethod = getMethod("pageSize");
 
         getByteHeapMethod = getMethod("getByte", long.class);
@@ -148,23 +172,85 @@ public class UnsafeAccessImplReflective implements UnsafeAccess {
         allocateMemoryMethod = getMethod("allocateMemory", long.class);
         reallocateMemoryMethod = getMethod("reallocateMemory", long.class, long.class);
         freeMemoryMethod = getMethod("freeMemory", long.class);
+
+        arrayBaseOffsets = getArrayConstants("BASE_OFFSET");
+        arrayIndexScales = getArrayConstants("INDEX_SCALE");
+        addressSize = getConstantInt("ADDRESS_SIZE");
     }
 
     private Method getMethod(String name, Class<?>... paramTypes) {
         try {
-            return sun.misc.Unsafe.class.getDeclaredMethod(name, paramTypes);
+            return unsafeClass.getDeclaredMethod(name, paramTypes);
         } catch (NoSuchMethodException e) {
-            throw new RuntimeException("Failed to get method", e);
+            throw new RuntimeException("Failed to get method \"" + formatMethodSignature(name, paramTypes) + "\"", e);
         }
     }
 
     @SuppressWarnings("unchecked")
     private <T> T invokeMethod(Method method, Object... args) {
         try {
-            return (T) method.invoke(null, args);
+            return (T) method.invoke(unsafeInstance, args);
         } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new RuntimeException("Failed to invoke method", e);
+            throw new RuntimeException("Failed to invoke method \"" + formatMethodSignature(method) + "\"", e);
         }
+    }
+
+    private String formatMethodSignature(String name, Class<?>[] paramTypes) {
+        return name +
+                '(' +
+                Arrays.stream(paramTypes).map(Class::toString).collect(Collectors.joining(", ")) +
+                ')';
+    }
+
+    private String formatMethodSignature(Method method) {
+        return formatMethodSignature(method.getName(), method.getParameterTypes());
+    }
+
+    private int getConstantInt(String name) {
+        try {
+            Field f = unsafeClass.getDeclaredField(name);
+            return f.getInt(null);
+        } catch (IllegalAccessException | NoSuchFieldException e) {
+            throw new RuntimeException("Failed to get constant int \"" + name + "\"", e);
+        }
+    }
+
+    private static final String[] ARRAY_CONST_PREFIXES = {
+            "ARRAY_BYTE_",
+            "ARRAY_SHORT_",
+            "ARRAY_CHAR_",
+            "ARRAY_INT_",
+            "ARRAY_LONG_",
+            "ARRAY_FLOAT_",
+            "ARRAY_DOUBLE_",
+            "ARRAY_OBJECT_"
+    };
+
+    private int[] getArrayConstants(String suffix) {
+        int[] consts = new int[ARRAY_CONST_PREFIXES.length];
+        for (int i = 0; i < ARRAY_CONST_PREFIXES.length; i++)
+            consts[i] = getConstantInt(ARRAY_CONST_PREFIXES[i] + suffix);
+        return consts;
+    }
+
+    private int getArrayConstant(int[] consts, Class<?> arrayClass) {
+        if (!arrayClass.isArray())
+            throw new IllegalArgumentException("Class is not an array class!");
+        if (arrayClass == byte[].class)
+            return consts[0];
+        if (arrayClass == short[].class)
+            return consts[1];
+        if (arrayClass == char[].class)
+            return consts[2];
+        if (arrayClass == int[].class)
+            return consts[3];
+        if (arrayClass == long[].class)
+            return consts[4];
+        if (arrayClass == float[].class)
+            return consts[5];
+        if (arrayClass == double[].class)
+            return consts[6];
+        return consts[7];
     }
 
     @Override
@@ -427,29 +513,19 @@ public class UnsafeAccessImplReflective implements UnsafeAccess {
 
     @Override
     public int arrayBaseOffset(Class<?> arrayClass) {
-        // Unsafe.arrayBaseOffset completely halts the JVM with an nonexistent exception (java.lang.InvalidClassException)
-        // if given a non-array class (would be completely fine if the exception actually existed)
-        // luckily, Unsafe already has constants for every possible return value
-        if (!arrayClass.isArray())
-            throw new IllegalArgumentException("Class is not an array class!");
-        return invokeMethod(arrayBaseOffsetMethod, arrayClass);
+        return getArrayConstant(arrayBaseOffsets, arrayClass);
     }
 
 
     @Override
     public int arrayIndexScale(Class<?> arrayClass) {
-        // Unsafe.arrayIndexScale completely halts the JVM with an nonexistent exception (java.lang.InvalidClassException)
-        // if given a non-array class (would be completely fine if the exception actually existed)
-        // luckily, Unsafe already has constants for every possible return value
-        if (!arrayClass.isArray())
-            throw new IllegalArgumentException("Class is not an array class!");
-        return invokeMethod(arrayIndexScaleMethod, arrayClass);
+        return getArrayConstant(arrayIndexScales, arrayClass);
     }
 
 
     @Override
     public int addressSize() {
-        return invokeMethod(addressSizeMethod);
+        return addressSize;
     }
 
 
@@ -467,7 +543,6 @@ public class UnsafeAccessImplReflective implements UnsafeAccess {
         private HeapMemoryImpl(long size) {
             super(size);
             address = invokeMethod(allocateMemoryMethod, size);
-            clear();
         }
 
         @Override
@@ -486,7 +561,7 @@ public class UnsafeAccessImplReflective implements UnsafeAccess {
         @Override
         public void copyFrom(HeapMemory src, long srcOffset, long dstOffset, long bytes) {
             checkCopyFrom(src, srcOffset, dstOffset, bytes);
-            copyMemory(null, src.getAddress() + srcOffset, null, address + dstOffset, bytes);
+            copyMemory(null, src.address() + srcOffset, null, address + dstOffset, bytes);
         }
 
         @Override
@@ -510,7 +585,7 @@ public class UnsafeAccessImplReflective implements UnsafeAccess {
         @Override
         public void putShort(long offset, short x) {
             checkBounds(offset);
-            invokeMethod(putShortHeapMethod, address + offset);
+            invokeMethod(putShortHeapMethod, address + offset, x);
         }
 
         @Override
@@ -522,7 +597,7 @@ public class UnsafeAccessImplReflective implements UnsafeAccess {
         @Override
         public void putChar(long offset, char x) {
             checkBounds(offset);
-            invokeMethod(putCharHeapMethod, address + offset);
+            invokeMethod(putCharHeapMethod, address + offset, x);
         }
 
         @Override
@@ -590,7 +665,7 @@ public class UnsafeAccessImplReflective implements UnsafeAccess {
             if (!isValid)
                 return;
             try {
-                freeMemoryMethod.invoke(null, address);
+                freeMemoryMethod.invoke(unsafeInstance, address);
             } catch (IllegalAccessException | InvocationTargetException ignored) { }
             isValid = false;
         }

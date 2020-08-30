@@ -11,14 +11,14 @@ public interface HeapMemory extends AutoCloseable {
      *
      * @return the block size
      */
-    long getSize();
+    long size();
 
     /**
      * Gets the memory block's address on the heap.
      *
      * @return the block address
      */
-    long getAddress();
+    long address();
 
     /**
      * <p>Checks if the memory block is valid or not.</p>
@@ -39,13 +39,6 @@ public interface HeapMemory extends AutoCloseable {
      *         value to set bytes to
      */
     void set(long offset, long bytes, byte value);
-
-    /**
-     * Sets all bytes of this memory block to 0.
-     */
-    default void clear() {
-        set(0, getSize(), (byte) 0);
-    }
 
     /**
      * Reallocates the memory block with a new size.

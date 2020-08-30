@@ -307,14 +307,9 @@ public class UnsafeAccessImplDirect implements UnsafeAccess {
     }
 
     private final class HeapMemoryImpl extends BaseHeapMemoryImpl {
-        private long size;
-        private long address;
-        private boolean valid;
-
         private HeapMemoryImpl(long size) {
             super(size);
             address = theUnsafe.allocateMemory(size);
-            clear();
         }
 
         @Override
@@ -333,7 +328,7 @@ public class UnsafeAccessImplDirect implements UnsafeAccess {
         @Override
         public void copyFrom(HeapMemory src, long srcOffset, long dstOffset, long bytes) {
             checkCopyFrom(src, srcOffset, dstOffset, bytes);
-            copyMemory(null, src.getAddress() + srcOffset, null, address + dstOffset, bytes);
+            copyMemory(null, src.address() + srcOffset, null, address + dstOffset, bytes);
         }
 
         @Override
@@ -434,10 +429,10 @@ public class UnsafeAccessImplDirect implements UnsafeAccess {
 
         @Override
         public void close() {
-            if (!valid)
+            if (!isValid)
                 return;
             theUnsafe.freeMemory(address);
-            valid = false;
+            isValid = false;
         }
     }
 }
