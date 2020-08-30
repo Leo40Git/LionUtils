@@ -2,7 +2,6 @@ package adudecalledleo.lionutils.internal.unsafe;
 
 import adudecalledleo.lionutils.LoggerUtil;
 import adudecalledleo.lionutils.internal.unsafe.impl.UnsafeAccessImplDirect;
-import adudecalledleo.lionutils.internal.unsafe.impl.UnsafeAccessImplReflective;
 import adudecalledleo.lionutils.unsafe.UnsafeAccess;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.util.JavaVersion;
@@ -27,7 +26,6 @@ public class UnsafeAccessProvider {
 
     private static final ImplInfo[] IMPL_INFOS = {
             new ImplInfo("direct proxy", UnsafeAccessImplDirect::new),
-            new ImplInfo("reflection-based proxy", UnsafeAccessImplReflective::new),
     };
 
     static final Logger LOGGER = LoggerUtil.getLogger("LionUtils|UnsafeAccess");
