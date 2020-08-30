@@ -251,8 +251,9 @@ public class ConfigHolder<T extends Config> {
                 config.verify();
             } catch (ConfigVerificationException e) {
                 if (defCfg) {
-                    throw new IllegalStateException("Default config is invalid?!" +
-                            "config.verify() threw exception after default config was loaded", e);
+                    throw new IllegalStateException(
+                            "Default config is invalid?! config.verify() threw exception after default config was loaded",
+                            e);
                 } else {
                     logAndHandleException("Loaded invalid config from file \"" + configPath.getFileName().toString() +
                             "\", continuing with default values", e, Event.VERIFY);
@@ -286,6 +287,12 @@ public class ConfigHolder<T extends Config> {
     public void reset() {
         config = getDefault();
         updateAndNotifyListeners(Event.LOAD);
+        try {
+            config.verify();
+        } catch (ConfigVerificationException e) {
+            throw new IllegalStateException(
+                    "Default config is invalid?! config.verify() threw exception after default config was loaded", e);
+        }
         updateAndNotifyListeners(Event.VERIFY);
     }
 
