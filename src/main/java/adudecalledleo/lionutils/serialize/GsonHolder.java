@@ -89,7 +89,7 @@ public final class GsonHolder {
         public boolean shouldSkipField(FieldAttributes f) {
             Exclude exclude = f.getAnnotation(Exclude.class);
             if (exclude == null)
-                return true;
+                return false;
             Exclude.Type type = exclude.value();
             return type == Exclude.Type.BOTH || this.type == type;
         }
