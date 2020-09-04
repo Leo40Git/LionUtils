@@ -6,17 +6,24 @@ import adudecalledleo.lionutils.unsafe.UnsafeAccess;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.util.JavaVersion;
 
+import java.util.function.DoublePredicate;
 import java.util.function.Supplier;
 
 public class UnsafeAccessProvider {
     private static final class ImplInfo {
         public final String description;
+        public final DoublePredicate usablePredicate;
         public final Supplier<UnsafeAccess> implSupplier;
 
         private ImplInfo(String description,
-                Supplier<UnsafeAccess> implSupplier) {
+                DoublePredicate usablePredicate, Supplier<UnsafeAccess> implSupplier) {
             this.description = description;
+            this.usablePredicate = usablePredicate;
             this.implSupplier = implSupplier;
+        }
+
+        public boolean canBeUsed() {
+            return usablePredicate.test(JavaVersion.current());
         }
 
         public UnsafeAccess getImpl() {
@@ -25,7 +32,7 @@ public class UnsafeAccessProvider {
     }
 
     private static final ImplInfo[] IMPL_INFOS = {
-            new ImplInfo("direct proxy", UnsafeAccessImplDirect::new),
+            new ImplInfo("direct proxy", v -> true, UnsafeAccessImplDirect::new),
     };
 
     static final Logger LOGGER = LoggerUtil.getLogger("LionUtils|UnsafeAccess");
@@ -37,6 +44,8 @@ public class UnsafeAccessProvider {
             LOGGER.info("Initializing Unsafe access, running Java {} by {} FYI", JavaVersion.current(),
                     System.getProperty("java.vendor"));
             for (ImplInfo info : IMPL_INFOS) {
+                if (!info.canBeUsed())
+                    continue;
                 try {
                     instance = info.getImpl();
                 } catch (Exception e) {

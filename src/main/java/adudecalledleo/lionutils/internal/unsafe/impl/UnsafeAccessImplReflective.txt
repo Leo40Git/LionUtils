@@ -1,5 +1,5 @@
-This class was removed to keep the library size somewhat low (this class alone caused a 10+KB difference in the final size!)
+This class was removed to keep the library size somewhat low
 Available here: https://gist.github.com/Leo40Git/5735b38bac0fd2d0e9049c8159733422
 
 To use this class, add the following entry to the UnsafeAccessProvider.IMPL_INFOS array:
-    new ImplInfo("reflection-based proxy", UnsafeAccessImplReflective::new)
+    new ImplInfo("reflection-based proxy", v -> true, UnsafeAccessImplReflective::new)
