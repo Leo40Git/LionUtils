@@ -4,6 +4,10 @@ import adudecalledleo.lionutils.InitializerUtil;
 import adudecalledleo.lionutils.LoggerUtil;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtHelper;
 import net.minecraft.util.UserCache;
 import org.apache.logging.log4j.Logger;
 
@@ -124,5 +128,40 @@ public final class GameProfileUtil {
         if (!profile.isComplete())
             return PLAYER_ID_UNKNOWN;
         return profile.getId();
+    }
+
+    /**
+     * Creates a stack of a player's head from their {@link GameProfile}.
+     *
+     * @param profile
+     *         profile to create head from
+     * @return the head of the player that is associated with that profile
+     *
+     * @since 5.1.0
+     */
+    public static ItemStack createPlayerHead(GameProfile profile) {
+        ItemStack headStack = new ItemStack(Items.PLAYER_HEAD);
+        CompoundTag skullOwnerTag = headStack.getOrCreateSubTag("SkullOwner");
+        NbtHelper.fromGameProfile(skullOwnerTag, profile);
+        return headStack;
+    }
+
+    /**
+     * <p>Creates a stack of a player's head from their UUID or name.<br>
+     * Accepts either a UUID, a name, or both - but not neither!</p>
+     * Equivalent to:<pre>
+     * {@link #createPlayerHead(GameProfile) createPlayerHead}({@link #getGameProfile(UUID, String) getGameProfile}(id, name));
+     * </pre>
+     *
+     * @param id
+     *         player UUID
+     * @param name
+     *         player name
+     * @return the head of the player that is associated with that UUID/name
+     *
+     * @since 5.1.0
+     */
+    public static ItemStack createPlayerHead(UUID id, String name) {
+        return createPlayerHead(getGameProfile(id, name));
     }
 }
