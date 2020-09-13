@@ -19,7 +19,7 @@
   ],
   "depends": {
     "fabricloader": ">=0.9.1+build.205",
-    "minecraft": "1.16.2,1.16.3"
+    "minecraft": "~1.16.2"
   },
   "custom": {
     "modmenu:api": true
