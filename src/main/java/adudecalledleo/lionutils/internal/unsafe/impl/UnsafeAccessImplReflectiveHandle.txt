@@ -1,5 +1,0 @@
-This class was removed to keep the library size somewhat low
-Available here: https://gist.github.com/Leo40Git/c5702b37db8f226756d4eeab3f408b6f
-
-To use this class, add the following entry to the UnsafeAccessProvider.IMPL_INFOS array:
-    new ImplInfo("reflection-based proxy using MethodHandles", v -> v >= 1.7, UnsafeAccessImplReflective::new)

@@ -1,30 +1,48 @@
-package adudecalledleo.lionutils.internal.unsafe.impl;
+package adudecalledleo.lionutils.internal.unsafe;
 
+import adudecalledleo.lionutils.LoggerUtil;
 import adudecalledleo.lionutils.unsafe.HeapMemory;
 import adudecalledleo.lionutils.unsafe.UnsafeAccess;
+import org.apache.logging.log4j.Logger;
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
 
 // Written for Java 8 and below, although it appears to work with Java 9 and above too
 // NOTE - Only tested with AdoptOpenJDK+HotSpot, may malfunction with other JDKs!
-public class UnsafeAccessImplDirect implements UnsafeAccess {
-    private static Unsafe theUnsafe;
+public class UnsafeAccessImpl implements UnsafeAccess {
+    private static final Logger LOGGER = LoggerUtil.getLogger("LionUtils|UnsafeAccess");
 
-    public UnsafeAccessImplDirect() {
-        if (theUnsafe == null) {
+    private static boolean initialized;
+    private static UnsafeAccessImpl instance;
+
+    public static UnsafeAccess get() {
+        if (!initialized) {
+            initialized = true;
             try {
-                Field unsafeHolder = Unsafe.class.getDeclaredField("theUnsafe");
-                unsafeHolder.setAccessible(true);
-                theUnsafe = (Unsafe) unsafeHolder.get(null);
-            } catch (NoSuchFieldException | IllegalAccessException e) {
-                throw new RuntimeException("Failed to get Unsafe instance", e);
-            } catch (ClassCastException e) {
-                throw new RuntimeException("Failed to cast Unsafe instance to Unsafe?? Something's wrong with this JVM",
-                        e);
-            } catch (NullPointerException e) {
-                throw new RuntimeException("Unsafe holder field is not static?? Something's wrong with this JVM", e);
+                instance = new UnsafeAccessImpl();
+            } catch (Exception e) {
+                LOGGER.error("Could not initialize Unsafe access proxy", e);
+                instance = null;
             }
+        }
+        return instance;
+    }
+
+    private final Unsafe theUnsafe;
+
+    private UnsafeAccessImpl() {
+        try {
+            Field unsafeHolder = Unsafe.class.getDeclaredField("theUnsafe");
+            unsafeHolder.setAccessible(true);
+            theUnsafe = (Unsafe) unsafeHolder.get(null);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException("Failed to get Unsafe instance", e);
+        } catch (ClassCastException e) {
+            throw new RuntimeException("Failed to cast Unsafe instance to Unsafe?? Something's wrong with this JVM",
+                    e);
+        } catch (NullPointerException e) {
+            throw new RuntimeException("Unsafe holder field is not static?? Something's wrong with this JVM", e);
         }
     }
 
@@ -306,10 +324,41 @@ public class UnsafeAccessImplDirect implements UnsafeAccess {
         return new HeapMemoryImpl(size);
     }
 
-    private final class HeapMemoryImpl extends BaseHeapMemoryImpl {
+    private final class HeapMemoryImpl implements HeapMemory {
+        private long size;
+        private long address;
+        private boolean isValid;
+
         private HeapMemoryImpl(long size) {
-            super(size);
             address = theUnsafe.allocateMemory(size);
+        }
+
+        private void checkIsValid() {
+            if (!isValid)
+                throw new IllegalStateException("Heap memory has been invalidated!");
+        }
+
+        private void checkBounds(long offset) {
+            checkIsValid();
+            if (offset < 0)
+                throw new IllegalArgumentException("Offset is negative!");
+            if ((address + offset) >= (address + size))
+                throw new IllegalArgumentException("Offset of " + offset + " is out of bounds for size " + size);
+        }
+
+        @Override
+        public long size() {
+            return size;
+        }
+
+        @Override
+        public long address() {
+            return address;
+        }
+
+        @Override
+        public boolean isValid() {
+            return isValid;
         }
 
         @Override
@@ -327,7 +376,22 @@ public class UnsafeAccessImplDirect implements UnsafeAccess {
 
         @Override
         public void copyFrom(HeapMemory src, long srcOffset, long dstOffset, long bytes) {
-            checkCopyFrom(src, srcOffset, dstOffset, bytes);
+            if (!src.isValid())
+                throw new IllegalStateException("Source native memory is invalid!");
+            if (!isValid())
+                throw new IllegalArgumentException("Destination native memory is invalid!");
+            if (srcOffset < 0)
+                throw new IllegalArgumentException("Source offset is negative!");
+            if (dstOffset < 0)
+                throw new IllegalArgumentException("Destination offset is negative");
+            long srcAddress = src.address();
+            long srcSize = src.size();
+            if ((srcAddress + srcOffset + bytes) >= (srcAddress + srcSize)) throw new IllegalArgumentException(
+                    "Source offset of " + srcOffset + " with byte count " + bytes +
+                            " is out of bounds for source of size " + srcSize);
+            if ((address + dstOffset + bytes) > (address + size)) throw new IllegalArgumentException(
+                    "Destination offset of " + srcOffset + " with byte count " + bytes +
+                            " is out of bounds for destination of size " + srcSize);
             copyMemory(null, src.address() + srcOffset, null, address + dstOffset, bytes);
         }
 

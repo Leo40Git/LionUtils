@@ -1,6 +1,6 @@
 package adudecalledleo.lionutils.unsafe;
 
-import adudecalledleo.lionutils.internal.unsafe.UnsafeAccessProvider;
+import adudecalledleo.lionutils.internal.unsafe.UnsafeAccessImpl;
 
 import java.lang.reflect.Field;
 
@@ -16,7 +16,7 @@ public interface UnsafeAccess {
      * @return {@code true} if proxy is available, {@code false} otherwise
      */
     static boolean isAvailable() {
-        return UnsafeAccessProvider.initAndCheckAvailable();
+        return UnsafeAccessImpl.get() != null;
     }
 
     /**
@@ -25,7 +25,7 @@ public interface UnsafeAccess {
      * @return current {@code Unsafe} proxy
      */
     static UnsafeAccess get() {
-        return UnsafeAccessProvider.getUnsafeAccess();
+        return UnsafeAccessImpl.get();
     }
 
     /**
