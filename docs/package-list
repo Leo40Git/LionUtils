@@ -6,6 +6,7 @@ adudecalledleo.lionutils.client.render
 adudecalledleo.lionutils.config
 adudecalledleo.lionutils.entity
 adudecalledleo.lionutils.inventory
+adudecalledleo.lionutils.item
 adudecalledleo.lionutils.mixin
 adudecalledleo.lionutils.network
 adudecalledleo.lionutils.serialize
