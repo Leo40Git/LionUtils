@@ -16,7 +16,7 @@ import java.util.List;
  */
 public final class ItemStackUtil {
     private ItemStackUtil() {
-        InitializerUtil.badConstructor();
+        InitializerUtil.utilCtor();
     }
 
     private static ListTag getOrCreateLoreListTag(ItemStack stack) {

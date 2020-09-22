@@ -20,7 +20,7 @@ import java.util.stream.Stream;
  */
 public final class InventoryUtil {
     private InventoryUtil() {
-        InitializerUtil.badConstructor();
+        InitializerUtil.utilCtor();
     }
 
     /**

@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
  */
 public interface UnmodifiableInventory extends Inventory {
     /**
-     * <p>{@inheritDoc}</p>
+     * {@inheritDoc}<p>
      * Does nothing here.
      *
      * @return {@link ItemStack#EMPTY}
@@ -21,7 +21,7 @@ public interface UnmodifiableInventory extends Inventory {
     }
 
     /**
-     * <p>{@inheritDoc}</p>
+     * {@inheritDoc}<p>
      * Does nothing here.
      *
      * @return {@link ItemStack#EMPTY}

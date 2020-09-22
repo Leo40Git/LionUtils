@@ -20,7 +20,7 @@ import java.util.UUID;
  */
 public final class GameProfileUtil {
     private GameProfileUtil() {
-        InitializerUtil.badConstructor();
+        InitializerUtil.utilCtor();
     }
 
     private static final Logger LOGGER = LoggerUtil.getLogger("LionUtils|GameProfileUtil");
@@ -30,7 +30,7 @@ public final class GameProfileUtil {
     private static boolean warnedAboutIncompleteProfile = false;
 
     /**
-     * <p>Sets the session service that we should use.</p>
+     * Sets the session service that we should use.<p>
      * This is set automatically, so you shouldn't need to call this.
      *
      * @param sessionService
@@ -41,7 +41,7 @@ public final class GameProfileUtil {
     }
 
     /**
-     * <p>Sets the user cache we should use.</p>
+     * Sets the user cache we should use.<p>
      * This is set automatically, so you shouldn't need to call this.
      *
      * @param userCache
@@ -86,7 +86,7 @@ public final class GameProfileUtil {
     }
 
     /**
-     * <p>Default return value of {@link #getPlayerName(UUID)} if something goes wrong.</p>
+     * Default return value of {@link #getPlayerName(UUID)} if something goes wrong.<p>
      * This name is illegal, as it contains characters which are not normally allowed in names.
      */
     public static final String PLAYER_NAME_UNKNOWN = "<???>";
@@ -107,7 +107,7 @@ public final class GameProfileUtil {
     }
 
     /**
-     * <p>Default return value of {@link #findPlayerID(String)} if something goes wrong.</p>
+     * Default return value of {@link #findPlayerID(String)} if something goes wrong.<p>
      * This is a <a href="http://tools.ietf.org/html/rfc4122#section-4.1.7">nil UUID</a>.
      *
      * @since 5.0.0
@@ -147,8 +147,8 @@ public final class GameProfileUtil {
     }
 
     /**
-     * <p>Creates a stack of a player's head from their UUID or name.<br>
-     * Accepts either a UUID, a name, or both - but not neither!</p>
+     * Creates a stack of a player's head from their UUID or name.<br>
+     * Accepts either a UUID, a name, or both - but not neither!<p>
      * Equivalent to:<pre>
      * {@link #createPlayerHead(GameProfile) createPlayerHead}({@link #getGameProfile(UUID, String) getGameProfile}(id, name));
      * </pre>

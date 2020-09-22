@@ -32,7 +32,7 @@ public class ConfigHolder<T extends Config> {
      */
     public enum Event {
         /**
-         * <p>Signals that the configuration POJO has been loaded from the file (or the default POJO was reloaded).</p>
+         * Signals that the configuration POJO has been loaded from the file (or the default POJO was reloaded).<p>
          * Note that it is recommended to make listeners not do anything if this event is invoked, since:
          * <ul>
          *     <li>{@link #VERIFY} will always be invoked after loading a configuration POJO.</li>
@@ -87,7 +87,8 @@ public class ConfigHolder<T extends Config> {
      * @param configType
      *         type of config POJO
      * @param defaultFactory
-     *         factory to create default POJO.<br> this should <em>always</em> return a new instance.
+     *         factory to create default POJO.<br>
+     *         this should <em>always</em> return a new instance.
      * @param <T>
      *         POJO configuration type
      * @return the builder instance
@@ -107,7 +108,8 @@ public class ConfigHolder<T extends Config> {
      * @param configType
      *         type of config POJO
      * @param defaultFactory
-     *         factory to create default POJO.<br> this should <em>always</em> return a new instance.
+     *         factory to create default POJO.<br>
+     *         this should <em>always</em> return a new instance.
      * @param <T>
      *         POJO configuration type
      * @return the builder instance
@@ -147,7 +149,7 @@ public class ConfigHolder<T extends Config> {
         }
 
         /**
-         * <p>Sets the {@link ObjectFormat} to use to save and load the configuration POJO.</p>
+         * Sets the {@link ObjectFormat} to use to save and load the configuration POJO.<p>
          * By default, {@link GsonHolder#FORMAT} is used.
          *
          * @param objectFormat
@@ -160,7 +162,7 @@ public class ConfigHolder<T extends Config> {
         }
 
         /**
-         * <p>Sets the {@link Logger} to use.</p>
+         * Sets the {@link Logger} to use.<p>
          * By default, a {@linkplain LoggerUtil#NULL_LOGGER null logger} is used.
          *
          * @param logger
@@ -187,7 +189,7 @@ public class ConfigHolder<T extends Config> {
         }
 
         /**
-         * <p>Sets the exception handler to call when an exception occurs.</p>
+         * Sets the exception handler to call when an exception occurs.<p>
          * By default, a no-op implementation is used.
          *
          * @param exceptionHandler

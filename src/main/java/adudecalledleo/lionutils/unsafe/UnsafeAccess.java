@@ -518,7 +518,7 @@ public interface UnsafeAccess {
     void ensureClassInitialized(Class<?> c);
 
     /**
-     * <p>Initializes a class, if needed.</p>
+     * Initializes a class, if needed.<p>
      * Equivalent to:<pre>
      * if ({@link #shouldBeInitialized(Class) shouldBeInitialized}(c))
      *     {@link #ensureClassInitialized(Class) ensureClassInitialized}(c);

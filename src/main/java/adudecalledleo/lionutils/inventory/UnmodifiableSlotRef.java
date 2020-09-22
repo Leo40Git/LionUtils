@@ -32,14 +32,14 @@ public class UnmodifiableSlotRef extends SlotRef {
     }
 
     /**
-     * <p>{@inheritDoc}</p>
+     * {@inheritDoc}<p>
      * Does nothing here.
      */
     @Override
     public void setStack(ItemStack stack) { }
 
     /**
-     * <p>{@inheritDoc}</p>
+     * {@inheritDoc}<p>
      * Does nothing here.
      */
     @Override
@@ -48,7 +48,7 @@ public class UnmodifiableSlotRef extends SlotRef {
     }
 
     /**
-     * <p>{@inheritDoc}</p>
+     * {@inheritDoc}<p>
      * Does nothing here.
      */
     @Override

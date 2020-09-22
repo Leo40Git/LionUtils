@@ -12,7 +12,7 @@ import net.minecraft.util.math.Vec3d;
  */
 public final class PacketBufUtil {
     private PacketBufUtil() {
-        InitializerUtil.badConstructor();
+        InitializerUtil.utilCtor();
     }
 
     /**

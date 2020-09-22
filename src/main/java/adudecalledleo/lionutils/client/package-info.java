@@ -1,5 +1,5 @@
 /**
- * Contains classes designed to help with operations that are (usually) exclusive to the client-side.
+ * Contains classes designed to help with operations that are exclusive to the client-side.
  *
  * @since 4.0.0
  */

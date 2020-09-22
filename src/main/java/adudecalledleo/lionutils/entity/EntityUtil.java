@@ -11,7 +11,7 @@ import net.minecraft.util.math.Vec3d;
  */
 public final class EntityUtil {
     private EntityUtil() {
-        InitializerUtil.badConstructor();
+        InitializerUtil.utilCtor();
     }
 
     /**

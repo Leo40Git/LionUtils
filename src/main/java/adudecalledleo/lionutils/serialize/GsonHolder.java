@@ -15,7 +15,7 @@ import java.io.IOException;
  */
 public final class GsonHolder {
     private GsonHolder() {
-        InitializerUtil.badConstructor();
+        InitializerUtil.utilCtor();
     }
 
     private static final ExcludeStrategy EXCLUDE_STRATEGY_SERIALIZE = new ExcludeStrategy(
@@ -36,7 +36,7 @@ public final class GsonHolder {
     }
 
     /**
-     * <p>{@link Gson} instance. Do you even need an explanation?</p>
+     * {@link Gson} instance. Do you even need an explanation?<p>
      * Includes the following goodies: <ul>
      * <li>Exclusion strategy for excluding fields annotated with the {@link Exclude} annotation.</li>
      * <li>Type adapter for {@link Identifier}s, to serialize and deserialize them via their string
@@ -52,7 +52,7 @@ public final class GsonHolder {
     public static final Gson GSON = baseGsonBuilder().setPrettyPrinting().create();
 
     /**
-     * <p>{@link Gson} instance for "compressed" JSON.</p>
+     * {@link Gson} instance for "compressed" JSON.<p>
      * Has the same features as {@link #GSON}, but without pretty printing.
      *
      * @since 3.0.0

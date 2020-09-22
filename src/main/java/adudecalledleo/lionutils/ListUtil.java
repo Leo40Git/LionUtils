@@ -9,12 +9,12 @@ import java.util.List;
  */
 public final class ListUtil {
     private ListUtil() {
-        InitializerUtil.badConstructor();
+        InitializerUtil.utilCtor();
     }
 
     /**
-     * Updates a list using an "elements to add" list and an "elements to remove" list.<br> Useful for implementing
-     * listener/observer patterns.
+     * Updates a list using an "elements to add" list and an "elements to remove" list.<br>
+     * Useful for implementing listener/observer patterns.
      *
      * @param list
      *         list to update

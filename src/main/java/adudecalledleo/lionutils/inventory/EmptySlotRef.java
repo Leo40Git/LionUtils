@@ -21,7 +21,7 @@ public final class EmptySlotRef extends UnmodifiableSlotRef {
     }
 
     /**
-     * <p>{@inheritDoc}</p>
+     * {@inheritDoc}<p>
      * Does nothing here.
      *
      * @return {@link ItemStack#EMPTY}

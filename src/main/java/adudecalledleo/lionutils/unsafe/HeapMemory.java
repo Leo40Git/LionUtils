@@ -21,7 +21,7 @@ public interface HeapMemory extends AutoCloseable {
     long address();
 
     /**
-     * <p>Checks if the memory block is valid or not.</p>
+     * Checks if the memory block is valid or not.<p>
      * A memory block is valid after being allocated and invalidated after being {@linkplain #close() freed}.
      *
      * @return {@code true} if valid, {@code false} otherwise

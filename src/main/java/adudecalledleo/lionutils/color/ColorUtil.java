@@ -1,4 +1,4 @@
-package adudecalledleo.lionutils.client.color;
+package adudecalledleo.lionutils.color;
 
 import adudecalledleo.lionutils.InitializerUtil;
 import net.minecraft.util.math.MathHelper;
@@ -8,11 +8,11 @@ import java.util.function.IntUnaryOperator;
 /**
  * Helper class for dealing with colors.
  *
- * @since 4.0.0
+ * @since 6.0.0
  */
 public final class ColorUtil {
     private ColorUtil() {
-        InitializerUtil.badConstructor();
+        InitializerUtil.utilCtor();
     }
 
     /**
@@ -77,7 +77,7 @@ public final class ColorUtil {
     }
 
     /**
-     * <p>Packs a color.</p>
+     * Packs a color.<p>
      * Equivalent to <code>{@link #pack(int, int, int, int) pack}(r, g, b, 0xFF)</code>.
      *
      * @param r

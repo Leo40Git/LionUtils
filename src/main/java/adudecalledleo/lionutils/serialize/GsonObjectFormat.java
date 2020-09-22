@@ -27,7 +27,7 @@ public final class GsonObjectFormat implements ObjectFormat {
 
     /**
      * {@inheritDoc}
-     * <p>Delegates to {@link Gson#fromJson(Reader, Class)}.</p>
+     * Delegates to {@link Gson#fromJson(Reader, Class)}.<p>
      */
     @Override
     public <T> T read(Reader reader, Class<T> typeOfT) throws IOException {
@@ -40,7 +40,7 @@ public final class GsonObjectFormat implements ObjectFormat {
 
     /**
      * {@inheritDoc}
-     * <p>Delegates to {@link Gson#toJson(Object, Appendable)}.</p>
+     * Delegates to {@link Gson#toJson(Object, Appendable)}.<p>
      */
     @Override
     public <T> void write(T src, Appendable writer) throws IOException {

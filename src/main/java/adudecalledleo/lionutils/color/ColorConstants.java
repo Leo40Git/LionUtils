@@ -1,16 +1,16 @@
-package adudecalledleo.lionutils.client.color;
+package adudecalledleo.lionutils.color;
 
 import adudecalledleo.lionutils.InitializerUtil;
 
 /**
  * Contains color constants.
  *
- * @since 4.0.0
+ * @since 6.0.0
  */
 @SuppressWarnings({"unused", "RedundantSuppression"})
 public final class ColorConstants {
     private ColorConstants() {
-        InitializerUtil.badConstructor();
+        InitializerUtil.utilCtor();
     }
 
     public static final int TRANSPARENT = 0;

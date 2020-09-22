@@ -29,12 +29,12 @@ import java.util.UUID;
 @RequiresFabricAPI
 public final class SpawnPacketUtil {
     private SpawnPacketUtil() {
-        InitializerUtil.badConstructor();
+        InitializerUtil.utilCtor();
     }
 
     /**
-     * <p>Creates a S2C packet for spawning the entity on the client.<br>
-     * Required for any entity that doesn't extend {@link net.minecraft.entity.LivingEntity LivingEntity}.</p>
+     * Creates a S2C packet for spawning the entity on the client.<br>
+     * Required for any entity that doesn't extend {@link net.minecraft.entity.LivingEntity LivingEntity}.<p>
      * To use, simply override {@link Entity#createSpawnPacket()} with the following:<pre>
      * &#64;Override
      * public Packet&lt;?&gt; createSpawnPacket() {
@@ -85,7 +85,8 @@ public final class SpawnPacketUtil {
     }
 
     /**
-     * Registers a handler for an entity spawn packet received from the server.<br> Should be used in tandem with {@link
+     * Registers a handler for an entity spawn packet received from the server.<br>
+     * Should be used in tandem with {@link
      * #create(Entity, Identifier)} on the server-side.
      *
      * @param packetID

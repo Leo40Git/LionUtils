@@ -11,12 +11,13 @@ import java.util.ArrayDeque;
 import java.util.NoSuchElementException;
 
 /**
- * <p>Helper class for managing OpenGL's "scissor test" feature using a stack-based approach.</p>
+ * Helper class for managing OpenGL's "scissor test" feature using a stack-based approach.<p>
  * The behavior of this class can be changed via {@link #setMode(Mode)}:<ul>
  * <li>If set to {@link Mode#ABSOLUTE ABSOLUTE}, the last frame on the stack will be directly sent as the scissoring
  * rect.</li>
  * <li>If set to {@link Mode#ADDITIVE ADDITIVE}, adding a frame to the stack will expand the current scissoring rect to
- * accommodate all the frames on the stack.<br> {@link #set(int, int, int, int)} can be used to "directly" set the
+ * accommodate all the frames on the stack.<br>
+ * {@link #set(int, int, int, int)} can be used to "directly" set the
  * scissoring rect to the specified position and size.</li>
  * </ul>
  *
@@ -26,7 +27,7 @@ import java.util.NoSuchElementException;
 @Environment(EnvType.CLIENT)
 public final class ScissorStack {
     private ScissorStack() {
-        InitializerUtil.badConstructor();
+        InitializerUtil.utilCtor();
     }
 
     private static final ArrayDeque<Frame> FRAMES = new ArrayDeque<>();
@@ -50,12 +51,12 @@ public final class ScissorStack {
      */
     public enum Mode {
         /**
-         * <p>Only the last frame in the stack will be used for determining the final scissoring rect.</p>
+         * Only the last frame in the stack will be used for determining the final scissoring rect.<p>
          * This is the default mode.
          */
         ABSOLUTE,
         /**
-         * <p>All frames will be accommodated from when determining the final scissoring rect.</p>
+         * All frames will be accommodated from when determining the final scissoring rect.<p>
          * This will make the final scissoring rect expand to accommodate all frames on the stack.
          */
         ADDITIVE
@@ -125,8 +126,8 @@ public final class ScissorStack {
     }
 
     /**
-     * <p>Forcibly sets the scissoring state to the specified frame.</p>
-     * <p>Note that {@link #pop()} still must be called afterwards.</p>
+     * Forcibly sets the scissoring state to the specified frame.<p>
+     * Note that {@link #pop()} still must be called afterwards.<p>
      * Equivalent to:<pre>
      * {@link #clear() ScissorStack.clear()};
      * {@link #push(int, int, int, int) ScissorStack.push}(x, y, width, height);
@@ -161,7 +162,7 @@ public final class ScissorStack {
     }
 
     /**
-     * <p>Refreshes the current scissoring rect.</p>
+     * Refreshes the current scissoring rect.<p>
      * This is called automatically, so you shouldn't need to call this yourself.
      */
     public static void refreshScissorRect() {

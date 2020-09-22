@@ -14,7 +14,7 @@ import java.util.List;
  */
 public final class NbtUtil {
     private NbtUtil() {
-        InitializerUtil.badConstructor();
+        InitializerUtil.utilCtor();
     }
 
     /**
