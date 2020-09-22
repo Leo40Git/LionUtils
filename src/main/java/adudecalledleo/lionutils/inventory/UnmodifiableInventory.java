@@ -35,5 +35,8 @@ public interface UnmodifiableInventory extends Inventory {
     default void setStack(int slot, ItemStack stack) { }
 
     @Override
+    default void markDirty() { }
+
+    @Override
     default void clear() { }
 }

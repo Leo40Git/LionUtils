@@ -105,6 +105,11 @@ public final class InventoryUtil {
         }
 
         @Override
+        public ItemStack getStack(int slot) {
+            return super.getStack(slot).copy();
+        }
+
+        @Override
         public ItemStack removeStack(int slot, int amount) {
             return UnmodifiableInventory.super.removeStack(slot, amount);
         }
@@ -144,12 +149,7 @@ public final class InventoryUtil {
 
         @Override
         public ItemStack getStack(int slot) {
-            return delegate.getStack(slot);
-        }
-
-        @Override
-        public void markDirty() {
-            delegate.markDirty();
+            return delegate.getStack(slot).copy();
         }
 
         @Override
@@ -173,9 +173,6 @@ public final class InventoryUtil {
         public ItemStack getStack(int slot) {
             return ItemStack.EMPTY;
         }
-
-        @Override
-        public void markDirty() { }
 
         @Override
         public boolean canPlayerUse(PlayerEntity player) {
@@ -260,6 +257,11 @@ public final class InventoryUtil {
         }
 
         @Override
+        public ItemStack getStack(int slot) {
+            return super.getStack(slot).copy();
+        }
+
+        @Override
         public ItemStack removeStack(int slot, int amount) {
             return UnmodifiableInventory.super.removeStack(slot, amount);
         }
@@ -272,6 +274,11 @@ public final class InventoryUtil {
         @Override
         public void setStack(int slot, ItemStack stack) {
             UnmodifiableInventory.super.setStack(slot, stack);
+        }
+
+        @Override
+        public void markDirty() {
+            UnmodifiableInventory.super.markDirty();
         }
 
         @Override
