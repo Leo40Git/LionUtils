@@ -1,8 +1,11 @@
 package adudecalledleo.lionutils.item;
 
+import adudecalledleo.lionutils.network.GameProfileUtil;
+import com.mojang.authlib.GameProfile;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
@@ -52,6 +55,15 @@ public final class ItemStackBuilder {
     public ItemStackBuilder setItem(Item item) {
         this.item = item;
         return this;
+    }
+
+    /**
+     * Sets the resulting stack's item.
+     * @param itemConvertible item to set
+     * @return this builder
+     */
+    public ItemStackBuilder setItem(ItemConvertible itemConvertible) {
+        return setItem(itemConvertible.asItem());
     }
 
     /**
@@ -162,7 +174,6 @@ public final class ItemStackBuilder {
      * Sets the tag mutator.<p>
      * This mutator is invoked with the result of {@link ItemStack#getOrCreateTag()} <em>after</em> the item is built,
      * meaning this mutator can override the builder's other settings.<p>
-     * <p><strong>NOTE:</strong> This overrides {@link #copyFromTag(CompoundTag)}!
      * @param tagMutator tag mutator to use
      * @return this builder
      */
@@ -177,12 +188,25 @@ public final class ItemStackBuilder {
      * copyFrom(tag)}</code>.<p>
      * This copying is done <em>after</em> the item is built,
      * meaning this tag can override the builder's other settings.<p>
-     * <strong>NOTE:</strong> This overrides {@link #setTagMutator(Consumer)}!
+     * <strong>NOTE:</strong> This overwrites the {@linkplain #setTagMutator(Consumer) tag mutator}!
      * @param source tag to copy from
      * @return this builder
      */
     public ItemStackBuilder copyFromTag(CompoundTag source) {
         return setTagMutator(tag -> tag.copyFrom(source));
+    }
+
+    /**
+     * Configures this builder to build heads of the specified player.<p>
+     * <strong>NOTE:</strong> This overwrites the {@linkplain #setItem(Item) item}, {@linkplain #setDamage(int) damage}
+     * and {@linkplain #setTagMutator(Consumer) tag mutator}!
+     * @param profile profile of player to build heads of
+     * @return this builder
+     */
+    public ItemStackBuilder playerHead(GameProfile profile) {
+        item = Items.PLAYER_HEAD;
+        damageSet = false;
+        return copyFromTag(GameProfileUtil.createPlayerHeadTag(profile));
     }
 
     /**

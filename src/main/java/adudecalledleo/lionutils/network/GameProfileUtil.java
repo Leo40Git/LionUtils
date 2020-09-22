@@ -131,6 +131,37 @@ public final class GameProfileUtil {
     }
 
     /**
+     * Creates a {@code CompoundTag} that can be set on a "player head" stack to get the associated player's head.
+     * @param profile profile to create head tag from
+     * @return the tag of the head of the player that is associated with that profile
+     * @since 6.0.0
+     */
+    public static CompoundTag createPlayerHeadTag(GameProfile profile) {
+        CompoundTag baseTag = new CompoundTag();
+        baseTag.put("SkullOwner", NbtHelper.fromGameProfile(new CompoundTag(), profile));
+        return baseTag;
+    }
+
+    /**
+     * Creates a {@code CompoundTag} that can be set on a "player head" stack to get the associated player's head.<br>
+     * Accepts either a UUID, a name, or both - but not neither!<p>
+     * Equivalent to:<pre>
+     * {@link #createPlayerHeadTag(GameProfile) createPlayerHeadTag}({@link #getGameProfile(UUID, String) getGameProfile}(id, name));
+     * </pre>
+     *
+     * @param id
+     *         player UUID
+     * @param name
+     *         player name
+     * @return the tag head of the player that is associated with that UUID/name
+     *
+     * @since 6.0.0
+     */
+    public static CompoundTag createPlayerHeadTag(UUID id, String name) {
+        return createPlayerHeadTag(getGameProfile(id, name));
+    }
+
+    /**
      * Creates a stack of a player's head from their {@link GameProfile}.
      *
      * @param profile
@@ -141,8 +172,7 @@ public final class GameProfileUtil {
      */
     public static ItemStack createPlayerHead(GameProfile profile) {
         ItemStack headStack = new ItemStack(Items.PLAYER_HEAD);
-        CompoundTag skullOwnerTag = headStack.getOrCreateSubTag("SkullOwner");
-        NbtHelper.fromGameProfile(skullOwnerTag, profile);
+        headStack.getOrCreateTag().copyFrom(createPlayerHeadTag(profile));
         return headStack;
     }
 
