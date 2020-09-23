@@ -15,7 +15,7 @@ import java.util.*;
 import java.util.function.Consumer;
 
 /**
- * Helper class for building an {@code ItemStack}.
+ * Helper class for building {@code ItemStack}s.
  *
  * @since 6.0.0
  */
@@ -25,23 +25,20 @@ public final class ItemStackBuilder {
     private boolean damageSet;
     private int damage;
     private Text customName;
-    private final ArrayList<Text> lore;
+    private ArrayList<Text> lore;
     private boolean unbreakable;
-    private final EnumSet<ItemStack.TooltipSection> hiddenTooltipSections;
-    private final EnchantMapBuilder enchantMapBuilder;
+    private EnumSet<ItemStack.TooltipSection> hiddenTooltipSections;
+    private EnchantMapBuilder enchantMapBuilder;
     private Consumer<CompoundTag> tagMutator;
 
     private ItemStackBuilder() {
         item = Items.AIR;
         count = 1;
-        lore = new ArrayList<>();
-        hiddenTooltipSections = EnumSet.noneOf(ItemStack.TooltipSection.class);
-        enchantMapBuilder = EnchantMapBuilder.create();
     }
 
     /**
      * Creates a new {@code ItemStackBuilder}.
-     * @return new builder instance
+     * @return a new builder instance
      */
     public static ItemStackBuilder create() {
         return new ItemStackBuilder();
@@ -99,14 +96,39 @@ public final class ItemStackBuilder {
     }
 
     /**
-     * Adds an enchantment to the resulting stack.
+     * Adds the specified enchantment of the specified level to the resulting stack.
      * @param enchantment enchantment to add
      * @param level level of enchantment to add
      * @return this builder
      */
     public ItemStackBuilder addEnchantment(Enchantment enchantment, int level) {
+        if (enchantMapBuilder == null)
+            enchantMapBuilder = EnchantMapBuilder.create();
         enchantMapBuilder.add(enchantment, level);
         return this;
+    }
+
+    /**
+     * Adds the specified enchantment of its minimum level to the resulting stack.
+     * @param enchantment enchantment to add
+     * @return this builder
+     */
+    public ItemStackBuilder addMinEnchantment(Enchantment enchantment) {
+        return addEnchantment(enchantment, enchantment.getMinLevel());
+    }
+
+    /**
+     * Adds the specified enchantment of its maximum level to the resulting stack.
+     * @param enchantment enchantment to add
+     * @return this builder
+     */
+    public ItemStackBuilder addMaxEnchantment(Enchantment enchantment) {
+        return addEnchantment(enchantment, enchantment.getMaxLevel());
+    }
+
+    private void initLore() {
+        if (lore == null)
+            lore = new ArrayList<>();
     }
 
     /**
@@ -115,6 +137,7 @@ public final class ItemStackBuilder {
      * @return this builder
      */
     public ItemStackBuilder addLore(Text line) {
+        initLore();
         lore.add(line);
         return this;
     }
@@ -124,9 +147,9 @@ public final class ItemStackBuilder {
      * @param lines lines of lore to add
      * @return this builder
      */
-    public ItemStackBuilder addLore(Iterable<Text> lines) {
-        for (Text line : lines)
-            lore.add(line);
+    public ItemStackBuilder addLore(Collection<Text> lines) {
+        initLore();
+        lore.addAll(lines);
         return this;
     }
 
@@ -136,6 +159,7 @@ public final class ItemStackBuilder {
      * @return this builder
      */
     public ItemStackBuilder addLore(Text... lines) {
+        initLore();
         Collections.addAll(lore, lines);
         return this;
     }
@@ -150,12 +174,18 @@ public final class ItemStackBuilder {
         return this;
     }
 
+    private void initHiddenTooltipSections() {
+        if (hiddenTooltipSections == null)
+            hiddenTooltipSections = EnumSet.noneOf(ItemStack.TooltipSection.class);
+    }
+
     /**
      * Hides a tooltip section on the resulting stack.
      * @param tooltipSection tooltip section to hide
      * @return this builder
      */
     public ItemStackBuilder hideTooltipSection(ItemStack.TooltipSection tooltipSection) {
+        initHiddenTooltipSections();
         hiddenTooltipSections.add(tooltipSection);
         return this;
     }
@@ -166,6 +196,7 @@ public final class ItemStackBuilder {
      * @return this builder
      */
     public ItemStackBuilder hideTooltipSections(ItemStack.TooltipSection... tooltipSections) {
+        initHiddenTooltipSections();
         Collections.addAll(hiddenTooltipSections, tooltipSections);
         return this;
     }
@@ -173,7 +204,7 @@ public final class ItemStackBuilder {
     /**
      * Sets the tag mutator.<p>
      * This mutator is invoked with the result of {@link ItemStack#getOrCreateTag()} <em>after</em> the item is built,
-     * meaning this mutator can override the builder's other settings.<p>
+     * meaning this mutator can override the builder's other settings.
      * @param tagMutator tag mutator to use
      * @return this builder
      */
@@ -223,10 +254,14 @@ public final class ItemStackBuilder {
             else if (damageSet)
                 stack.setDamage(damage);
         }
-        stack.setCustomName(customName);
-        EnchantmentHelper.set(enchantMapBuilder.build(), stack);
-        ItemStackUtil.setLore(stack, lore);
-        ItemStackUtil.setHiddenTooltipSections(stack, hiddenTooltipSections);
+        if (customName != null)
+            stack.setCustomName(customName);
+        if (enchantMapBuilder != null)
+            EnchantmentHelper.set(enchantMapBuilder.build(), stack);
+        if (lore != null)
+            ItemStackUtil.setLore(stack, lore);
+        if (hiddenTooltipSections != null)
+            ItemStackUtil.setHiddenTooltipSections(stack, hiddenTooltipSections);
         if (tagMutator != null)
             tagMutator.accept(stack.getOrCreateTag());
         return stack;

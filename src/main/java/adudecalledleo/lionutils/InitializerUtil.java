@@ -31,17 +31,6 @@ public final class InitializerUtil {
     }
 
     /**
-     * Throws an {@link UnsupportedOperationException}.<br>
-     * Intended for use in initializer class constructors to prevent them from being constructed.
-     *
-     * @deprecated Use {@link #initCtor()} or {@link #utilCtor()} instead.
-     */
-    @Deprecated
-    public static void badConstructor() {
-        throw new UnsupportedOperationException("Tried to invoke constructor for initializer class");
-    }
-
-    /**
      * If {@code obj} is non-null, throws an {@link UnsupportedOperationException}.<br>
      * Intended for use in singleton class constructors to prevent them from being constructed again.
      *

@@ -1,6 +1,4 @@
-package adudecalledleo.lionutils.item;
-
-import adudecalledleo.lionutils.InitializerUtil;
+package adudecalledleo.lionutils.item;import adudecalledleo.lionutils.InitializerUtil;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
@@ -85,19 +83,32 @@ public final class ItemStackUtil {
         return ret;
     }
 
+    /**
+     * Removes an {@code ItemStack}'s lore.
+     * @param stack stack to remove lore from
+     * @return the given stack
+     */
+    public static ItemStack removeLore(ItemStack stack) {
+        CompoundTag displayTag;
+        if ((displayTag = stack.getSubTag("display")) == null)
+            return stack;
+        displayTag.remove("Lore");
+        return stack;
+    }
+
     private static ListTag getOrCreateLoreListTag(ItemStack stack, boolean clear) {
         CompoundTag displayTag = stack.getOrCreateSubTag("display");
         ListTag loreListTag;
         if (displayTag.contains("Lore", /* NbtType.LIST */ 9)) {
             loreListTag = displayTag.getList("Lore", /* NbtType.STRING */ 8);
-            if (!clear)
+            if (clear)
                 loreListTag.clear();
         } else
             displayTag.put("Lore", loreListTag = new ListTag());
         return loreListTag;
     }
 
-    private static ItemStack addToLoreListTag(ItemStack stack, Iterable<Text> lines, boolean clear) {
+    private static ItemStack addToLoreListTag(ItemStack stack, Collection<Text> lines, boolean clear) {
         ListTag loreListTag = getOrCreateLoreListTag(stack, clear);
         for (Text line : lines)
             loreListTag.add(StringTag.of(Text.Serializer.toJson(line)));
@@ -110,8 +121,10 @@ public final class ItemStackUtil {
      * @param lines lines of lore to set
      * @return the given stack
      */
-    public static ItemStack setLore(ItemStack stack, Iterable<Text> lines) {
-        return addToLoreListTag(stack, lines, false);
+    public static ItemStack setLore(ItemStack stack, Collection<Text> lines) {
+        if (lines.isEmpty())
+            return removeLore(stack);
+        return addToLoreListTag(stack, lines, true);
     }
 
     /**
@@ -120,8 +133,8 @@ public final class ItemStackUtil {
      * @param lines lines of lore to add
      * @return the given stack
      */
-    public static ItemStack addLore(ItemStack stack, Iterable<Text> lines) {
-        return addToLoreListTag(stack, lines, true);
+    public static ItemStack addLore(ItemStack stack, Collection<Text> lines) {
+        return addToLoreListTag(stack, lines, false);
     }
 
     /**
@@ -189,6 +202,8 @@ public final class ItemStackUtil {
      * @return the given stack
      */
     public static ItemStack hideTooltipSections(ItemStack stack, EnumSet<ItemStack.TooltipSection> tooltipSections) {
+        if (tooltipSections.isEmpty())
+            return stack;
         CompoundTag tag = stack.getOrCreateTag();
         int existingFlags = 0;
         if (tag.contains("HideFlags", /* NbtType.NUMBER */ 99))
@@ -204,11 +219,39 @@ public final class ItemStackUtil {
      * @return the given stack
      */
     public static ItemStack showTooltipSections(ItemStack stack, EnumSet<ItemStack.TooltipSection> tooltipSections) {
+        if (tooltipSections.isEmpty())
+            return stack;
         CompoundTag tag = stack.getOrCreateTag();
         int existingFlags = 0;
         if (tag.contains("HideFlags", /* NbtType.NUMBER */ 99))
             existingFlags = tag.getInt("HideFlags");
-        tag.putInt("HideFlags", existingFlags & ~evalHideFlags(tooltipSections));
+        existingFlags &= ~evalHideFlags(tooltipSections);
+        if (existingFlags == 0)
+            tag.remove("HideFlags");
+        else
+            tag.putInt("HideFlags", existingFlags);
+        return stack;
+    }
+
+    /**
+     * Hides all tooltip sections on the {@code ItemStack}.
+     * @param stack stack to hide the tooltip sections of
+     * @return the given stack
+     */
+    public static ItemStack hideAllTooltipSections(ItemStack stack) {
+        return setHiddenTooltipSections(stack, EnumSet.allOf(ItemStack.TooltipSection.class));
+    }
+
+    /**
+     * Shows all tooltip sections on the {@code ItemStack}.
+     * @param stack stack to show the tooltip sections of
+     * @return the given stack
+     */
+    public static ItemStack showAllTooltipSections(ItemStack stack) {
+        CompoundTag tag;
+        if ((tag = stack.getTag()) == null)
+            return stack;
+        tag.remove("HideFlags");
         return stack;
     }
 
