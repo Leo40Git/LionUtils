@@ -1,4 +1,6 @@
-package adudecalledleo.lionutils.item;import adudecalledleo.lionutils.InitializerUtil;
+package adudecalledleo.lionutils.item;
+
+import adudecalledleo.lionutils.InitializerUtil;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
@@ -21,7 +23,9 @@ public final class ItemStackUtil {
 
     /**
      * Removes all enchantments from an {@code ItemStack}
-     * @param stack stack to remove enchantments from
+     *
+     * @param stack
+     *         stack to remove enchantments from
      * @return the given stack
      */
     public static ItemStack removeEnchantments(ItemStack stack) {
@@ -34,8 +38,11 @@ public final class ItemStackUtil {
 
     /**
      * Adds enchantments to an {@code ItemStack}.
-     * @param stack stack to add enchantments to
-     * @param enchantments enchantments to add
+     *
+     * @param stack
+     *         stack to add enchantments to
+     * @param enchantments
+     *         enchantments to add
      * @return the given stack
      */
     public static ItemStack addEnchantments(ItemStack stack, Map<Enchantment, Integer> enchantments) {
@@ -49,9 +56,13 @@ public final class ItemStackUtil {
 
     /**
      * Adds an enchantment to an {@code ItemStack}.
-     * @param stack stack to add enchantment to
-     * @param enchantment enchantment to add
-     * @param level level of enchantment to add
+     *
+     * @param stack
+     *         stack to add enchantment to
+     * @param enchantment
+     *         enchantment to add
+     * @param level
+     *         level of enchantment to add
      * @return the given stack
      */
     public static ItemStack addEnchantment(ItemStack stack, Enchantment enchantment, int level) {
@@ -69,7 +80,9 @@ public final class ItemStackUtil {
 
     /**
      * Gets an {@code ItemStack}'s lore.
-     * @param stack stack to get lore from
+     *
+     * @param stack
+     *         stack to get lore from
      * @return list of lore lines, or an empty list if the stack didn't have any lore
      */
     public static List<Text> getLore(ItemStack stack) {
@@ -85,7 +98,9 @@ public final class ItemStackUtil {
 
     /**
      * Removes an {@code ItemStack}'s lore.
-     * @param stack stack to remove lore from
+     *
+     * @param stack
+     *         stack to remove lore from
      * @return the given stack
      */
     public static ItemStack removeLore(ItemStack stack) {
@@ -117,8 +132,11 @@ public final class ItemStackUtil {
 
     /**
      * Sets an {@code ItemStack}'s lore.
-     * @param stack stack to set lore of
-     * @param lines lines of lore to set
+     *
+     * @param stack
+     *         stack to set lore of
+     * @param lines
+     *         lines of lore to set
      * @return the given stack
      */
     public static ItemStack setLore(ItemStack stack, Collection<Text> lines) {
@@ -129,8 +147,11 @@ public final class ItemStackUtil {
 
     /**
      * Adds to an {@code ItemStack}'s lore.
-     * @param stack stack to add lore to
-     * @param lines lines of lore to add
+     *
+     * @param stack
+     *         stack to add lore to
+     * @param lines
+     *         lines of lore to add
      * @return the given stack
      */
     public static ItemStack addLore(ItemStack stack, Collection<Text> lines) {
@@ -139,8 +160,11 @@ public final class ItemStackUtil {
 
     /**
      * Sets an {@code ItemStack}'s lore.
-     * @param stack stack to set lore of
-     * @param lines lines of lore to set
+     *
+     * @param stack
+     *         stack to set lore of
+     * @param lines
+     *         lines of lore to set
      * @return the given stack
      */
     public static ItemStack setLore(ItemStack stack, Text... lines) {
@@ -149,8 +173,11 @@ public final class ItemStackUtil {
 
     /**
      * Adds to an {@code ItemStack}'s lore.
-     * @param stack stack to add lore to
-     * @param lines lines of lore to add
+     *
+     * @param stack
+     *         stack to add lore to
+     * @param lines
+     *         lines of lore to add
      * @return the given stack
      */
     public static ItemStack addLore(ItemStack stack, Text... lines) {
@@ -161,7 +188,9 @@ public final class ItemStackUtil {
 
     /**
      * Gets the set of hidden tooltip sections of an {@code ItemStack}.
-     * @param stack stack to get hidden tooltip sections of
+     *
+     * @param stack
+     *         stack to get hidden tooltip sections of
      * @return the hidden tooltip sections
      */
     public static EnumSet<ItemStack.TooltipSection> getHiddenTooltipSections(ItemStack stack) {
@@ -186,19 +215,26 @@ public final class ItemStackUtil {
 
     /**
      * Sets an {@code ItemStack}'s hidden tooltip sections.
-     * @param stack stack to set hidden tooltip sections of
-     * @param tooltipSections hidden tooltip sections to set
+     *
+     * @param stack
+     *         stack to set hidden tooltip sections of
+     * @param tooltipSections
+     *         hidden tooltip sections to set
      * @return the given stack
      */
-    public static ItemStack setHiddenTooltipSections(ItemStack stack, EnumSet<ItemStack.TooltipSection> tooltipSections) {
+    public static ItemStack setHiddenTooltipSections(ItemStack stack,
+            EnumSet<ItemStack.TooltipSection> tooltipSections) {
         stack.getOrCreateTag().putInt("HideFlags", evalHideFlags(tooltipSections));
         return stack;
     }
 
     /**
      * Hides the specified tooltip sections on the {@code ItemStack}.
-     * @param stack stack to hide the tooltip sections of
-     * @param tooltipSections hidden tooltip sections to hide
+     *
+     * @param stack
+     *         stack to hide the tooltip sections of
+     * @param tooltipSections
+     *         hidden tooltip sections to hide
      * @return the given stack
      */
     public static ItemStack hideTooltipSections(ItemStack stack, EnumSet<ItemStack.TooltipSection> tooltipSections) {
@@ -214,8 +250,11 @@ public final class ItemStackUtil {
 
     /**
      * Shows the specified tooltip sections on the {@code ItemStack}.
-     * @param stack stack to hide the tooltip sections of
-     * @param tooltipSections hidden tooltip sections to show
+     *
+     * @param stack
+     *         stack to hide the tooltip sections of
+     * @param tooltipSections
+     *         hidden tooltip sections to show
      * @return the given stack
      */
     public static ItemStack showTooltipSections(ItemStack stack, EnumSet<ItemStack.TooltipSection> tooltipSections) {
@@ -235,7 +274,9 @@ public final class ItemStackUtil {
 
     /**
      * Hides all tooltip sections on the {@code ItemStack}.
-     * @param stack stack to hide the tooltip sections of
+     *
+     * @param stack
+     *         stack to hide the tooltip sections of
      * @return the given stack
      */
     public static ItemStack hideAllTooltipSections(ItemStack stack) {
@@ -244,7 +285,9 @@ public final class ItemStackUtil {
 
     /**
      * Shows all tooltip sections on the {@code ItemStack}.
-     * @param stack stack to show the tooltip sections of
+     *
+     * @param stack
+     *         stack to show the tooltip sections of
      * @return the given stack
      */
     public static ItemStack showAllTooltipSections(ItemStack stack) {
@@ -257,7 +300,9 @@ public final class ItemStackUtil {
 
     /**
      * Checks if an {@code ItemStack} is flagged as unbreakable.
-     * @param stack stack to check
+     *
+     * @param stack
+     *         stack to check
      * @return {@code true} if the stack is flagged as unbreakable, {@code false} otherwise
      */
     public static boolean isUnbreakable(ItemStack stack) {
@@ -269,8 +314,11 @@ public final class ItemStackUtil {
 
     /**
      * Sets an {@code ItemStack}'s "unbreakable" flag.
-     * @param stack stack to set unbreakable flag of
-     * @param unbreakable value to set unbreakable flag to
+     *
+     * @param stack
+     *         stack to set unbreakable flag of
+     * @param unbreakable
+     *         value to set unbreakable flag to
      * @return the given stack
      */
     public static ItemStack setUnbreakable(ItemStack stack, boolean unbreakable) {

@@ -41,7 +41,9 @@ public class SlotRef implements Clearable {
 
     /**
      * Constructs an empty {@code SlotRef}.
+     *
      * @return the empty {@code SlotRef}
+     *
      * @since 6.0.0
      */
     public static UnmodifiableSlotRef empty() {

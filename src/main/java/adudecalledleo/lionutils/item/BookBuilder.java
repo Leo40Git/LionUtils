@@ -42,7 +42,9 @@ public final class BookBuilder {
 
     /**
      * Creates a new page.
-     * @param lines page contents
+     *
+     * @param lines
+     *         page contents
      * @return a new page that contains the specified lines
      */
     public static Page page(Collection<Text> lines) {
@@ -51,7 +53,9 @@ public final class BookBuilder {
 
     /**
      * Creates a new page.
-     * @param lines page contents
+     *
+     * @param lines
+     *         page contents
      * @return a new page that contains the specified lines
      */
     public static Page page(Text... lines) {
@@ -60,6 +64,7 @@ public final class BookBuilder {
 
     /**
      * Creates a new empty page.
+     *
      * @return a new empty page
      */
     public static Page emptyPage() {
@@ -81,8 +86,11 @@ public final class BookBuilder {
 
     /**
      * Creates a new {@code BookBuilder}.
-     * @param author book author
-     * @param title book title
+     *
+     * @param author
+     *         book author
+     * @param title
+     *         book title
      * @return a new builder instance
      */
     public static BookBuilder create(String author, String title) {
@@ -93,7 +101,9 @@ public final class BookBuilder {
 
     /**
      * Adds a page to the resulting book.
-     * @param page page to add
+     *
+     * @param page
+     *         page to add
      * @return this builder
      */
     public BookBuilder addPage(Page page) {
@@ -103,7 +113,9 @@ public final class BookBuilder {
 
     /**
      * Adds a new page to the resulting book.
-     * @param lines contents of page to add
+     *
+     * @param lines
+     *         contents of page to add
      * @return this builder
      */
     public BookBuilder addPage(Collection<Text> lines) {
@@ -112,7 +124,9 @@ public final class BookBuilder {
 
     /**
      * Adds a new page to the resulting book.
-     * @param lines contents of page to add
+     *
+     * @param lines
+     *         contents of page to add
      * @return this builder
      */
     public BookBuilder addPage(Text... lines) {
@@ -121,6 +135,7 @@ public final class BookBuilder {
 
     /**
      * Adds a new empty page to the resulting book.
+     *
      * @return this builder
      */
     public BookBuilder addEmptyPage() {
@@ -129,7 +144,9 @@ public final class BookBuilder {
 
     /**
      * Adds a line of lore to the resulting book.
-     * @param line line of lore to add
+     *
+     * @param line
+     *         line of lore to add
      * @return this builder
      */
     public BookBuilder addLore(Text line) {
@@ -139,7 +156,9 @@ public final class BookBuilder {
 
     /**
      * Add lines of lore to the resulting book.
-     * @param lines lines of lore to add
+     *
+     * @param lines
+     *         lines of lore to add
      * @return this builder
      */
     public BookBuilder addLore(Collection<Text> lines) {
@@ -149,7 +168,9 @@ public final class BookBuilder {
 
     /**
      * Add lines of lore to the resulting book.
-     * @param lines lines of lore to add
+     *
+     * @param lines
+     *         lines of lore to add
      * @return this builder
      */
     public BookBuilder addLore(Text... lines) {
@@ -159,7 +180,9 @@ public final class BookBuilder {
 
     /**
      * Sets the resulting book's title {@code Style}.
-     * @param titleStyle book title style
+     *
+     * @param titleStyle
+     *         book title style
      * @return this builder
      */
     public BookBuilder setTitleStyle(Style titleStyle) {
@@ -169,6 +192,7 @@ public final class BookBuilder {
 
     /**
      * Builds a new {@code ItemStack} representing the built book.
+     *
      * @return the newly built stack
      */
     public ItemStack build() {

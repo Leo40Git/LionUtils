@@ -23,6 +23,7 @@ public final class EnchantMapBuilder {
 
     /**
      * Creates a new {@code EnchantMapBuilder}.
+     *
      * @return a new builder instance
      */
     public static EnchantMapBuilder create() {
@@ -31,8 +32,11 @@ public final class EnchantMapBuilder {
 
     /**
      * Adds an enchantment-level pair entry of the specified enchantment and level to the builder.
-     * @param enchantment enchantment
-     * @param level level of enchantment
+     *
+     * @param enchantment
+     *         enchantment
+     * @param level
+     *         level of enchantment
      * @return this builder
      */
     public EnchantMapBuilder add(Enchantment enchantment, int level) {
@@ -42,7 +46,9 @@ public final class EnchantMapBuilder {
 
     /**
      * Adds an enchantment-level pair entry of the specified enchantment and its minimum level to the builder.
-     * @param enchantment enchantment
+     *
+     * @param enchantment
+     *         enchantment
      * @return this builder
      */
     public EnchantMapBuilder addMin(Enchantment enchantment) {
@@ -51,7 +57,9 @@ public final class EnchantMapBuilder {
 
     /**
      * Adds an enchantment-level pair entry of the specified enchantment and its maximum level to the builder.
-     * @param enchantment enchantment
+     *
+     * @param enchantment
+     *         enchantment
      * @return this builder
      */
     public EnchantMapBuilder addMax(Enchantment enchantment) {
@@ -60,6 +68,7 @@ public final class EnchantMapBuilder {
 
     /**
      * Builds the final {@code Enchantment}s to levels map.
+     *
      * @return the {@code Enchantment}s to levels map
      */
     public Map<Enchantment, Integer> build() {
@@ -72,8 +81,11 @@ public final class EnchantMapBuilder {
     /**
      * Creates a {@linkplain Collections#singletonMap(Object, Object) singleton map} of
      * {@code Enchantment}s to levels containing the specified enchantment and level.
-     * @param enchantment enchantment
-     * @param level level of enchantment
+     *
+     * @param enchantment
+     *         enchantment
+     * @param level
+     *         level of enchantment
      * @return the {@code Enchantment}s to levels map
      */
     public static Map<Enchantment, Integer> of(Enchantment enchantment, int level) {
@@ -83,7 +95,9 @@ public final class EnchantMapBuilder {
     /**
      * Creates a {@linkplain Collections#singletonMap(Object, Object) singleton map} of
      * {@code Enchantment}s to levels containing the specified enchantment and its minimum level.
-     * @param enchantment enchantment
+     *
+     * @param enchantment
+     *         enchantment
      * @return the {@code Enchantment}s to levels map
      */
     public static Map<Enchantment, Integer> ofMin(Enchantment enchantment) {
@@ -93,7 +107,9 @@ public final class EnchantMapBuilder {
     /**
      * Creates a {@linkplain Collections#singletonMap(Object, Object) singleton map} of
      * {@code Enchantment}s to levels containing the specified enchantment and its maximum level.
-     * @param enchantment enchantment
+     *
+     * @param enchantment
+     *         enchantment
      * @return the {@code Enchantment}s to levels map
      */
     public static Map<Enchantment, Integer> ofMax(Enchantment enchantment) {

@@ -11,7 +11,10 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.Text;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.EnumSet;
 import java.util.function.Consumer;
 
 /**
@@ -38,6 +41,7 @@ public final class ItemStackBuilder {
 
     /**
      * Creates a new {@code ItemStackBuilder}.
+     *
      * @return a new builder instance
      */
     public static ItemStackBuilder create() {
@@ -46,7 +50,9 @@ public final class ItemStackBuilder {
 
     /**
      * Sets the resulting stack's item.
-     * @param item item to set
+     *
+     * @param item
+     *         item to set
      * @return this builder
      */
     public ItemStackBuilder setItem(Item item) {
@@ -56,7 +62,9 @@ public final class ItemStackBuilder {
 
     /**
      * Sets the resulting stack's item.
-     * @param itemConvertible item to set
+     *
+     * @param itemConvertible
+     *         item to set
      * @return this builder
      */
     public ItemStackBuilder setItem(ItemConvertible itemConvertible) {
@@ -65,7 +73,9 @@ public final class ItemStackBuilder {
 
     /**
      * Sets the resulting stack's size (count).
-     * @param count count to set
+     *
+     * @param count
+     *         count to set
      * @return this builder
      */
     public ItemStackBuilder setCount(int count) {
@@ -76,7 +86,9 @@ public final class ItemStackBuilder {
     /**
      * Sets the resulting stack's damage.<p>
      * Does not take effect if the {@linkplain #setItem(Item) item} is not damageable.
-     * @param damage damage to set
+     *
+     * @param damage
+     *         damage to set
      * @return this builder
      */
     public ItemStackBuilder setDamage(int damage) {
@@ -87,7 +99,9 @@ public final class ItemStackBuilder {
 
     /**
      * Sets the resulting stack's custom name.
-     * @param customName custom name to set
+     *
+     * @param customName
+     *         custom name to set
      * @return this builder
      */
     public ItemStackBuilder setCustomName(Text customName) {
@@ -97,8 +111,11 @@ public final class ItemStackBuilder {
 
     /**
      * Adds the specified enchantment of the specified level to the resulting stack.
-     * @param enchantment enchantment to add
-     * @param level level of enchantment to add
+     *
+     * @param enchantment
+     *         enchantment to add
+     * @param level
+     *         level of enchantment to add
      * @return this builder
      */
     public ItemStackBuilder addEnchantment(Enchantment enchantment, int level) {
@@ -110,7 +127,9 @@ public final class ItemStackBuilder {
 
     /**
      * Adds the specified enchantment of its minimum level to the resulting stack.
-     * @param enchantment enchantment to add
+     *
+     * @param enchantment
+     *         enchantment to add
      * @return this builder
      */
     public ItemStackBuilder addMinEnchantment(Enchantment enchantment) {
@@ -119,7 +138,9 @@ public final class ItemStackBuilder {
 
     /**
      * Adds the specified enchantment of its maximum level to the resulting stack.
-     * @param enchantment enchantment to add
+     *
+     * @param enchantment
+     *         enchantment to add
      * @return this builder
      */
     public ItemStackBuilder addMaxEnchantment(Enchantment enchantment) {
@@ -133,7 +154,9 @@ public final class ItemStackBuilder {
 
     /**
      * Adds a line of lore to the resulting stack.
-     * @param line line of lore to add
+     *
+     * @param line
+     *         line of lore to add
      * @return this builder
      */
     public ItemStackBuilder addLore(Text line) {
@@ -144,7 +167,9 @@ public final class ItemStackBuilder {
 
     /**
      * Add lines of lore to the resulting stack.
-     * @param lines lines of lore to add
+     *
+     * @param lines
+     *         lines of lore to add
      * @return this builder
      */
     public ItemStackBuilder addLore(Collection<Text> lines) {
@@ -155,7 +180,9 @@ public final class ItemStackBuilder {
 
     /**
      * Add lines of lore to the resulting stack.
-     * @param lines lines of lore to add
+     *
+     * @param lines
+     *         lines of lore to add
      * @return this builder
      */
     public ItemStackBuilder addLore(Text... lines) {
@@ -167,6 +194,7 @@ public final class ItemStackBuilder {
     /**
      * Flags the resulting stack as unbreakable.<p>
      * Does not take effect if the {@linkplain #setItem(Item) item} is not damageable.
+     *
      * @return this builder
      */
     public ItemStackBuilder unbreakable() {
@@ -181,7 +209,9 @@ public final class ItemStackBuilder {
 
     /**
      * Hides a tooltip section on the resulting stack.
-     * @param tooltipSection tooltip section to hide
+     *
+     * @param tooltipSection
+     *         tooltip section to hide
      * @return this builder
      */
     public ItemStackBuilder hideTooltipSection(ItemStack.TooltipSection tooltipSection) {
@@ -192,7 +222,9 @@ public final class ItemStackBuilder {
 
     /**
      * Hides tooltip sections on the resulting stack.
-     * @param tooltipSections tooltip sections to hide
+     *
+     * @param tooltipSections
+     *         tooltip sections to hide
      * @return this builder
      */
     public ItemStackBuilder hideTooltipSections(ItemStack.TooltipSection... tooltipSections) {
@@ -205,7 +237,9 @@ public final class ItemStackBuilder {
      * Sets the tag mutator.<p>
      * This mutator is invoked with the result of {@link ItemStack#getOrCreateTag()} <em>after</em> the item is built,
      * meaning this mutator can override the builder's other settings.
-     * @param tagMutator tag mutator to use
+     *
+     * @param tagMutator
+     *         tag mutator to use
      * @return this builder
      */
     public ItemStackBuilder setTagMutator(Consumer<CompoundTag> tagMutator) {
@@ -215,12 +249,15 @@ public final class ItemStackBuilder {
 
     /**
      * Sets the tag to copy to the resulting stack's tag.<p>
-     * This tag is copied via <code>{@linkplain ItemStack#getOrCreateTag()}.{@linkplain CompoundTag#copyFrom(CompoundTag)
+     * This tag is copied via <code>{@linkplain ItemStack#getOrCreateTag()}.{@linkplain
+     * CompoundTag#copyFrom(CompoundTag)
      * copyFrom(tag)}</code>.<p>
      * This copying is done <em>after</em> the item is built,
      * meaning this tag can override the builder's other settings.<p>
      * <strong>NOTE:</strong> This overwrites the {@linkplain #setTagMutator(Consumer) tag mutator}!
-     * @param source tag to copy from
+     *
+     * @param source
+     *         tag to copy from
      * @return this builder
      */
     public ItemStackBuilder copyFromTag(CompoundTag source) {
@@ -231,7 +268,9 @@ public final class ItemStackBuilder {
      * Configures this builder to build heads of the specified player.<p>
      * <strong>NOTE:</strong> This overwrites the {@linkplain #setItem(Item) item}, {@linkplain #setDamage(int) damage}
      * and {@linkplain #setTagMutator(Consumer) tag mutator}!
-     * @param profile profile of player to build heads of
+     *
+     * @param profile
+     *         profile of player to build heads of
      * @return this builder
      */
     public ItemStackBuilder playerHead(GameProfile profile) {
@@ -242,6 +281,7 @@ public final class ItemStackBuilder {
 
     /**
      * Builds a new {@code ItemStack}.
+     *
      * @return the newly built stack
      */
     public ItemStack build() {

@@ -132,8 +132,11 @@ public final class GameProfileUtil {
 
     /**
      * Creates a {@code CompoundTag} that can be set on a "player head" stack to get the associated player's head.
-     * @param profile profile to create head tag from
+     *
+     * @param profile
+     *         profile to create head tag from
      * @return the tag of the head of the player that is associated with that profile
+     *
      * @since 6.0.0
      */
     public static CompoundTag createPlayerHeadTag(GameProfile profile) {

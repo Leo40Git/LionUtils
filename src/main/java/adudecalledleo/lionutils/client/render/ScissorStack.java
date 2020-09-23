@@ -164,8 +164,6 @@ public final class ScissorStack {
     /**
      * Refreshes the current scissoring rect.<p>
      * This is called automatically, so you shouldn't need to call this yourself.
-     *
-     * @author ADudeCalledLeo, Juuxel
      */
     public static void refreshScissorRect() {
         Window window = MinecraftClient.getInstance().getWindow();

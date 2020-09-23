@@ -33,7 +33,9 @@ public interface SimpleInventoryAccessor {
 
     /**
      * Sets the inventory's size.
-     * @param size inventory size
+     *
+     * @param size
+     *         inventory size
      * @since 6.0.0
      */
     @Accessor
