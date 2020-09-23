@@ -4,7 +4,7 @@
   "package": "adudecalledleo.lionutils.internal.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "MixinSkullBlockEntity"
+    "SkullBlockEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

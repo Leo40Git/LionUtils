@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(SkullBlockEntity.class)
-abstract class MixinSkullBlockEntity {
+abstract class SkullBlockEntityMixin {
     @Inject(method = "setSessionService", at = @At("TAIL"))
     private static void lionutils$setSessionService(MinecraftSessionService value, CallbackInfo ci) {
         GameProfileUtil.setSessionService(value);
