@@ -1,8 +1,11 @@
 package adudecalledleo.lionutils.inventory;
 
+import adudecalledleo.lionutils.internal.inventory.EmptySlotRef;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Clearable;
+
+import java.util.Objects;
 
 /**
  * Represents a reference to a slot in an {@link Inventory}.
@@ -29,12 +32,20 @@ public class SlotRef implements Clearable {
      * @return the constructed slot reference
      */
     public static SlotRef create(Inventory inventory, int slot) {
-        if (inventory == null)
-            throw new IllegalArgumentException("inventory == null!");
+        Objects.requireNonNull(inventory, "inventory == null!");
         if (slot < 0 || slot >= inventory.size())
             throw new IllegalArgumentException(
                     "slot index " + slot + " is out of bounds for inventory of size" + inventory.size());
         return new SlotRef(inventory, slot);
+    }
+
+    /**
+     * Constructs an empty {@code SlotRef}.
+     * @return the empty {@code SlotRef}
+     * @since 6.0.0
+     */
+    public static UnmodifiableSlotRef empty() {
+        return EmptySlotRef.INSTANCE;
     }
 
     protected SlotRef(Inventory inventory, int slot) {

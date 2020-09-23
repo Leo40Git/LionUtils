@@ -3,6 +3,8 @@ package adudecalledleo.lionutils.inventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 
+import java.util.Objects;
+
 /**
  * Represents an unmodifiable reference to a slot in an {@link Inventory}.
  *
@@ -19,8 +21,7 @@ public class UnmodifiableSlotRef extends SlotRef {
      * @return the constructed slot reference
      */
     public static UnmodifiableSlotRef create(Inventory inventory, int slot) {
-        if (inventory == null)
-            throw new IllegalArgumentException("inventory == null!");
+        Objects.requireNonNull(inventory, "inventory == null!");
         if (slot < 0 || slot >= inventory.size())
             throw new IndexOutOfBoundsException(
                     "slot index " + slot + " is out of bounds for inventory of size" + inventory.size());

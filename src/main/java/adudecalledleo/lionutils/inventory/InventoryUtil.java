@@ -69,7 +69,7 @@ public final class InventoryUtil {
      * @since 5.0.0
      */
     public static UnmodifiableInventory empty() {
-        return new EmptyInventory();
+        return EmptyInventory.INSTANCE;
     }
 
     /**
@@ -159,6 +159,12 @@ public final class InventoryUtil {
     }
 
     private static class EmptyInventory implements UnmodifiableInventory {
+        public static final EmptyInventory INSTANCE = new EmptyInventory();
+
+        private EmptyInventory() {
+            InitializerUtil.singletonCheck(INSTANCE);
+        }
+
         @Override
         public int size() {
             return 0;
@@ -201,7 +207,7 @@ public final class InventoryUtil {
                     }
                     return SlotRef.create(inventory, key);
                 }
-                return EmptySlotRef.INSTANCE;
+                return SlotRef.empty();
             });
         }
 
