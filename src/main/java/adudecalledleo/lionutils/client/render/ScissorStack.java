@@ -21,7 +21,7 @@ import java.util.NoSuchElementException;
  * scissoring rect to the specified position and size.</li>
  * </ul>
  *
- * @author Juuxel
+ * @author ADudeCalledLeo, Juuxel
  * @since 5.0.0
  */
 @Environment(EnvType.CLIENT)
@@ -164,6 +164,8 @@ public final class ScissorStack {
     /**
      * Refreshes the current scissoring rect.<p>
      * This is called automatically, so you shouldn't need to call this yourself.
+     *
+     * @author ADudeCalledLeo, Juuxel
      */
     public static void refreshScissorRect() {
         Window window = MinecraftClient.getInstance().getWindow();

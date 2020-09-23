@@ -51,7 +51,7 @@ public final class SpawnPacketUtil {
      */
     public static Packet<?> create(Entity e, Identifier packetID) {
         if (e.world.isClient)
-            throw new IllegalStateException("SpawnPacketUtil.create called from client-side!");
+            throw new IllegalStateException("SpawnPacketUtil.create called on the logical client!");
         PacketByteBuf byteBuf = new PacketByteBuf(Unpooled.buffer());
         byteBuf.writeVarInt(Registry.ENTITY_TYPE.getRawId(e.getType()));
         byteBuf.writeUuid(e.getUuid());
@@ -86,8 +86,7 @@ public final class SpawnPacketUtil {
 
     /**
      * Registers a handler for an entity spawn packet received from the server.<br>
-     * Should be used in tandem with {@link
-     * #create(Entity, Identifier)} on the server-side.
+     * Should be used in tandem with {@link #create(Entity, Identifier)} on the server-side.
      *
      * @param packetID
      *         spawn packet ID

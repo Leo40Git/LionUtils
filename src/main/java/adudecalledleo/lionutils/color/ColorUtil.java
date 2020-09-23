@@ -168,8 +168,6 @@ public final class ColorUtil {
 
     /**
      * Represents a color component.
-     *
-     * @since 5.0.0
      */
     public enum Component {
         /**
@@ -282,8 +280,6 @@ public final class ColorUtil {
      * @param modAlpha
      *         whether to modify the alpha component or not
      * @return the modified color
-     *
-     * @since 5.0.0
      */
     public static int modify(int orig, IntUnaryOperator modifier, boolean modAlpha) {
         int r = modifier.applyAsInt(unpackRed(orig));
@@ -303,8 +299,6 @@ public final class ColorUtil {
      * @param modifier
      *         component modifier
      * @return the modified color
-     *
-     * @since 5.0.0
      */
     public static int modify(int orig, IntUnaryOperator modifier) {
         return modify(orig, modifier, false);
@@ -312,8 +306,6 @@ public final class ColorUtil {
 
     /**
      * Represents a color component modifier.
-     *
-     * @since 5.0.0
      */
     @FunctionalInterface
     public interface ComponentModifier {
@@ -337,8 +329,6 @@ public final class ColorUtil {
      * @param modifier
      *         component modifier
      * @return the modified color
-     *
-     * @since 5.0.0
      */
     public static int modify(int orig, ComponentModifier modifier) {
         int r = modifier.modify(Component.RED, unpackRed(orig));
@@ -367,8 +357,6 @@ public final class ColorUtil {
      * @param orig
      *         original color
      * @return the inverted color
-     *
-     * @since 5.0.0
      */
     public static int invert(int orig) {
         return modify(orig, comp -> -comp);
@@ -376,8 +364,6 @@ public final class ColorUtil {
 
     /**
      * Represents what value to use when converting a color into grayscale.
-     *
-     * @since 5.0.0
      */
     public enum GrayscaleStyle {
         /**
@@ -406,8 +392,6 @@ public final class ColorUtil {
      * @param style
      *         style
      * @return the grayscale color
-     *
-     * @since 5.0.0
      */
     public static int grayscale(int orig, GrayscaleStyle style) {
         int v = 0;
