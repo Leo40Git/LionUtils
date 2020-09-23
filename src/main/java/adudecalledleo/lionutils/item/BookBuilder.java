@@ -6,7 +6,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.text.LiteralText;
-import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 
 import java.util.*;
@@ -72,16 +71,31 @@ public final class BookBuilder {
     }
 
     private final String author;
-    private final String title;
+    private final Text title;
     private final List<Page> pages;
-    private final List<Text> lore;
-    private Style titleStyle;
+    private List<Text> lore;
 
-    private BookBuilder(String author, String title) {
+    private BookBuilder(String author, Text title) {
         this.author = author;
         this.title = title;
         pages = new ArrayList<>();
-        lore = new ArrayList<>();
+    }
+
+    /**
+     * Creates a new {@code BookBuilder}.
+     *
+     * @param author
+     *         book author
+     * @param title
+     *         book title
+     * @return a new builder instance
+     *
+     * @since 6.0.1
+     */
+    public static BookBuilder create(String author, Text title) {
+        Objects.requireNonNull(author, "author == null!");
+        Objects.requireNonNull(title, "title == null!");
+        return new BookBuilder(author, title);
     }
 
     /**
@@ -96,7 +110,7 @@ public final class BookBuilder {
     public static BookBuilder create(String author, String title) {
         Objects.requireNonNull(author, "author == null!");
         Objects.requireNonNull(title, "title == null!");
-        return new BookBuilder(author, title);
+        return new BookBuilder(author, new LiteralText(title).styled(style -> style.withItalic(false)));
     }
 
     /**
@@ -142,6 +156,11 @@ public final class BookBuilder {
         return addPage(emptyPage());
     }
 
+    private void initLore() {
+        if (lore == null)
+            lore = new ArrayList<>();
+    }
+
     /**
      * Adds a line of lore to the resulting book.
      *
@@ -150,6 +169,7 @@ public final class BookBuilder {
      * @return this builder
      */
     public BookBuilder addLore(Text line) {
+        initLore();
         lore.add(line);
         return this;
     }
@@ -162,6 +182,7 @@ public final class BookBuilder {
      * @return this builder
      */
     public BookBuilder addLore(Collection<Text> lines) {
+        initLore();
         lore.addAll(lines);
         return this;
     }
@@ -174,19 +195,8 @@ public final class BookBuilder {
      * @return this builder
      */
     public BookBuilder addLore(Text... lines) {
+        initLore();
         Collections.addAll(lore, lines);
-        return this;
-    }
-
-    /**
-     * Sets the resulting book's title {@code Style}.
-     *
-     * @param titleStyle
-     *         book title style
-     * @return this builder
-     */
-    public BookBuilder setTitleStyle(Style titleStyle) {
-        this.titleStyle = titleStyle;
         return this;
     }
 
@@ -196,15 +206,15 @@ public final class BookBuilder {
      * @return the newly built stack
      */
     public ItemStack build() {
-        ItemStack bookStack = new ItemStack(Items.WRITTEN_BOOK);
-        CompoundTag tag = bookStack.getOrCreateTag();
+        ItemStack stack = new ItemStack(Items.WRITTEN_BOOK);
+        CompoundTag tag = stack.getOrCreateTag();
         tag.put("pages", serializePages(pages));
         tag.putString("author", author);
-        tag.putString("title", title);
-        ItemStackUtil.setLore(bookStack, lore);
-        if (titleStyle != null)
-            bookStack.setCustomName(new LiteralText(title).fillStyle(titleStyle));
-        return bookStack;
+        tag.putString("title", title.getString());
+        stack.setCustomName(title);
+        if (lore != null)
+            ItemStackUtil.setLore(stack, lore);
+        return stack;
     }
 
     private static ListTag serializePages(List<Page> pages) {
