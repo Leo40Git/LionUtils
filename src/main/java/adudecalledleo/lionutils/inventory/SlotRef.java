@@ -16,11 +16,11 @@ public class SlotRef implements Clearable {
     /**
      * The {@link Inventory} being referred to.
      */
-    public final Inventory inventory;
+    protected final Inventory inventory;
     /**
      * The index of the slot being referred to.
      */
-    public final int slot;
+    protected final int slot;
 
     /**
      * Constructs a {@code SlotRef}.

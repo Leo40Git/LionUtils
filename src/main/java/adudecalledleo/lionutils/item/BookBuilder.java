@@ -201,9 +201,9 @@ public final class BookBuilder {
     }
 
     /**
-     * Builds a new {@code ItemStack} representing the built book.
+     * Builds a new {@code ItemStack} representing the resulting book.
      *
-     * @return the newly built stack
+     * @return a new stack
      */
     public ItemStack build() {
         ItemStack stack = new ItemStack(Items.WRITTEN_BOOK);
