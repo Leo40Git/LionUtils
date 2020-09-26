@@ -1,6 +1,5 @@
 package adudecalledleo.lionutils.item;
 
-import adudecalledleo.lionutils.network.GameProfileUtil;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -9,6 +8,7 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtHelper;
 import net.minecraft.text.Text;
 
 import java.util.ArrayList;
@@ -276,7 +276,7 @@ public final class ItemStackBuilder {
     public ItemStackBuilder playerHead(GameProfile profile) {
         item = Items.PLAYER_HEAD;
         damageSet = false;
-        return copyFromTag(GameProfileUtil.createPlayerHeadTag(profile));
+        return setTagMutator(tag -> tag.put("SkullOwner", NbtHelper.fromGameProfile(new CompoundTag(), profile)));
     }
 
     /**

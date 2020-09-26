@@ -1,7 +1,6 @@
 package adudecalledleo.lionutils.color;
 
 import adudecalledleo.lionutils.InitializerUtil;
-import net.minecraft.util.math.MathHelper;
 
 import java.util.function.IntUnaryOperator;
 
@@ -348,7 +347,7 @@ public final class ColorUtil {
      * @return the multiplied color
      */
     public static int multiply(int orig, float multiplier) {
-        return modify(orig, comp -> MathHelper.floor(comp * multiplier));
+        return modify(orig, comp -> (int) (comp * multiplier));
     }
 
     /**
@@ -409,9 +408,33 @@ public final class ColorUtil {
             v = unpackRed(orig);
             v += unpackGreen(orig);
             v += unpackBlue(orig);
-            v = MathHelper.floor(v / 3f);
+            v = (int) (v / 3f);
             break;
         }
         return pack(v, v, v, unpackAlpha(orig));
+    }
+
+    private static int mix0(Component comp, int c1, int c2, float bias) {
+        return (int) (comp.unpack(c1) * bias + comp.unpack(c2) * (1 - bias));
+    }
+
+    /**
+     * Mixes two colors together. Ignores alpha values and returns an opaque color (alpha = 255).
+     *
+     * @param c1
+     *         first color to mix
+     * @param c2
+     *         second color to mix
+     * @param bias
+     *         mixing bias, where 0 is the first color and 1 is the second color
+     * @return the mixed color
+     *
+     * @since 6.1.0
+     */
+    public static int mix(int c1, int c2, float bias) {
+        int r = mix0(Component.RED, c1, c2, bias);
+        int g = mix0(Component.GREEN, c1, c2, bias);
+        int b = mix0(Component.BLUE, c1, c2, bias);
+        return pack(r, g, b, 0xFF);
     }
 }

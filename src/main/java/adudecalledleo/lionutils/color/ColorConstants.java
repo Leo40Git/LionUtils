@@ -3,7 +3,7 @@ package adudecalledleo.lionutils.color;
 import adudecalledleo.lionutils.InitializerUtil;
 
 /**
- * Contains color constants.
+ * Contains color constants. Based on the {@code Formatting} color codes.
  *
  * @since 6.0.0
  */
