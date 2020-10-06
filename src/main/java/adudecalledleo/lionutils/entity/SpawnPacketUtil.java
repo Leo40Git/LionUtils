@@ -37,7 +37,7 @@ public final class SpawnPacketUtil {
      * To use, simply override {@link Entity#createSpawnPacket()} with the following:<pre>
      * &#64;Override
      * public Packet&lt;?&gt; createSpawnPacket() {
-     *     return EntityUtil.createSpawnPacket(this, packetID);
+     *     return SpawnPacketUtil.createSpawnPacket(this, packetID);
      * }
      * </pre>
      * Make sure you register your {@code packetId} on the client-side with {@link #register(Identifier)}!

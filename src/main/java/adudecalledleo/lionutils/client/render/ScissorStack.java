@@ -56,7 +56,7 @@ public final class ScissorStack {
          */
         ABSOLUTE,
         /**
-         * All frames will be accommodated from when determining the final scissoring rect.<p>
+         * All frames will be accommodated when determining the final scissoring rect.<p>
          * This will make the final scissoring rect expand to accommodate all frames on the stack.
          */
         ADDITIVE
