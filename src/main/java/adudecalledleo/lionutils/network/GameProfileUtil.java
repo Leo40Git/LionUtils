@@ -57,6 +57,8 @@ public final class GameProfileUtil {
      * @return profile associated with the specified player
      */
     public static GameProfile getGameProfile(UUID id, String name) {
+        if (sessionService == null || userCache == null)
+            throw new IllegalStateException("GameProfileUtil hasn't been initialized yet! Are you calling this outside a world?");
         if (id == null && name == null)
             throw new IllegalArgumentException("Either ID or name need to be non-null!");
         GameProfile profile = null;
