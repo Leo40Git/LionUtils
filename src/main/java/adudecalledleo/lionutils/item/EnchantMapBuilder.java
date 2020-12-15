@@ -1,11 +1,10 @@
 package adudecalledleo.lionutils.item;
 
-import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
 
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -15,10 +14,10 @@ import java.util.Map;
  * @since 6.0.0
  */
 public final class EnchantMapBuilder {
-    private final Object2IntArrayMap<Enchantment> map;
+    private final LinkedHashMap<Enchantment, Integer> map;
 
     private EnchantMapBuilder() {
-        map = new Object2IntArrayMap<>();
+        map = new LinkedHashMap<>();
     }
 
     /**
@@ -40,6 +39,7 @@ public final class EnchantMapBuilder {
      * @return this builder
      */
     public EnchantMapBuilder add(Enchantment enchantment, int level) {
+        map.remove(enchantment);
         map.put(enchantment, level);
         return this;
     }
@@ -72,10 +72,7 @@ public final class EnchantMapBuilder {
      * @return the {@code Enchantment}s to levels map
      */
     public Map<Enchantment, Integer> build() {
-        HashMap<Enchantment, Integer> finalMap = new HashMap<>();
-        for (Object2IntArrayMap.Entry<Enchantment> entry : map.object2IntEntrySet())
-            finalMap.put(entry.getKey(), entry.getIntValue());
-        return finalMap;
+        return new LinkedHashMap<>(map);
     }
 
     /**
